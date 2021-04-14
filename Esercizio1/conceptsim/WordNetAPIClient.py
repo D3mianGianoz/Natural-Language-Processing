@@ -1,5 +1,5 @@
-from nltk.corpus import wordnet as wn
 from iteration_utilities import deepflatten
+from nltk.corpus import wordnet as wn
 
 
 class WordNetAPIClient:
@@ -103,7 +103,7 @@ class WordNetAPIClient:
         return max(max(len(path) for path in sense.hypernym_paths()) for sense in wn.all_synsets())
 
     @staticmethod
-    def __get_synsets(word):
+    def get_synsets(word):
         """
         Parameters:
              word: word for which we need to find meaning
