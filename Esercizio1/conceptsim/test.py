@@ -1,6 +1,5 @@
-from WordNetAPIClient import *
 from MetricsSimilarity import *
-from nltk.corpus import wordnet as wn
+from WordNetAPIClient import *
 
 if __name__ == "__main__":
     Api = WordNetAPIClient()
@@ -23,11 +22,13 @@ if __name__ == "__main__":
     # TODO capire come gestire il -log
     test2a = metrics.lch(cat, cat)
     test2b = metrics.lch(hit, slap)
+    test2c = metrics.lch(cat, dog)
 
     # Corretto
     test3a = metrics.wu_palmer(cat, dog)
 
     # Esempi presi da https://www.nltk.org/howto/wordnet.html
+    # print(f'PHT_sim({s1_c}{s1_d}): {s1_c.path_similarity(s1_d)}')
 
     print(test1a)
     print(wn.path_similarity(cat, cat, simulate_root=False))
@@ -44,6 +45,9 @@ if __name__ == "__main__":
     print("-----------------------------------------")
     print(test2b)
     print(wn.lch_similarity(hit, slap))
+    print("-----------------------------------------")
+    print(test2c)
+    print(wn.lch_similarity(cat, dog))
     print("=========================================")
 
     print(test3a)

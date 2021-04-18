@@ -17,11 +17,10 @@ class WordNetAPIClient:
 
     @staticmethod
     def depth_path(synset, lcs):
-        """ It measures the distance (depth) between the given Synset and the WordNet's root.
+        """It measures the distance (depth) between the given Synset and the WordNet's root.
         Args:
             synset: synset to reach from the root
             lcs:Lowest Common Subsumer - the first common sense or most specific ancestor node
-
         Returns:
             the minimum path which contains LCS
         """
@@ -70,7 +69,7 @@ class WordNetAPIClient:
         """
         lcs = self.lowest_common_subsumer(synset1, synset2)
         if lcs is None:
-            return
+            return None
 
         hypernym1 = synset1.hypernym_paths()
         hypernym2 = synset2.hypernym_paths()

@@ -1,6 +1,7 @@
 import numpy as np
 """
 This module contains the correlation indices implementations.
+Alternatively one could you use scypy implementation
 """
 
 

@@ -38,8 +38,8 @@ class SimilarityMetrics:
         """
         Implementations of the Leakcock-Chodorow metric.
         """
-        len_s1_s2 = self.client.distance(syn1, syn2)
         max_val = self.client.depth_max
+        len_s1_s2 = self.client.distance(syn1, syn2)
         if len_s1_s2 is None:
             return 0
 
