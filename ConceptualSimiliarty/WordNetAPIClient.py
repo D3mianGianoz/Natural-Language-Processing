@@ -12,7 +12,7 @@ class WordNetAPIClient:
         expensive task, it is computed here once for all the class.
         """
         print("[Client] - Computing WordNet graph's max depth.")
-        self.depth_max = self.__depth_max()
+        self.depth_max = 20
         print("[Client] - WordNet graph's max depth computed.")
 
     @staticmethod
@@ -104,7 +104,7 @@ class WordNetAPIClient:
     @staticmethod
     def get_synsets(word):
         """
-        Parameters:
+        Args:
              word: word for which we need to find meaning
         Returns:
             Synset list associated to the given word

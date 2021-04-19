@@ -21,7 +21,7 @@ def parse_word_sim_353(path):
          a list, representation of the input file. Its format will be [(w1, w2, gold_annotation)]
     """
     word_sim_array = []
-    with open(path + "WordSim353.csv", "r") as fileWord:
+    with open(path, "r") as fileWord:
         next(fileWord)
         for line in fileWord:
             (word1, word2, human) = line.rstrip("\n").split(",")
@@ -99,7 +99,7 @@ def conceptual_similarity(options):
         spearman_list.append(spearman_index(golden, yy))
         # spearman_list.append(scipy.stats.spearmanr(golden, yy))
 
-    with open(options["output"] + 'task1_results.csv', "w") as out:
+    with open(options["output"] / 'task1.1_results.csv', "w") as out:
         out.write("word1, word2, {}, {}, {}, gold\n"
                   .format(metrics[1][0], metrics[1][1], metrics[1][2]))
         for index in range(len(ws353)):
@@ -108,7 +108,7 @@ def conceptual_similarity(options):
                               similarities[1][index], similarities[2][index], ws353[index][2], )
                       )
 
-    with open(options["output"] + 'task1_indices.csv', "w") as out:
+    with open(options["output"] / 'task1.1_indices.csv', "w") as out:
         out.write(" , Pearson, Spearman\n")
         for index in range(len(pearson_list)):
             out.write("{}, {}, {}\n".format(metrics[1][index], str(pearson_list[index]),

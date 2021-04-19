@@ -7,7 +7,7 @@ Alternatively one could you use scypy implementation
 
 def pearson_index(x, y):
     """Implementation of the Pearson index.
-    Args
+    Args:
          x: golden value
          y: similarity list
     Returns:
