@@ -19,7 +19,6 @@ if __name__ == "__main__":
     test1b = metrics.shortest_path(cat, dog)
     test1c = metrics.shortest_path(hit, slap)
 
-    # TODO capire come gestire il -log
     test2a = metrics.lch(cat, cat)
     test2b = metrics.lch(hit, slap)
     test2c = metrics.lch(cat, dog)

@@ -1,8 +1,8 @@
 import time as t
 
-from Esercizio1.conceptsim.MetricsSimilarity import SimilarityMetrics
-from Esercizio1.conceptsim.WordNetAPIClient import WordNetAPIClient
-from Esercizio1.conceptsim.correlation_indexes import pearson_index, spearman_index
+from ConceptualSimiliarty.MetricsSimilarity import SimilarityMetrics
+from ConceptualSimiliarty.WordNetAPIClient import WordNetAPIClient
+from ConceptualSimiliarty.correlation_indexes import pearson_index, spearman_index
 
 """
 Compute Concept Similarity.
@@ -21,7 +21,7 @@ def parse_word_sim_353(path):
          a list, representation of the input file. Its format will be [(w1, w2, gold_annotation)]
     """
     word_sim_array = []
-    with open(path + "/WordSim353.csv", "r") as fileWord:
+    with open(path + "WordSim353.csv", "r") as fileWord:
         next(fileWord)
         for line in fileWord:
             (word1, word2, human) = line.rstrip("\n").split(",")
