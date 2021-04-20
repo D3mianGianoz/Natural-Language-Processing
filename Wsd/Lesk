@@ -1,0 +1,44 @@
+from nltk.corpus import wordnet as wn
+
+def max_freq(word):
+    
+    synsets = wn.synsets(word)
+
+    sense2freq = ""
+    freq_max = 0
+
+    for s in synsets:
+    
+        freq = 0
+    
+        for lemma in s.lemmas():
+            freq+=lemma.count()
+            if freq > freq_max:
+                freq_max = freq
+                sense2freq = s
+
+    return sense2freq
+    
+    
+    def lesk(word, sentence):
+    
+    #inizializzazione
+    max_overlap = 0; 
+    #best_sense = wn.synsets(word)[0] 
+    best_sense = max_freq(word)
+    context = sentence.split()
+    signature = []
+    
+    for ss in wn.synsets(word):
+        
+        signature += ss.definition().split()
+        signature += ss.lemma_names()     
+
+        overlap = set(signature).intersection(context)
+        signature.clear()
+
+        if len(overlap) > max_overlap:
+            best_sense = ss
+            max_overlap = len(overlap)
+            
+    return best_sense
