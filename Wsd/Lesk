@@ -20,13 +20,38 @@ def max_freq(word):
     return sense2freq
     
     
+    def bag_of_word(sent):
+    """Auxiliary function for the Lesk algorithm. Transforms the given sentence
+    according to the bag of words approach, apply lemmatization, stop words
+    and punctuation removal.
+    Params:
+        sent: sentence
+    Returns:
+        bag of words
+    """
+
+    stop_words = set(stopwords.words('english'))
+    punctuation = {',', ';', '(', ')', '{', '}', ':', '?', '!'}
+    # Returns the input word unchanged if it cannot be found in WordNet.
+    wnl = nltk.WordNetLemmatizer()
+    # Return a tokenized copy of text, using NLTK’s recommended word tokenizer (Treebank + PunkSentence)
+    tokens = nltk.word_tokenize(sent)
+    tokens = list(filter(lambda x: x not in stop_words and x not in punctuation, tokens))
+    return set(wnl.lemmatize(t) for t in tokens)
+    
+    
     def lesk(word, sentence):
     
     #inizializzazione
     max_overlap = 0; 
     #best_sense = wn.synsets(word)[0] 
     best_sense = max_freq(word)
-    context = sentence.split()
+    #context = sentence.split()
+    
+    #If I choose the bag of words approach
+    context = bag_of_word(sentence)
+    
+    signature = []
     signature = []
     
     for ss in wn.synsets(word):
