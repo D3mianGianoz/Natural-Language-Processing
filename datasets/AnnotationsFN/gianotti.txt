@@ -1,0 +1,103 @@
+#1 Biological_classification
+# Name
+Synset('classification.n.01')
+# FE
+Synset('member.n.02')
+Synset('rank.n.02') # n.04
+--Subtype
+Synset('property.n.02')
+# LU
+Synset('class.n.07')
+Synset('domain.n.01')
+Synset('family.n.06')
+Synset('genus.n.02')
+Synset('kingdom.n.05')
+Synset('order.n.12')
+Synset('phylum.n.02')
+Synset('species.n.01')
+Synset('variety.n.03')
+#2 Employment_scenario
+# Name
+Synset('scenario.n.03')
+# FE \check fino a task
+Synset('employee.n.01')
+Synset('employer.n.01')
+Synset('task.n.02')
+Synset('compensation.n.01')
+Synset('duration.n.01')
+Synset('field.n.06')
+Synset('position.n.06')
+# LU
+None
+#3 Authority
+# Name
+Synset('authority.n.01')
+# FE
+Synset('agent.n.06')
+Synset('theme.n.01')
+Synset('descriptor.n.01')
+Synset('domain.n.01')
+Synset('source.n.01')
+# LU
+Synset('authority.n.02')
+Synset('dominion.n.01')
+Synset('jurisdiction.n.01')
+Synset('power.n.01')
+Synset('sway.n.01')
+#4 Commerce_sell
+# Name
+Synset('sell.n.01')
+# FE -- 1° purpose imposed 2° purpose -- not imposed
+Synset('buyer.n.01')
+Synset('goods.n.01')
+Synset('seller.n.01')
+Synset('back.a.06')
+Synset('explanation.n.01')
+Synset('purpose.n.01')
+Synset('manner.n.01')
+Synset('means.n.02')
+Synset('money.n.01')
+Synset('period.n.01')
+Synset('place.n.02')
+Synset('purpose.n.01')
+Synset('rate.n.02')
+Synset('relay.n.01')
+Synset('result.n.01')
+Synset('time.n.01')
+Synset('unit.n.01')
+# LU
+Synset('auction.n.02')
+Synset('auction.v.01')
+Synset('retail.v.01')
+Synset('retailer.n.01')
+Synset('sale.n.01')
+Synset('sell.v.01')
+Synset('seller.n.01')
+Synset('vend.v.01')
+Synset('vendor.n.01')
+#5 Locale
+# Name
+Synset('locale.n.01')
+# FE -serve locale ??? --check su temporary
+Synset('locale.n.01')
+Synset('part.n.01')
+Synset('possessor.n.01')
+Synset('temporary.a.01')
+Synset('cause.n.04')
+Synset('purpose.n.01')
+Synset('name.n.01')
+Synset('event.n.04')
+Synset('location.n.01')
+# LU
+Synset('area.n.01')
+Synset('earth.n.02')
+Synset('grounds.n.02')
+Synset('location.n.03')
+Synset('place.n.01')
+Synset('pocket.n.02')
+Synset('point.n.01')
+Synset('region.n.01')
+Synset('regional.a.02')
+Synset('site.n.01')
+Synset('spot.n.01')
+Synset('zone.n.01')
