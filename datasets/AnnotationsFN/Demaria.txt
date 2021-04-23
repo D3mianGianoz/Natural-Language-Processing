@@ -14,7 +14,7 @@ Synset(‘topic.n.02’)
 Synset(‘believe.v.01’)
 Synset(‘certain.a.03’)
 Synset(‘certainty.n.01’)
-Synset(‘confidence.n.01’
+Synset(‘confidence.n.01’)
 Synset(‘confident.a.01’)
 Synset(‘convinced.a.02’)
 Synset(‘doubt.n.02’)
