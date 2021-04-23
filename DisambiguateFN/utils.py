@@ -3,6 +3,7 @@ from random import randint
 from random import seed
 
 from nltk.corpus import framenet as fn
+from nltk.corpus import wordnet as wn
 
 
 def read_correct_synsets(path):
@@ -31,12 +32,44 @@ def get_wordnet_context(word):
        Returns:
             a dictionary of Synset associated to the given word
     """
-    pass
+    synsets = wn.synsets(word)
+    ret = {}  # return variable
+
+    for syns in synsets:
+        if syns.examples():
+            t = [syns.lemma_names()[0], syns.examples()[0]]
+        else:
+            t = [syns.lemma_names()[0], []]
+
+            i = 0
+            for hypo in syns.hyponyms():
+                if i == 3:
+                    break
+                if hypo.lemma_names():
+                    t.append(hypo.lemma_names()[0])
+                if hypo.examples():
+                    t.append(hypo.examples()[0])
+                i += 1
+
+            i = 0
+            for hyper in syns.hypernyms():
+                if i == 3:
+                    break
+                if hyper.lemma_names():
+                    t.append(hyper.lemma_names()[0])
+                if hyper.examples():
+                    t.append(hyper.examples()[0])
+                i += 1
+
+        ret[syns.name()] = t
+
+    return ret
 
 
 """
     The functions below these lines were made by professor Radicioni
 """
+
 
 def get_frame_set_for_student(surname, list_len=5):
     ids_list = []
@@ -56,6 +89,7 @@ def get_frame_set_for_student(surname, list_len=5):
         offset = randint(0, nof_frames)
         i += 1
     return ids_list
+
 
 def print_frames_with_ids():
     for x in fn.frames():

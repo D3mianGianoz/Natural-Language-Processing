@@ -3,13 +3,26 @@ from pathlib import Path
 
 import nltk
 from nltk.corpus import framenet as fn
+from nltk.corpus import stopwords
 
-from DisambiguateFN.utils import read_correct_synsets, get_frame_set_for_student
+from DisambiguateFN.utils import read_correct_synsets, get_frame_set_for_student, get_wordnet_context
 
-surnames = ['gianotti', 'Demaria']
 """
 In this file, we executes Task 2 (FrameNet Disambiguation)
 """
+
+surnames = ['gianotti', 'Demaria']
+
+
+# TODO Da controllare se faccia più danni oppure fa il suo lavoro
+def clean_word(word):
+    stop_words = set(stopwords.words('english'))
+    word = re.sub('[^A-Za-z0-9 ]+', '', word)
+    # Returns the input word unchanged if it cannot be found in WordNet.
+    wnl = nltk.WordNetLemmatizer()
+    if word not in stop_words:
+        return wnl.lemmatize(word)
+    return ""
 
 
 def evaluate_performance():
@@ -23,7 +36,7 @@ def get_main_clause(frame_name):
     Returns:
          the main clause inside the frame name
     """
-    tokens = nltk.word_tokenize(re.sub('\_', ' ', frame_name))
+    tokens = nltk.word_tokenize(re.sub('_', ' ', frame_name))
     tokens = nltk.pos_tag(tokens)
 
     for elem in reversed(tokens):
@@ -31,20 +44,30 @@ def get_main_clause(frame_name):
             return elem[0]
 
 
-
-
 def populate_contexts(f, mode: str):
+    """It populates 2 disambiguation context (one for Framenet and one for Wordnet)
+    given a frame name.
+
+    Params:
+        frame: the frame name.
+        mode: a string indicating the way to create context the possibility are: "Frame name", "FEs" and "LUs".
+    Returns:
+         two list (context_w, context_s) representing the populated contexts.
+    """
     context_w = []  # the Framenet context
     context_s = {}  # the Wordnet context
 
     if mode == "Frame name":
-        main_clause = get_main_clause(f.name)
+        if "_" in f.name:
+            main_clause = get_main_clause(f.name)
+        else:
+            main_clause = f.name
         # The context in this case contains the frame name and his definition.
         context_w = [main_clause, f.definition]
 
         # Here, the context is a list of synset associated to the frame name.
         # In each synset are usually present word, glosses and examples.
-        context_s = get_wordnet_context()
+        context_s = get_wordnet_context(main_clause)
 
     elif mode == "FEs":
         # Populating ctx_w for FEs
@@ -57,28 +80,71 @@ def populate_contexts(f, mode: str):
 
 
 def bag_of_words(ctx_fn, ctx_wn):
-    return True
+    """ Given two disambiguation context, it returns the bag of words mapping
+    between the input arguments.
+    Params:
+        sent: sentence
+    Returns:
+        bag of words
+    """
+    sentences_fn = set()  # set of all Framenet FEs and their descriptions
+    sentences_wn = {}  # dictionary of all Wordnet sysnset, glosses and examples.
+    temp_max = 0
+    ret = None
+
+    for sentence in ctx_fn:
+        for word in sentence.split():
+            word_clean = clean_word(word)
+            print(word_clean)
+            sentences_fn.add(word_clean)
+
+    # transform the ctx_w dictionary into a set, in order to compute
+    # intersection.
+    for key in ctx_wn:  # for each WN synset
+        temp_set = set()
+        for sentence in ctx_wn[key]:  # for each sentence inside WN synset
+            if sentence:
+                for word in sentence.split():
+                    clean_word(word)
+                    temp_set.add(word)  # add words to temp_set
+
+        # computing intersection between temp_set and sentences_fn.
+        # Putting the result inside sentences_wn[key].
+        # Each entry in sentences_wn will have the cardinality of the
+        # intersection as his "score" at the first position.
+        sentences_wn[key] = (len(temp_set & sentences_fn), temp_set)
+
+        # update max score and save the associated sentence.
+        if temp_max < sentences_wn[key][0]:
+            temp_max = sentences_wn[key][0]
+            ret = (key, sentences_wn[key])
+
+    if ret:
+        return ret[0]
+    else:
+        return Warning("No bag of words created")
 
 
 if __name__ == "__main__":
     correct_synsets_path = Path('.') / 'datasets' / 'AnnotationsFN'
     output_path = Path('.') / 'output'
 
-    with open(output_path / 'results.csv', "w", encoding="utf-8") as out:
+    with open(output_path / 'task2_results_no_stop.csv', "w", encoding="utf-8") as out:
 
         print("Assigning Synsets...")
 
         for surname in surnames:
             frame_ids = get_frame_set_for_student(surname)
-
+            out.write("Student {0},\n".format(surname))
             surname_path = correct_synsets_path / (surname + '.txt')
             read_correct_synsets(surname_path)
+
             for fID in frame_ids:
                 frame = fn.frame_by_id(fID)
                 # calculate context of FN: ctx_w and WN: ctx_s
                 ctx_w, ctx_s = populate_contexts(frame, "Frame name")
                 sense_name = bag_of_words(ctx_fn=ctx_w, ctx_wn=ctx_s)
-
-            out.write("Frame name, {0}, Wordnet Synset, {1}\n".format(frame.name, sense_name))
+                # Write it to file
+                out.write("Frame name, {0}, Wordnet Synset, {1}\n".format(frame.name, sense_name))
 
     evaluate_performance()
