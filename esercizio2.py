@@ -31,15 +31,20 @@ def get_main_clause(frame_name):
             return elem[0]
 
 
+
+
 def populate_contexts(f, mode: str):
     context_w = []  # the Framenet context
     context_s = {}  # the Wordnet context
 
     if mode == "Frame name":
         main_clause = get_main_clause(f.name)
+        # The context in this case contains the frame name and his definition.
         context_w = [main_clause, f.definition]
 
-        context_s = {"test": main_clause}
+        # Here, the context is a list of synset associated to the frame name.
+        # In each synset are usually present word, glosses and examples.
+        context_s = get_wordnet_context()
 
     elif mode == "FEs":
         # Populating ctx_w for FEs

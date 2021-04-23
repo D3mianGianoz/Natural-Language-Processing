@@ -24,10 +24,19 @@ def read_correct_synsets(path):
     return correct_synset
 
 
+def get_wordnet_context(word):
+    """
+       Params:
+            word: word for which we need to find meaning
+       Returns:
+            a dictionary of Synset associated to the given word
+    """
+    pass
+
+
 """
     The functions below these lines were made by professor Radicioni
 """
-
 
 def get_frame_set_for_student(surname, list_len=5):
     ids_list = []
