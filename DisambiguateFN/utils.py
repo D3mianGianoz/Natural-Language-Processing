@@ -41,6 +41,8 @@ def get_wordnet_context(word):
         else:
             t = [syns.lemma_names()[0], []]
 
+            # 3 è una costante fornita dalla consegna,
+            # non si considerano path più lunghi
             i = 0
             for hypo in syns.hyponyms():
                 if i == 3:

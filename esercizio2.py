@@ -11,10 +11,9 @@ from DisambiguateFN.utils import read_correct_synsets, get_frame_set_for_student
 In this file, we executes Task 2 (FrameNet Disambiguation)
 """
 
-surnames = ['gianotti', 'Demaria']
-
-
 # TODO Da controllare se faccia più danni oppure fa il suo lavoro
+# L'idea è quella di pulire le parole prima di unire i due contesti
+# Roberto guarda se preferisci i risultati di no_stop o semplici (no punteggiatura)
 def clean_word(word):
     stop_words = set(stopwords.words('english'))
     word = re.sub('[^A-Za-z0-9 ]+', '', word)
@@ -58,13 +57,16 @@ def populate_contexts(f, mode: str):
     context_s = {}  # the Wordnet context
 
     if mode == "Frame name":
-        if "_" in f.name:
+        if "Motion" in f.name:
+            main_clause = "Motion"
+        elif "_" in f.name:
             main_clause = get_main_clause(f.name)
         else:
             main_clause = f.name
         # The context in this case contains the frame name and his definition.
         context_w = [main_clause, f.definition]
 
+        print(context_w)
         # Here, the context is a list of synset associated to the frame name.
         # In each synset are usually present word, glosses and examples.
         context_s = get_wordnet_context(main_clause)
@@ -80,12 +82,12 @@ def populate_contexts(f, mode: str):
 
 
 def bag_of_words(ctx_fn, ctx_wn):
-    """ Given two disambiguation context, it returns the bag of words mapping
-    between the input arguments.
+    """ Given two disambiguation context, it returns the best sense using the
+     bag of words mapping between the input arguments.
     Params:
         sent: sentence
     Returns:
-        bag of words
+        the best sense
     """
     sentences_fn = set()  # set of all Framenet FEs and their descriptions
     sentences_wn = {}  # dictionary of all Wordnet sysnset, glosses and examples.
@@ -95,7 +97,6 @@ def bag_of_words(ctx_fn, ctx_wn):
     for sentence in ctx_fn:
         for word in sentence.split():
             word_clean = clean_word(word)
-            print(word_clean)
             sentences_fn.add(word_clean)
 
     # transform the ctx_w dictionary into a set, in order to compute
@@ -105,7 +106,9 @@ def bag_of_words(ctx_fn, ctx_wn):
         for sentence in ctx_wn[key]:  # for each sentence inside WN synset
             if sentence:
                 for word in sentence.split():
-                    clean_word(word)
+                    print(f"Parola da pulire {word}")
+                    word = clean_word(word)
+                    print(f"Parola da pulita {word}")
                     temp_set.add(word)  # add words to temp_set
 
         # computing intersection between temp_set and sentences_fn.
@@ -119,6 +122,7 @@ def bag_of_words(ctx_fn, ctx_wn):
             temp_max = sentences_wn[key][0]
             ret = (key, sentences_wn[key])
 
+    # return the best sense maximizing the score
     if ret:
         return ret[0]
     else:
@@ -128,6 +132,8 @@ def bag_of_words(ctx_fn, ctx_wn):
 if __name__ == "__main__":
     correct_synsets_path = Path('.') / 'datasets' / 'AnnotationsFN'
     output_path = Path('.') / 'output'
+    surnames = ['gianotti', 'Demaria']
+    fn_modes = ["Frame name", "FEs", "LUs"]
 
     with open(output_path / 'task2_results_no_stop.csv', "w", encoding="utf-8") as out:
 
@@ -136,15 +142,21 @@ if __name__ == "__main__":
         for surname in surnames:
             frame_ids = get_frame_set_for_student(surname)
             out.write("Student {0},\n".format(surname))
+            # Retrive gold annotation
             surname_path = correct_synsets_path / (surname + '.txt')
             read_correct_synsets(surname_path)
 
             for fID in frame_ids:
                 frame = fn.frame_by_id(fID)
                 # calculate context of FN: ctx_w and WN: ctx_s
-                ctx_w, ctx_s = populate_contexts(frame, "Frame name")
+                ctx_w, ctx_s = populate_contexts(f=frame, mode=fn_modes[0])
                 sense_name = bag_of_words(ctx_fn=ctx_w, ctx_wn=ctx_s)
                 # Write it to file
-                out.write("Frame name, {0}, Wordnet Synset, {1}\n".format(frame.name, sense_name))
+                out.write("{0}, {1}, Wordnet Synset, {2}\n".format(fn_modes[0], frame.name, sense_name))
+
+                # TODO
+                ctx_w_FE, ctx_s_FE = populate_contexts(f=frame, mode=fn_modes[1])
+
+                ctx_w_LU, ctx_s_LU = populate_contexts(f=frame, mode=fn_modes[2])
 
     evaluate_performance()

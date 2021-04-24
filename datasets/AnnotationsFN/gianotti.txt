@@ -46,7 +46,7 @@ Synset('power.n.01')
 Synset('sway.n.01')
 #4 Commerce_sell
 # Name
-Synset('sell.n.01')
+Synset('sell.v.05')
 # FE -- 1° purpose imposed 2° purpose -- not imposed
 Synset('buyer.n.01')
 Synset('goods.n.01')

@@ -3,38 +3,31 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="/Esercizio1/conceptsim/conceptual_similarity.py">
+        <entry key="/output/task1.1_indices.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/Esercizio1/output/task1_indices.csv">
+        <entry key="/output/task1.1_results.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/Esercizio1/output/task1_results.csv">
+        <entry key="/output/task2_results.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/Esercizio1/utils/WordSim353.csv">
+        <entry key="/output/task2_results_no_stop.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/Esercizio1/wsd/word_sense_disambiguation.py">
-          <value>
-            <Attribute>
-              <option name="separator" value=":" />
             </Attribute>
           </value>
         </entry>
