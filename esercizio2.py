@@ -88,7 +88,15 @@ def populate_contexts(f, mode: str):
         
     elif mode == "LUs":
         # Populating ctx_w for LUs
-        pass
+        for i in sorted(f.lexUnit):
+            main_clause = i
+        # The context in this case contains the frame name and his definition.
+            lu = f.lexUnit[i]
+            context_w.append([main_clause, lu.definition])
+    
+        # Here, the context is a list of synset associated to the frame name.
+        # In each synset are usually present word, glosses and examples.
+            context_s.append(get_wordnet_context(main_clause[:-2]))
 
     return context_w, context_s
 
@@ -174,5 +182,8 @@ if __name__ == "__main__":
                     
                 #TODO
                 ctx_w_LU, ctx_s_LU = populate_contexts(f=frame, mode=fn_modes[2])
+                for (i,j) in zip(ctx_w_LU, ctx_s_LU):
+                    sense_name = bag_of_words(ctx_fn=i, ctx_wn=j)
+                    out.write("{0}, {1}, Wordnet Synset, {2}\n".format(fn_modes[2], i[0], sense_name))
 
     evaluate_performance()
