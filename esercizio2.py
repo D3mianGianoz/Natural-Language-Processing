@@ -54,7 +54,7 @@ def populate_contexts(f, mode: str):
          two list (context_w, context_s) representing the populated contexts.
     """
     context_w = []  # the Framenet context
-    context_s = {}  # the Wordnet context
+    context_s = []  # the Wordnet context
 
     if mode == "Frame name":
         if "Motion" in f.name:
@@ -73,7 +73,19 @@ def populate_contexts(f, mode: str):
 
     elif mode == "FEs":
         # Populating ctx_w for FEs
-        pass
+        for i in sorted(f.FE):
+            if "_" in i:
+                main_clause = get_main_clause(i)
+            else:
+                main_clause = i
+        # The context in this case contains the frame name and his definition.
+            fe = f.FE[i]
+            context_w.append([main_clause, fe.definition])
+    
+        # Here, the context is a list of synset associated to the frame name.
+        # In each synset are usually present word, glosses and examples.
+            context_s.append(get_wordnet_context(main_clause))
+        
     elif mode == "LUs":
         # Populating ctx_w for LUs
         pass
