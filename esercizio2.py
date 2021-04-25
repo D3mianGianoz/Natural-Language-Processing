@@ -166,9 +166,13 @@ if __name__ == "__main__":
                 # Write it to file
                 out.write("{0}, {1}, Wordnet Synset, {2}\n".format(fn_modes[0], frame.name, sense_name))
 
-                # TODO
-                ctx_w_FE, ctx_s_FE = populate_contexts(f=frame, mode=fn_modes[1])
-
+                # Implemented (Demaria)
+                ctx_w, ctx_s = populate_contexts(f=frame, mode=fn_modes[1])
+                for (i,j) in zip(ctx_w, ctx_s):
+                    sense_name = bag_of_words(ctx_fn=i, ctx_wn=j)
+                    out.write("{0}, {1}, Wordnet Synset, {2}\n".format(fn_modes[1], i[0], sense_name))
+                    
+                #TODO
                 ctx_w_LU, ctx_s_LU = populate_contexts(f=frame, mode=fn_modes[2])
 
     evaluate_performance()
