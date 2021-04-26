@@ -83,7 +83,7 @@ def get_frame_set_for_student(surname, list_len=5):
     offset = 0
     seed(1)
     while i < list_len:
-        fID = framenet_IDs[(base_idx+offset)%nof_frames]
+        fID = framenet_IDs[(base_idx+offset) % nof_frames]
         f = fn.frame(fID)
         ids_list.append(fID)
         fNAME = f.name

@@ -11,14 +11,14 @@ from DisambiguateFN.utils import read_correct_synsets, get_frame_set_for_student
 In this file, we executes Task 2 (FrameNet Disambiguation)
 """
 
-# TODO Da controllare se faccia più danni oppure fa il suo lavoro
-# L'idea è quella di pulire le parole prima di unire i due contesti
-# Roberto guarda se preferisci i risultati di no_stop o semplici (no punteggiatura)
+stop_words = set(stopwords.words('english'))
+wnl = nltk.WordNetLemmatizer()
+
+
+# The idea is to remove punctuation and stop words
 def clean_word(word):
-    stop_words = set(stopwords.words('english'))
     word = re.sub('[^A-Za-z0-9 ]+', '', word)
     # Returns the input word unchanged if it cannot be found in WordNet.
-    wnl = nltk.WordNetLemmatizer()
     if word not in stop_words:
         return wnl.lemmatize(word)
     return ""
@@ -66,37 +66,31 @@ def populate_contexts(f, mode: str):
         # The context in this case contains the frame name and his definition.
         context_w = [main_clause, f.definition]
 
-        print(context_w)
         # Here, the context is a list of synset associated to the frame name.
         # In each synset are usually present word, glosses and examples.
         context_s = get_wordnet_context(main_clause)
 
     elif mode == "FEs":
         # Populating ctx_w for FEs
-        for i in sorted(f.FE):
-            if "_" in i:
-                main_clause = get_main_clause(i)
+        for key in sorted(f.FE):
+            if "_" in key:
+                main_clause = get_main_clause(key)
             else:
-                main_clause = i
-        # The context in this case contains the frame name and his definition.
-            fe = f.FE[i]
+                main_clause = key
+            fe = f.FE[key]
             context_w.append([main_clause, fe.definition])
-    
-        # Here, the context is a list of synset associated to the frame name.
-        # In each synset are usually present word, glosses and examples.
+
+            # appending the value to ctx_s list.
             context_s.append(get_wordnet_context(main_clause))
-        
+
     elif mode == "LUs":
         # Populating ctx_w for LUs
-        for i in sorted(f.lexUnit):
-            main_clause = i
-        # The context in this case contains the frame name and his definition.
-            lu = f.lexUnit[i]
-            context_w.append([main_clause, lu.definition])
-    
-        # Here, the context is a list of synset associated to the frame name.
-        # In each synset are usually present word, glosses and examples.
-            context_s.append(get_wordnet_context(main_clause[:-2]))
+        for key in sorted(f.lexUnit):
+            lu_key = re.sub('\.[a-z]+', '', key)
+            context_w.append(lu_key)
+
+            # appending the value to ctx_s list.
+            context_s.append(get_wordnet_context(lu_key))
 
     return context_w, context_s
 
@@ -110,9 +104,9 @@ def bag_of_words(ctx_fn, ctx_wn):
         the best sense
     """
     sentences_fn = set()  # set of all Framenet FEs and their descriptions
-    sentences_wn = {}  # dictionary of all Wordnet sysnset, glosses and examples.
-    temp_max = 0
-    ret = None
+    sentences_wn = {}  # dictionary of all Wordnet synset, glosses and examples.
+    temp_max = -1
+    ret = False
 
     for sentence in ctx_fn:
         for word in sentence.split():
@@ -126,9 +120,9 @@ def bag_of_words(ctx_fn, ctx_wn):
         for sentence in ctx_wn[key]:  # for each sentence inside WN synset
             if sentence:
                 for word in sentence.split():
-                    print(f"Parola da pulire {word}")
+                    # print(f"Parola da pulire {word}")
                     word = clean_word(word)
-                    print(f"Parola da pulita {word}")
+                    # print(f"Parola da pulita {word}")
                     temp_set.add(word)  # add words to temp_set
 
         # computing intersection between temp_set and sentences_fn.
@@ -146,6 +140,7 @@ def bag_of_words(ctx_fn, ctx_wn):
     if ret:
         return ret[0]
     else:
+        # couldn't find the word on Wordnet ex: Cognizer
         return Warning("No bag of words created")
 
 
@@ -176,14 +171,14 @@ if __name__ == "__main__":
 
                 # Implemented (Demaria)
                 ctx_w, ctx_s = populate_contexts(f=frame, mode=fn_modes[1])
-                for (i,j) in zip(ctx_w, ctx_s):
+                for (i, j) in zip(ctx_w, ctx_s):
                     sense_name = bag_of_words(ctx_fn=i, ctx_wn=j)
-                    out.write("{0}, {1}, Wordnet Synset, {2}\n".format(fn_modes[1], i[0], sense_name))
-                    
-                #TODO
+                    out.write("{0}, {1}, Wordnet Synset, {2}\n".format(fn_modes[1][:-1], i[0], sense_name))
+
+                # Implemented (Gianotti)
                 ctx_w_LU, ctx_s_LU = populate_contexts(f=frame, mode=fn_modes[2])
-                for (i,j) in zip(ctx_w_LU, ctx_s_LU):
+                for (i, j) in zip(ctx_w_LU, ctx_s_LU):
                     sense_name = bag_of_words(ctx_fn=i, ctx_wn=j)
-                    out.write("{0}, {1}, Wordnet Synset, {2}\n".format(fn_modes[2], i[0], sense_name))
+                    out.write("{0}, {1}, Wordnet Synset, {2}\n".format(fn_modes[2][:-1], i, sense_name))
 
     evaluate_performance()

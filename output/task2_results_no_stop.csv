@@ -1,12 +1,196 @@
 Student gianotti,
 Frame name, Biological_classification, Wordnet Synset, classification.n.02
+FE, Member, Wordnet Synset, member.n.01
+FE, Property, Wordnet Synset, property.n.01
+FE, Rank, Wordnet Synset, rank.n.01
+FE, Subtype, Wordnet Synset, No bag of words created
+LU, class, Wordnet Synset, class.n.01
+LU, domain, Wordnet Synset, sphere.n.01
+LU, family, Wordnet Synset, family.n.01
+LU, genus, Wordnet Synset, genus.n.01
+LU, kingdom, Wordnet Synset, kingdom.n.01
+LU, order, Wordnet Synset, order.n.01
+LU, phylum, Wordnet Synset, phylum.n.01
+LU, species, Wordnet Synset, species.n.02
+LU, variety, Wordnet Synset, assortment.n.01
 Frame name, Employment_scenario, Wordnet Synset, scenario.n.03
+FE, Compensation, Wordnet Synset, compensation.n.01
+FE, Duration, Wordnet Synset, duration.n.01
+FE, Employee, Wordnet Synset, employee.n.01
+FE, Employer, Wordnet Synset, employer.n.01
+FE, Field, Wordnet Synset, field.n.03
+FE, Position, Wordnet Synset, position.n.16
+FE, Task, Wordnet Synset, task.v.01
 Frame name, Authority, Wordnet Synset, authority.n.03
+FE, Agent, Wordnet Synset, agent.n.01
+FE, Descriptor, Wordnet Synset, form.n.01
+FE, Domain, Wordnet Synset, sphere.n.01
+FE, Source, Wordnet Synset, beginning.n.04
+FE, Theme, Wordnet Synset, subject.n.01
+LU, authority, Wordnet Synset, authority.n.01
+LU, dominion, Wordnet Synset, dominion.n.01
+LU, jurisdiction, Wordnet Synset, legal_power.n.01
+LU, power, Wordnet Synset, power.n.01
+LU, sway, Wordnet Synset, sway.n.01
 Frame name, Commerce_sell, Wordnet Synset, sell.v.06
+FE, Back, Wordnet Synset, back.n.01
+FE, Buyer, Wordnet Synset, buyer.n.01
+FE, Explanation, Wordnet Synset, explanation.n.01
+FE, Goods, Wordnet Synset, good.n.01
+FE, purpose, Wordnet Synset, purpose.n.01
+FE, Manner, Wordnet Synset, manner.n.01
+FE, Means, Wordnet Synset, entail.v.01
+FE, Money, Wordnet Synset, money.n.01
+FE, iterations, Wordnet Synset, iteration.n.01
+FE, Place, Wordnet Synset, topographic_point.n.01
+FE, Purpose, Wordnet Synset, purpose.n.01
+FE, Rate, Wordnet Synset, rate.n.01
+FE, Relay, Wordnet Synset, relay.n.01
+FE, Result, Wordnet Synset, leave.v.07
+FE, Seller, Wordnet Synset, seller.n.01
+FE, Time, Wordnet Synset, time.n.01
+FE, Unit, Wordnet Synset, unit.n.03
+LU, auction, Wordnet Synset, auction.n.02
+LU, auction, Wordnet Synset, auction.n.02
+LU, retail, Wordnet Synset, retail.v.01
+LU, retailer, Wordnet Synset, retailer.n.01
+LU, sale, Wordnet Synset, sale.n.01
+LU, sell, Wordnet Synset, sell.n.01
+LU, seller, Wordnet Synset, seller.n.01
+LU, vend, Wordnet Synset, peddle.v.01
+LU, vendor, Wordnet Synset, seller.n.01
 Frame name, Locale, Wordnet Synset, venue.n.01
+FE, parts, Wordnet Synset, parts.n.01
+FE, possessor, Wordnet Synset, owner.n.02
+FE, Descriptor, Wordnet Synset, form.n.01
+FE, cause, Wordnet Synset, cause.n.01
+FE, purpose, Wordnet Synset, purpose.n.01
+FE, Locale, Wordnet Synset, venue.n.01
+FE, Name, Wordnet Synset, name.n.06
+FE, event, Wordnet Synset, event.n.02
+FE, location, Wordnet Synset, location.n.01
+LU, area, Wordnet Synset, area.n.01
+LU, earth, Wordnet Synset, earth.n.01
+LU, grounds, Wordnet Synset, evidence.n.01
+LU, locale, Wordnet Synset, venue.n.01
+LU, location, Wordnet Synset, location.n.01
+LU, place, Wordnet Synset, topographic_point.n.01
+LU, pocket, Wordnet Synset, pouch.n.02
+LU, point, Wordnet Synset, point.n.01
+LU, region, Wordnet Synset, region.n.01
+LU, regional, Wordnet Synset, regional.s.02
+LU, site, Wordnet Synset, site.n.01
+LU, spot, Wordnet Synset, topographic_point.n.01
+LU, zone, Wordnet Synset, zone.n.01
 Student Demaria,
 Frame name, Certainty, Wordnet Synset, certainty.n.01
+FE, Cognizer, Wordnet Synset, No bag of words created
+FE, Concessive, Wordnet Synset, concessive.a.01
+FE, Content, Wordnet Synset, content.v.02
+FE, Degree, Wordnet Synset, degree.n.01
+FE, Explanation, Wordnet Synset, explanation.n.01
+FE, Expressor, Wordnet Synset, No bag of words created
+FE, Manner, Wordnet Synset, manner.n.01
+FE, Topic, Wordnet Synset, subject.n.01
+LU, believe, Wordnet Synset, believe.v.01
+LU, certain, Wordnet Synset, certain.s.01
+LU, certainty, Wordnet Synset, certainty.n.01
+LU, confidence, Wordnet Synset, assurance.n.01
+LU, confident, Wordnet Synset, confident.a.01
+LU, convinced, Wordnet Synset, convert.v.09
+LU, doubt, Wordnet Synset, doubt.n.01
+LU, doubt, Wordnet Synset, doubt.n.01
+LU, doubtful, Wordnet Synset, doubtful.s.01
+LU, dubious, Wordnet Synset, doubtful.s.02
+LU, know, Wordnet Synset, know.n.01
+LU, positive, Wordnet Synset, positive.a.01
+LU, skeptic, Wordnet Synset, skeptic.n.01
+LU, skeptical, Wordnet Synset, disbelieving.s.01
+LU, skepticism, Wordnet Synset, incredulity.n.01
+LU, sure, Wordnet Synset, certain.a.02
+LU, trust, Wordnet Synset, trust.n.01
+LU, uncertain, Wordnet Synset, uncertain.a.01
+LU, uncertainty, Wordnet Synset, uncertainty.n.01
+LU, unsure, Wordnet Synset, diffident.a.02
 Frame name, Firing_point, Wordnet Synset, point.n.10
+FE, Descriptor, Wordnet Synset, form.n.01
+FE, Detonator, Wordnet Synset, detonator.n.01
+FE, point, Wordnet Synset, point.v.10
+FE, Name, Wordnet Synset, name.n.01
+FE, location, Wordnet Synset, location.n.01
+LU, firing point, Wordnet Synset, No bag of words created
 Frame name, Breathing, Wordnet Synset, breathe.v.01
+FE, Agent, Wordnet Synset, agent.n.01
+FE, Air, Wordnet Synset, air.n.02
+FE, Circumstances, Wordnet Synset, circumstance.n.01
+FE, Degree, Wordnet Synset, degree.n.01
+FE, Depictive, Wordnet Synset, delineative.s.01
+FE, Distance, Wordnet Synset, distance.n.01
+FE, Duration, Wordnet Synset, duration.n.01
+FE, cause, Wordnet Synset, cause.n.01
+FE, Goal, Wordnet Synset, goal.n.01
+FE, Instrument, Wordnet Synset, instrument.n.01
+FE, cause, Wordnet Synset, cause.n.01
+FE, Manner, Wordnet Synset, manner.n.01
+FE, Means, Wordnet Synset, means.n.01
+FE, Path, Wordnet Synset, way.n.05
+FE, Place, Wordnet Synset, topographic_point.n.01
+FE, Purpose, Wordnet Synset, purpose.n.01
+FE, Source, Wordnet Synset, beginning.n.04
+FE, Time, Wordnet Synset, clock_time.n.01
+LU, blow, Wordnet Synset, blow.n.01
+LU, breath, Wordnet Synset, breath.n.01
+LU, breathe, Wordnet Synset, breathe.v.01
+LU, exhalation [act], Wordnet Synset, No bag of words created
+LU, exhalation, Wordnet Synset, halitus.n.01
+LU, exhale, Wordnet Synset, exhale.v.01
+LU, expire, Wordnet Synset, die.v.01
+LU, gasp, Wordnet Synset, gasp.n.01
+LU, huff, Wordnet Synset, huff.n.01
+LU, inhalation [breath], Wordnet Synset, No bag of words created
+LU, inhalation, Wordnet Synset, inhalation.n.01
+LU, inhale, Wordnet Synset, inhale.v.01
+LU, inspire, Wordnet Synset, inspire.v.01
+LU, insufflate, Wordnet Synset, insufflate.v.01
+LU, pant, Wordnet Synset, pant.n.01
+LU, puff, Wordnet Synset, puff.n.01
+LU, respire, Wordnet Synset, respire.v.01
+LU, sigh, Wordnet Synset, sigh.n.02
+LU, sigh, Wordnet Synset, sigh.n.02
+LU, suspire, Wordnet Synset, breathe.v.01
 Frame name, Delivery, Wordnet Synset, delivery.n.01
+FE, Beneficiary, Wordnet Synset, beneficiary.a.01
+FE, Circumstances, Wordnet Synset, circumstance.n.01
+FE, Container, Wordnet Synset, container.n.01
+FE, Cotheme, Wordnet Synset, No bag of words created
+FE, Deliverer, Wordnet Synset, deliverer.n.04
+FE, Depictive, Wordnet Synset, delineative.s.01
+FE, description, Wordnet Synset, description.n.01
+FE, Explanation, Wordnet Synset, explanation.n.01
+FE, Goal, Wordnet Synset, goal.n.01
+FE, Manner, Wordnet Synset, manner.n.01
+FE, Means, Wordnet Synset, entail.v.01
+FE, Path, Wordnet Synset, path.n.03
+FE, iterations, Wordnet Synset, iteration.n.01
+FE, Place, Wordnet Synset, topographic_point.n.01
+FE, Purpose, Wordnet Synset, purpose.n.01
+FE, Recipient, Wordnet Synset, recipient.n.01
+FE, Source, Wordnet Synset, source.v.02
+FE, Speed, Wordnet Synset, travel_rapidly.v.01
+FE, Theme, Wordnet Synset, subject.n.01
+FE, Time, Wordnet Synset, time.n.02
+FE, Vehicle, Wordnet Synset, vehicle.n.02
+LU, deliver, Wordnet Synset, deliver.v.01
+LU, delivery, Wordnet Synset, delivery.n.01
 Frame name, Motion_scenario, Wordnet Synset, movement.n.03
+FE, Area, Wordnet Synset, area.n.05
+FE, Cotheme, Wordnet Synset, No bag of words created
+FE, Distance, Wordnet Synset, distance.n.01
+FE, Duration, Wordnet Synset, duration.n.01
+FE, Goal, Wordnet Synset, goal.n.01
+FE, transportation, Wordnet Synset, transportation.n.05
+FE, Path, Wordnet Synset, way.n.05
+FE, Source, Wordnet Synset, source.v.02
+FE, Speed, Wordnet Synset, speed.n.01
+FE, Theme, Wordnet Synset, subject.n.01
+FE, Time, Wordnet Synset, time.v.02
