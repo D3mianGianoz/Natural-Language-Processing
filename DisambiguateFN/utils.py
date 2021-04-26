@@ -25,6 +25,15 @@ def read_correct_synsets(path):
     return correct_synset
 
 
+def find_between(s, first, last):
+    try:
+        start = s.index(first) + len(first)
+        end = s.index(last, start)
+        return s[start:end]
+    except ValueError:
+        return ""
+
+
 def get_wordnet_context(word):
     """
        Params:
@@ -83,7 +92,7 @@ def get_frame_set_for_student(surname, list_len=5):
     offset = 0
     seed(1)
     while i < list_len:
-        fID = framenet_IDs[(base_idx+offset) % nof_frames]
+        fID = framenet_IDs[(base_idx + offset) % nof_frames]
         f = fn.frame(fID)
         ids_list.append(fID)
         fNAME = f.name

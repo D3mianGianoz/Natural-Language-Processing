@@ -1,3 +1,4 @@
+import csv
 import re
 from pathlib import Path
 
@@ -5,7 +6,7 @@ import nltk
 from nltk.corpus import framenet as fn
 from nltk.corpus import stopwords
 
-from DisambiguateFN.utils import read_correct_synsets, get_frame_set_for_student, get_wordnet_context
+from DisambiguateFN.utils import read_correct_synsets, get_frame_set_for_student, get_wordnet_context, find_between
 
 """
 In this file, we executes Task 2 (FrameNet Disambiguation)
@@ -24,8 +25,50 @@ def clean_word(word):
     return ""
 
 
-def evaluate_performance():
-    pass
+def evaluate_performance(gold_path, out_path):
+    """
+    Doing output evaluation and print the result on the console.
+
+    Parameters
+    ----------
+    gold_path
+    out_path
+    """
+
+    test = 0
+    with open(out_path, "r", encoding="utf-8") as results:
+        reader_golden = read_correct_synsets(gold_path)
+        reader_results = csv.reader(results, delimiter=',')
+
+        items_in_results = []  # list of items in results
+        items_in_golden = []  # list of items in gold
+
+        for line_out in reader_results:
+            items_in_results.append(line_out[-1])
+
+        for elem in reader_golden:
+            # Unwrapping the synset
+            start = 'Synset(\''
+            end = '\')'
+
+            if elem == 'None':
+                items_in_golden.append(elem)
+            else:
+                items_in_golden.append(find_between(elem, start, end))
+
+        # counting equal elements
+        index = 0
+        while index < len(items_in_golden):
+            result = items_in_results[index]
+            gold = items_in_golden[index]
+            print(f'risultato:{result} ---- golden:{gold}')
+            if result == gold:
+                test += 1
+            index += 1
+
+        total_len = index
+
+    print("\nPrecision: {0} / {1} Synsets -> {2:.2f} %".format(test, total_len, (test / total_len) * 100))
 
 
 def get_main_clause(frame_name):
@@ -141,25 +184,25 @@ def bag_of_words(ctx_fn, ctx_wn):
         return ret[0]
     else:
         # couldn't find the word on Wordnet ex: Cognizer
-        return Warning("No bag of words created")
+        # Warning("No bag of words created")
+        return None
 
 
 if __name__ == "__main__":
     correct_synsets_path = Path('.') / 'datasets' / 'AnnotationsFN'
     output_path = Path('.') / 'output'
-    surnames = ['gianotti', 'Demaria']
+    surnames = ['Demaria']
     fn_modes = ["Frame name", "FEs", "LUs"]
 
-    with open(output_path / 'task2_results_no_stop.csv', "w", encoding="utf-8") as out:
+    print("Assigning Synsets...")
 
-        print("Assigning Synsets...")
+    for surname in surnames:
+        path = output_path / f'task2_results_{surname}.csv'
+        with open(path, "w", encoding="utf-8") as out:
 
-        for surname in surnames:
             frame_ids = get_frame_set_for_student(surname)
-            out.write("Student {0},\n".format(surname))
             # Retrive gold annotation
             surname_path = correct_synsets_path / (surname + '.txt')
-            read_correct_synsets(surname_path)
 
             for fID in frame_ids:
                 frame = fn.frame_by_id(fID)
@@ -167,18 +210,18 @@ if __name__ == "__main__":
                 ctx_w, ctx_s = populate_contexts(f=frame, mode=fn_modes[0])
                 sense_name = bag_of_words(ctx_fn=ctx_w, ctx_wn=ctx_s)
                 # Write it to file
-                out.write("{0}, {1}, Wordnet Synset, {2}\n".format(fn_modes[0], frame.name, sense_name))
+                out.write("{0}, {1},Wordnet Synset,{2}\n".format(fn_modes[0], frame.name, sense_name))
 
                 # Implemented (Demaria)
                 ctx_w, ctx_s = populate_contexts(f=frame, mode=fn_modes[1])
                 for (i, j) in zip(ctx_w, ctx_s):
                     sense_name = bag_of_words(ctx_fn=i, ctx_wn=j)
-                    out.write("{0}, {1}, Wordnet Synset, {2}\n".format(fn_modes[1][:-1], i[0], sense_name))
+                    out.write("{0}, {1},Wordnet Synset,{2}\n".format(fn_modes[1][:-1], i[0], sense_name))
 
                 # Implemented (Gianotti)
                 ctx_w_LU, ctx_s_LU = populate_contexts(f=frame, mode=fn_modes[2])
                 for (i, j) in zip(ctx_w_LU, ctx_s_LU):
                     sense_name = bag_of_words(ctx_fn=i, ctx_wn=j)
-                    out.write("{0}, {1}, Wordnet Synset, {2}\n".format(fn_modes[2][:-1], i, sense_name))
+                    out.write("{0}, {1},Wordnet Synset,{2}\n".format(fn_modes[2][:-1], i, sense_name))
 
-    evaluate_performance()
+        evaluate_performance(gold_path=surname_path, out_path=path)

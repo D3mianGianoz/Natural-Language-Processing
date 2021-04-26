@@ -3,9 +3,9 @@
 Synset('classification.n.01')
 # FE
 Synset('member.n.02')
-Synset('rank.n.02') # n.04
---Subtype
 Synset('property.n.02')
+Synset('rank.n.02')
+None
 # LU
 Synset('class.n.07')
 Synset('domain.n.01')
@@ -20,15 +20,15 @@ Synset('variety.n.03')
 # Name
 Synset('scenario.n.03')
 # FE \check fino a task
-Synset('employee.n.01')
-Synset('employer.n.01')
-Synset('task.n.02')
 Synset('compensation.n.01')
 Synset('duration.n.01')
+Synset('employee.n.01')
+Synset('employer.n.01')
 Synset('field.n.06')
 Synset('position.n.06')
+Synset('task.n.02')
 # LU
-None
+# Nessuna
 #3 Authority
 # Name
 Synset('authority.n.01')
@@ -48,21 +48,21 @@ Synset('sway.n.01')
 # Name
 Synset('sell.v.05')
 # FE -- 1° purpose imposed 2° purpose -- not imposed
-Synset('buyer.n.01')
-Synset('goods.n.01')
-Synset('seller.n.01')
 Synset('back.a.06')
+Synset('buyer.n.01')
 Synset('explanation.n.01')
-Synset('purpose.n.01')
+Synset('goods.n.01')
 Synset('manner.n.01')
 Synset('means.n.02')
 Synset('money.n.01')
 Synset('period.n.01')
 Synset('place.n.02')
+Synset('topographic_point.n.01')
 Synset('purpose.n.01')
 Synset('rate.n.02')
 Synset('relay.n.01')
 Synset('result.n.01')
+Synset('seller.n.01')
 Synset('time.n.01')
 Synset('unit.n.01')
 # LU
@@ -78,16 +78,17 @@ Synset('vendor.n.01')
 #5 Locale
 # Name
 Synset('locale.n.01')
-# FE -serve locale ??? --check su temporary
+# FE -serve locale ???
+# check su temporary
+Synset('cause.n.04')
+Synset('event.n.04')
 Synset('locale.n.01')
+Synset('location.n.01')
+Synset('name.n.01')
 Synset('part.n.01')
 Synset('possessor.n.01')
-Synset('temporary.a.01')
-Synset('cause.n.04')
 Synset('purpose.n.01')
-Synset('name.n.01')
-Synset('event.n.04')
-Synset('location.n.01')
+Synset('temporary.a.01')
 # LU
 Synset('area.n.01')
 Synset('earth.n.02')
