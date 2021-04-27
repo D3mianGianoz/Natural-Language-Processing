@@ -1,0 +1,132 @@
+﻿#1 Certainty
+# Name
+Synset('certainty.n.01')
+# FE
+None
+Synset('concessive.a.01')
+Synset('content.n.05')
+Synset('degree.n.01')
+Synset('explanation.n.01')
+None
+Synset('manner.n.01')
+Synset('topic.n.02')
+# LU
+Synset('believe.v.01')
+Synset('certain.a.03')
+Synset('certainty.n.01')
+Synset('confidence.n.01')
+Synset('confident.a.01')
+Synset('convinced.a.02')
+Synset('doubt.n.02')
+Synset('doubt.v.02')
+None
+None
+Synset('know.v.01')
+Synset('positive.a.01')
+Synset('skeptic.n.01')
+None
+Synset('incredulity.n.01')
+Synset('certain.a.02')
+Synset('trust.v.01')
+Synset('uncertain.a.02')
+Synset('uncertainty.n.01')
+None
+#2 Firing_point
+# Name
+Synset('point.n.02')
+# FE
+Synset('descriptor.n.01')
+Synset('detonator.n.01')
+None
+Synset('name.n.01')
+Synset('localization.n.01')
+# LU
+None
+#3 Breathing
+# Name
+Synset('breathing.n.01')
+# FE
+Synset('agentive_role.n.01')
+Synset('air.n.01')
+Synset('context.n.02')
+Synset('degree.n.01')
+Synset('delineative.s.01')
+Synset('distance.n.03')
+Synset('duration.n.01')
+Synset('cause.n.01')
+Synset('finish.n.04')
+Synset('instrument.n.02')
+None
+Synset('manner.n.01')
+Synset('means.n.01')
+Synset('path.n.04')
+Synset('place.n.13')
+Synset('purpose.n.01')
+Synset('beginning.n.04')
+Synset('time.n.02')
+# LU
+Synset('blow.v.02')
+Synset('breath.n.01')
+Synset('breathe.v.01')
+Synset('exhalation.n.02')
+Synset('halitus.n.01')
+Synset('exhale.v.01')
+Synset('exhale.v.01')
+Synset('pant.v.01')
+Synset('puff.v.08')
+Synset('inhalation.n.01')
+Synset('inhalant.n.02')
+Synset('inhale.v.01')
+Synset('inhale.v.02')
+Synset('insufflate.v.02')
+Synset('pant.v.02')
+Synset('puff.v.01')
+Synset('respire.v.02')
+Synset('sigh.n.01')
+Synset('sigh.v.01')
+Synset('sigh.v.01')
+#4 Delivery
+# Name
+Synset('delivery.n.01')
+# FE
+Synset('beneficiary.n.01')
+Synset('context.n.02')
+Synset('container.n.01')
+None
+Synset('deliveryman.n.01')
+Synset('delineative.s.01')
+None
+Synset('explanation.n.01')
+Synset('finish.n.04')
+Synset('manner.n.01')
+Synset('means.n.01')
+Synset('pant.v.01')
+Synset('time_period.n.01')
+Synset('topographic_point.n.01')
+Synset('purpose.n.01')
+Synset('recipient.n.01')
+Synset('beginning.n.04')
+Synset('speed.n.02')
+Synset('subject.n.01')
+Synset('time.n.01')
+Synset('vehicle.n.02')
+# LU
+Synset('deliver.v.02')
+Synset('delivery.n.01')
+#5 Motion_scenario
+# Name
+Synset('motion.n.04')
+# FE
+Synset('area.n.05')
+None
+Synset('distance.n.03')
+Synset('duration.n.01')
+Synset('finish.n.04')
+Synset('transportation.n.02')
+Synset('path.n.04')
+Synset('beginning.n.04')
+Synset('speed.n.02')
+Synset('subject.n.01')
+Synset('time.n.01')
+# LU
+# No Lexical Units
