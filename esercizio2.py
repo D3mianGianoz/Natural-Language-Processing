@@ -25,14 +25,15 @@ def clean_word(word):
     return ""
 
 
-def evaluate_performance(gold_path, out_path):
+def evaluate_performance(gold_path, out_path, none=True):
     """
     Doing output evaluation and print the result on the console.
-
+    If none = False it is not considering none while counting matching
     Parameters
     ----------
     gold_path
     out_path
+    none
     """
 
     test = 0
@@ -48,28 +49,38 @@ def evaluate_performance(gold_path, out_path):
 
         for elem in reader_golden:
             # Unwrapping the synset
-            start = 'Synset(\''
-            end = '\')'
+            start = 'Synset(‘'
+            end = '’)'
 
             if elem == 'None':
                 items_in_golden.append(elem)
+                #pass
             else:
                 items_in_golden.append(find_between(elem, start, end))
 
         # counting equal elements
         index = 0
+        contatore = 0
+        print(len(items_in_golden))
+        print(items_in_golden)
+        print(len(items_in_results))
+        print(items_in_results)
         while index < len(items_in_golden):
-            result = items_in_results[index]
-            gold = items_in_golden[index]
+            if (items_in_results[index] == 'None' or items_in_golden[index] == 'None') and none==False:
+                print('None')
+                pass
+            else:
+                contatore += 1
+                result = items_in_results[index]
+                gold = items_in_golden[index]
             print(f'risultato:{result} ---- golden:{gold}')
             if result == gold:
                 test += 1
             index += 1
 
-        total_len = index
+        total_len = contatore
 
     print("\nPrecision: {0} / {1} Synsets -> {2:.2f} %".format(test, total_len, (test / total_len) * 100))
-
 
 def get_main_clause(frame_name):
     """Get of the main clause from the frame name ("reggente").
@@ -225,3 +236,4 @@ if __name__ == "__main__":
                     out.write("{0}, {1},Wordnet Synset,{2}\n".format(fn_modes[2][:-1], i, sense_name))
 
         evaluate_performance(gold_path=surname_path, out_path=path)
+        evaluate_performance(gold_path=surname_path, out_path=path, none=False)
