@@ -63,7 +63,8 @@ def evaluate_performance(gold_path, out_path, none=True):
         contatore = 0
 
         while index < len(items_in_golden):
-            if (items_in_results[index] == 'None' and items_in_golden[index] == 'None') and none is False:
+            # Item either not found in wordnet or with no correct sense in the resource
+            if (items_in_results[index] == 'None' or items_in_golden[index] == 'None') and none is False:
                 total_none += 1
             else:
                 contatore += 1
