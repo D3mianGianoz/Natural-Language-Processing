@@ -25,23 +25,28 @@ def bag_of_word(sent):
 
 
 def get_Nasari_vectors(titolo, Nasari_vector):
-    """Given a sentence, it creates a bag of words of this sentence
-    and return the Nasari vectors for the words in the sentence
+    """Returns Nasari Vectors (pairs lemma-score) of a sentence in a single list.
     Params:
         title
-        Nazari vector
+        Nasari vector
     Returns:
-        Nazari vectors of words in title
+        Nasari vector of the title
     """
     
+    nasari = []
     bag = list(bag_of_word(titolo))
-    print(bag)
+    #print(bag)
     
     for word in bag:
         if word in str(Nasari_vector.keys()).lower():
-            print(word)
+            #print(word)
             vettore = Nasari_vector[str(word)]
-            print(vettore)
+            #print(vettore)
+            
+            for i in vettore:
+                nasari.append(i)
+     
+    return nasari
 
 
 if __name__ == "__main__":
