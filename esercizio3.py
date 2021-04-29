@@ -40,7 +40,7 @@ def get_Nasari_vectors(titolo, Nasari_vector):
     for word in bag:
         if word in str(Nasari_vector.keys()).lower():
             print(word)
-            vettore = Nasari_vector[str(word).title()]
+            vettore = Nasari_vector[str(word)]
             print(vettore)
 
 
