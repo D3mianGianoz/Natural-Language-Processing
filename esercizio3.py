@@ -1,6 +1,8 @@
 from pathlib import Path
+import nltk
+from nltk.corpus import stopwords
+from Summarize.utils import read_from_file, parse_nasari_dictionary
 
-from Summarize.utils import read_from_file
 
 def bag_of_word(sent):
     """Auxiliary function for the Lesk algorithm. Transforms the given sentence
@@ -21,6 +23,7 @@ def bag_of_word(sent):
     tokens = list(filter(lambda x: x not in stop_words and x not in punctuation, tokens))
     return set(wnl.lemmatize(t) for t in tokens)
 
+
 def get_Nasari_vectors(titolo, Nasari_vector):
     """Given a sentence, it creates a bag of words of this sentence
     and return the Nasari vectors for the words in the sentence
@@ -40,6 +43,7 @@ def get_Nasari_vectors(titolo, Nasari_vector):
             vettore = Nasari_vector[str(word).title()]
             print(vettore)
 
+
 if __name__ == "__main__":
     nasari_path = Path('.') / 'datasets' / 'NASARI_vectors' / 'dd-small-nasari-15.txt'
 
@@ -51,8 +55,9 @@ if __name__ == "__main__":
                   path / 'Trump-wall.txt']
 
     compression_rate: int = 10
-
     paragraphs, titles = read_from_file(file_paths[0])
 
-    print(paragraphs)
-    print(titles)
+    dict_na = parse_nasari_dictionary(nasari_path)
+
+    print(dict_na.popitem())
+
