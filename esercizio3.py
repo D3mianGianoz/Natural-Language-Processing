@@ -30,21 +30,20 @@ def get_Nasari_vectors(titolo, Nasari_vector):
         title
         Nasari vector
     Returns:
-        Nasari vector of the title
+        A dict where the keys are the word in the title and the value are their Nasari vectors
     """
     
-    nasari = []
+    nasari = {}
     bag = list(bag_of_word(titolo))
-    #print(bag)
+    print(bag)
     
     for word in bag:
         if word in str(Nasari_vector.keys()).lower():
             #print(word)
             vettore = Nasari_vector[str(word)]
             #print(vettore)
-            
-            for i in vettore:
-                nasari.append(i)
+            #nasari.append(vettore)
+            nasari.update({word:vettore})
      
     return nasari
 
