@@ -1,66 +1,57 @@
+import sys
 from pathlib import Path
-import nltk
-from nltk.corpus import stopwords
+from tqdm import tqdm
 from Summarize.utils import read_from_file, parse_nasari_dictionary
+from Wsd.utilities import bag_of_word
 
 
-def bag_of_word(sent):
-    """Auxiliary function for the Lesk algorithm. Transforms the given sentence
-    according to the bag of words approach, apply lemmatization, stop words
-    and punctuation removal.
+def get_nasari_vectors(title, nasari_dict):
+    """Given a sentence, it creates a bag of words of this sentence
+    and return the Nasari nasari for the words in the sentence
     Params:
-        sent: sentence
-    Returns:
-        bag of words
-    """
-
-    stop_words = set(stopwords.words('english'))
-    punctuation = {',', ';', '(', ')', '{', '}', ':', '?', '!'}
-    # Returns the input word unchanged if it cannot be found in WordNet.
-    wnl = nltk.WordNetLemmatizer()
-    # Return a tokenized copy of text, using NLTK’s recommended word tokenizer (Treebank + PunkSentence)
-    tokens = nltk.word_tokenize(sent)
-    tokens = list(filter(lambda x: x not in stop_words and x not in punctuation, tokens))
-    return set(wnl.lemmatize(t) for t in tokens)
-
-
-def get_Nasari_vectors(titolo, Nasari_vector):
-    """Returns Nasari Vectors (pairs lemma-score) of a sentence in a single list.
-    Params:
-        title
+        title:
         Nasari vector
     Returns:
-        A dict where the keys are the word in the title and the value are their Nasari vectors
+        Nasari nasari of words in title
     """
-    
+
+    # create bag of words
+    bag = bag_of_word(title)
+
     nasari = {}
-    bag = list(bag_of_word(titolo))
-    print(bag)
-    
+    # store the best scoring ones
+    test = {}
+
     for word in bag:
-        if word in str(Nasari_vector.keys()).lower():
-            #print(word)
-            vettore = Nasari_vector[str(word)]
-            #print(vettore)
-            #nasari.append(vettore)
-            nasari.update({word:vettore})
-     
+        if word in nasari_dict.keys():
+            array = nasari_dict[str(word)]
+            test[word] = list(filter(lambda x: x[1] > 500, array))
+            nasari[word] = array
+
+    for values in test.values():
+        for couple in values:
+            first = couple[0]
+            if first not in bag and first in nasari_dict.keys():
+                nas = nasari_dict[first]
+                nasari[first] = nas
+
     return nasari
 
-def create_context(titles):
+
+def create_context(titles, dict_n):
     """Creates the context
     Params:
         titles
     Returns:
         A unified dict of the context
     """
-    contesto = {}
+    context = {}
 
-    for title in titles:
-        x = get_Nasari_vectors(title, dict_na)
-        contesto.update(x)
-    
-    return contesto
+    for t in titles:
+        x = get_nasari_vectors(t, dict_n)
+        context.update(x)
+
+    return context
 
 
 if __name__ == "__main__":
@@ -74,10 +65,18 @@ if __name__ == "__main__":
                   path / 'Trump-wall.txt']
 
     compression_rate: int = 10
-    paragraphs, titles = read_from_file(file_paths[0])
+    print("Summarization.\nReduction percentage: {}".format(compression_rate))
 
-    dict_na = parse_nasari_dictionary(nasari_path)
+    nasari_dict = parse_nasari_dictionary(nasari_path)
+    # showing progress bar
+    progress_bar = tqdm(desc="Percentage", total=5, file=sys.stdout)
+    print("\n----------------------------")
+    f_path = file_paths[0]
+    print(f'La bellezza del file {f_path}')
+    paragraphs, titles = read_from_file(f_path)
 
-    print(dict_na.popitem())
-    print(create_context(titles))
+    vect1 = create_context(titles, nasari_dict)
+    for title in vect1.values():
+        print(title)
 
+    progress_bar.update(1)

@@ -2,8 +2,6 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.corpus import wordnet as wn
 
-nltk.download('popular')
-
 
 def lesk(word, sentence):
     """Lesk algorithm implementation. Given a word and a sentence in which it appears,
