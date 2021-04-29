@@ -54,6 +54,33 @@ def create_context(titles, dict_n):
 
     return context
 
+def weighted_overlap_demaria(v1, v2):
+    """Weighted Overlap between two nazari vectors v1 and v2 extracted from keys
+    Params: 
+        v1: first nasari vector extracter from a key
+        v2: second nasari vector extracter from a key
+    Returns:
+        weighted overlap between v1 and v2
+    """
+    WO = 0
+    dim_overlap = 0
+    numeratore = 0
+    denominatore = 0
+    contatorev1 = 0
+    contatorev2 = 0
+    for i in v1:
+        contatorev2 = 0
+        contatorev1 += 1
+        for j in v2:
+            contatorev2 += 1
+            if i[0] == j[0]:
+                print(i,j)
+                numeratore += 1/(contatorev1+contatorev2)
+                dim_overlap += 1
+                denominatore += 1/(2*dim_overlap)
+                WO = numeratore/denominatore
+    return WO
+
 
 if __name__ == "__main__":
     nasari_path = Path('.') / 'datasets' / 'NASARI_vectors' / 'dd-small-nasari-15.txt'
