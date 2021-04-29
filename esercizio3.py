@@ -47,6 +47,21 @@ def get_Nasari_vectors(titolo, Nasari_vector):
      
     return nasari
 
+def create_context(titles):
+    """Creates the context
+    Params:
+        titles
+    Returns:
+        A unified dict of the context
+    """
+    contesto = {}
+
+    for title in titles:
+        x = get_Nasari_vectors(title, dict_na)
+        contesto.update(x)
+    
+    return contesto
+
 
 if __name__ == "__main__":
     nasari_path = Path('.') / 'datasets' / 'NASARI_vectors' / 'dd-small-nasari-15.txt'
@@ -64,12 +79,5 @@ if __name__ == "__main__":
     dict_na = parse_nasari_dictionary(nasari_path)
 
     print(dict_na.popitem())
-    
-    contesto = {}
-
-    for title in titles:
-        x = get_Nasari_vectors(title, dict_na)
-        contesto.update(x)
-    
-    print(contesto)
+    print(create_context(titles))
 
