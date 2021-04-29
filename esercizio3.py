@@ -10,7 +10,7 @@ def get_nasari_vectors(title, nasari_dict):
     and return the Nasari nasari for the words in the sentence
     Params:
         title:
-        Nasari vector
+        Nasari vector+
     Returns:
         Nasari nasari of words in title
     """
@@ -39,7 +39,7 @@ def get_nasari_vectors(title, nasari_dict):
     return nasari
 
 
-def create_context(titles, dict_n):
+def create_context(titles, nas_dict):
     """Creates the context
     Params:
         titles
@@ -49,37 +49,77 @@ def create_context(titles, dict_n):
     context = {}
 
     for t in titles:
-        x = get_nasari_vectors(t, dict_n)
+        x = get_nasari_vectors(t, nas_dict)
         context.update(x)
 
     return context
 
+
+def summarization(file_path, nasari_dict, percentage):
+    """ Applies summarization to the given document, with the given percentage.
+    Params:
+        file_path: path of the input document
+        nasari_dict: Nasari dictionary
+        percentage: reduction percentage
+    Return:
+         the summarization of the given document.
+    """
+
+    paragraphs, titles = read_from_file(f_path)
+    weighted_paragraphs = []
+    print("Path:" + str(file_path))
+
+    # compute nasari
+    nasari_vectors = create_context(titles, nasari_dict)
+
+    # Stampa delle dimensioni del topic (numero di vettori presenti) e del
+    # numero di paragrafi.
+    print("Numero Topic:" + str(len(nasari_vectors)))
+    print("Numero paragrafi:" + str(len(paragraphs)))
+
+    for paragraph in paragraphs:
+        # Weighted Overlap average inside the paragraph.
+        score_wo = 0
+        par_context = create_context(paragraph, nasari_dict)
+
+        for word in par_context:
+            # TODO
+            pass
+
+    to_keep = len(paragraphs) - int(round((percentage / 100) * len(paragraphs), 0))
+
+    # Sort by highest score and keeps all the important entries. From first to "to_keep"
+    new_document = None
+
+    return new_document
+
+
 def weighted_overlap_demaria(v1, v2):
-    """Weighted Overlap between two nazari vectors v1 and v2 extracted from keys
+    """Weighted Overlap between two nasari vectors v1 and v2 extracted from keys
     Params: 
         v1: first nasari vector extracter from a key
         v2: second nasari vector extracter from a key
     Returns:
         weighted overlap between v1 and v2
     """
-    WO = 0
+    wo = 0
     dim_overlap = 0
-    numeratore = 0
-    denominatore = 0
-    contatorev1 = 0
-    contatorev2 = 0
+    numerator = 0
+    denominator = 0
+    counter_v1 = 0
+    counter_v2 = 0
     for i in v1:
-        contatorev2 = 0
-        contatorev1 += 1
+        counter_v2 = 0
+        counter_v1 += 1
         for j in v2:
-            contatorev2 += 1
+            counter_v2 += 1
             if i[0] == j[0]:
-                print(i,j)
-                numeratore += 1/(contatorev1+contatorev2)
+                print(i, j)
+                numerator += 1/(counter_v1+counter_v2)
                 dim_overlap += 1
-                denominatore += 1/(2*dim_overlap)
-                WO = numeratore/denominatore
-    return WO
+                denominator += 1/(2*dim_overlap)
+                wo = numerator/denominator
+    return wo
 
 
 if __name__ == "__main__":
@@ -99,12 +139,8 @@ if __name__ == "__main__":
     # showing progress bar
     progress_bar = tqdm(desc="Percentage", total=5, file=sys.stdout)
     print("\n----------------------------")
-    f_path = file_paths[0]
-    print(f'La bellezza del file {f_path}')
-    paragraphs, titles = read_from_file(f_path)
 
-    vect1 = create_context(titles, nasari_dict)
-    for title in vect1.values():
-        print(title)
+    f_path = file_paths[0]
+    summarization(f_path, nasari_dict, compression_rate)
 
     progress_bar.update(1)
