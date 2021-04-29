@@ -33,7 +33,8 @@ def get_nasari_vectors(title, nasari_dict):
             first = couple[0]
             if first not in bag and first in nasari_dict.keys():
                 nas = nasari_dict[first]
-                nasari[first] = nas
+                # penalize the newcomers
+                nasari[first] = list(map(lambda x: round(x[1] * 0.7, 2), nas))
 
     return nasari
 
