@@ -64,4 +64,12 @@ if __name__ == "__main__":
     dict_na = parse_nasari_dictionary(nasari_path)
 
     print(dict_na.popitem())
+    
+    contesto = {}
+
+    for title in titles:
+        x = get_Nasari_vectors(title, dict_na)
+        contesto.update(x)
+    
+    print(contesto)
 
