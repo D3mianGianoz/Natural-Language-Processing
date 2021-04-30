@@ -34,7 +34,7 @@ def get_nasari_vectors(title, nasari_dict):
             if first not in bag and first in nasari_dict.keys():
                 nas = nasari_dict[first]
                 # penalize the newcomers
-                nasari[first] = list(map(lambda x: round(x[1] * 0.7, 2), nas))
+                nasari[first] = list(map(lambda x: [first, round(x[1] * 0.7, 2)], nas))
 
     return nasari
 
@@ -79,26 +79,30 @@ def summarization(file_path, nasari_dict, percentage):
 
     for paragraph in paragraphs:
         # Weighted Overlap average inside the paragraph.
-        score_wo = 0
-        par_context = create_context(paragraph, nasari_dict)
+        par_wo = 0
+        par_context = get_nasari_vectors(paragraph, nasari_dict)
 
         for word in par_context:
-            # TODO
-            pass
+            topic_wo = 0
+            for vector in nasari_vectors:
+                # TODO
+                topic_wo = topic_wo + 1  # weighted_overlap_demaria(par_context[word], nasari_vectors[vector])
+            if topic_wo != 0:
+                topic_wo = topic_wo / len(nasari_vectors)
 
-    to_keep = len(paragraphs) - int(round((percentage / 100) * len(paragraphs), 0))
+            # Sum all words WO in the paragraph's WO
+            par_wo += topic_wo
 
-    # Sort by highest score and keeps all the important entries. From first to "to_keep"
-    new_document = None
-
-    return new_document
+        if len(par_context) > 0:
+            par_wo = par_wo / len(par_context)
+            weighted_paragraphs.append((paragraphs, par_wo))
 
 
 def weighted_overlap_demaria(v1, v2):
     """Weighted Overlap between two nasari vectors v1 and v2 extracted from keys
     Params: 
-        v1: first nasari vector extracter from a key
-        v2: second nasari vector extracter from a key
+        v1: first nasari vector extracted from a key
+        v2: second nasari vector extracted from a key
     Returns:
         weighted overlap between v1 and v2
     """
@@ -107,7 +111,6 @@ def weighted_overlap_demaria(v1, v2):
     numerator = 0
     denominator = 0
     counter_v1 = 0
-    counter_v2 = 0
     for i in v1:
         counter_v2 = 0
         counter_v1 += 1
@@ -115,16 +118,16 @@ def weighted_overlap_demaria(v1, v2):
             counter_v2 += 1
             if i[0] == j[0]:
                 print(i, j)
-                numerator += 1/(counter_v1+counter_v2)
+                numerator += 1 / (counter_v1 + counter_v2)
                 dim_overlap += 1
-                denominator += 1/(2*dim_overlap)
-                wo = numerator/denominator
+                denominator += 1 / (2 * dim_overlap)
+                wo = numerator / denominator
     return wo
 
 
 if __name__ == "__main__":
     nasari_path = Path('.') / 'datasets' / 'NASARI_vectors' / 'dd-small-nasari-15.txt'
-
+    path_output = Path('.') / 'output' / 'task3'
     path = Path('.') / 'datasets' / 'text-documents'
     file_paths = [path / 'Ebola-virus-disease.txt',
                   path / 'Andy-Warhol.txt',
@@ -141,6 +144,13 @@ if __name__ == "__main__":
     print("\n----------------------------")
 
     f_path = file_paths[0]
-    summarization(f_path, nasari_dict, compression_rate)
+    path_write = path_output / "Ebola summary.txt"
+    # with open(path_write, "w") as write:
+    # summary, selected_paragraphs = summarization(f_path, nasari_dict, compression_rate)
+
+    # print("Paragrafi selezionati:" + str(selected_paragraphs))
+    # for par in summary:
+    #     # print(p + "\n")
+    #     write.write(par + "\n\n")
 
     progress_bar.update(1)
