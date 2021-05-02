@@ -155,5 +155,5 @@ if __name__ == "__main__":
             for par in summary:
                 # print(par + "\n")
                 write.write(par + "\n\n")
-                
+
         progress_bar.update(1)
