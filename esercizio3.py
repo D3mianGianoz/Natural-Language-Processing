@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 from tqdm import tqdm
-from Summarize.utils import read_from_file, parse_nasari_dictionary
+from Summarize.utils import read_from_file, parse_nasari_dictionary, weighted_overlap
 from Wsd.utilities import bag_of_word
 
 
@@ -55,7 +55,7 @@ def create_context(titles, nas_dict):
     return context
 
 
-def summarization(file_path, nasari_dict, percentage):
+def summarization(file_path, nasari_dict):
     """ Applies summarization to the given document, with the given percentage.
     Params:
         file_path: path of the input document
@@ -85,44 +85,35 @@ def summarization(file_path, nasari_dict, percentage):
         for word in par_context:
             topic_wo = 0
             for vector in nasari_vectors:
-                # TODO
-                topic_wo = topic_wo + 1  # weighted_overlap_demaria(par_context[word], nasari_vectors[vector])
+                # you could use demaria version alternatively
+                topic_wo = topic_wo + weighted_overlap(par_context[word], nasari_vectors[
+                    vector])
             if topic_wo != 0:
                 topic_wo = topic_wo / len(nasari_vectors)
 
             # Sum all words WO in the paragraph's WO
             par_wo += topic_wo
+            # print(f'score {topic_wo} e paragrafo {par_wo}')
 
         if len(par_context) > 0:
             par_wo = par_wo / len(par_context)
-            weighted_paragraphs.append((paragraphs, par_wo))
+            weighted_paragraphs.append((paragraph, par_wo))
 
+    paragraphs_to_delete = int(len(weighted_paragraphs) * compression_rate / 100)
+    weighted_paragraphs_ordered = sorted(weighted_paragraphs, key=lambda tup: tup[1], reverse=True)
+    weighted_paragraphs_ordered = weighted_paragraphs_ordered[:-paragraphs_to_delete]
+    weighted_paragraphs_ordered = [i[0] for i in weighted_paragraphs_ordered]
 
-def weighted_overlap_demaria(v1, v2):
-    """Weighted Overlap between two nasari vectors v1 and v2 extracted from keys
-    Params: 
-        v1: first nasari vector extracted from a key
-        v2: second nasari vector extracted from a key
-    Returns:
-        weighted overlap between v1 and v2
-    """
-    wo = 0
-    dim_overlap = 0
-    numerator = 0
-    denominator = 0
-    counter_v1 = 0
-    for i in v1:
-        counter_v2 = 0
-        counter_v1 += 1
-        for j in v2:
-            counter_v2 += 1
-            if i[0] == j[0]:
-                print(i, j)
-                numerator += 1 / (counter_v1 + counter_v2)
-                dim_overlap += 1
-                denominator += 1 / (2 * dim_overlap)
-                wo = numerator / denominator
-    return wo
+    i = 0
+    summary_list = []
+    selected_paragraphs_list = []
+    for paragraph in paragraphs:
+        if paragraph in weighted_paragraphs_ordered:
+            summary_list.append(paragraph)
+            selected_paragraphs_list.append(i)
+        i += 1
+
+    return summary_list, selected_paragraphs_list
 
 
 if __name__ == "__main__":
@@ -135,7 +126,18 @@ if __name__ == "__main__":
                   path / 'Napoleon-wiki.txt',
                   path / 'Trump-wall.txt']
 
-    compression_rate: int = 10
+    try:
+        compression_rate = int(input("Please choose and type valid compression rate(%): 10, 20, 30\nRate: "))
+        if compression_rate not in [10, 20, 30]:
+            raise ValueError
+
+    # If something else that is not a valid input
+    # the ValueError exception will be called.
+    except ValueError:
+        # The cycle will go on until validation
+        print("Error! This is not a valid number, using default value")
+        compression_rate: int = 10
+
     print("Summarization.\nReduction percentage: {}".format(compression_rate))
 
     nasari_dict = parse_nasari_dictionary(nasari_path)
@@ -143,14 +145,15 @@ if __name__ == "__main__":
     progress_bar = tqdm(desc="Percentage", total=5, file=sys.stdout)
     print("\n----------------------------")
 
-    f_path = file_paths[0]
-    path_write = path_output / "Ebola summary.txt"
-    # with open(path_write, "w") as write:
-    # summary, selected_paragraphs = summarization(f_path, nasari_dict, compression_rate)
-
-    # print("Paragrafi selezionati:" + str(selected_paragraphs))
-    # for par in summary:
-    #     # print(p + "\n")
-    #     write.write(par + "\n\n")
-
-    progress_bar.update(1)
+    for f_path in file_paths:
+        name_file = 'summary_' + str(f_path.name) + ".txt"
+        path_write = path_output / name_file
+        with open(path_write, "w") as write:
+            summary, selected_paragraphs = summarization(f_path, nasari_dict)
+            print("Generazione Topic tramite:Titolo")
+            print("Paragrafi selezionati:" + str(selected_paragraphs))
+            for par in summary:
+                # print(par + "\n")
+                write.write(par + "\n\n")
+                
+        progress_bar.update(1)
