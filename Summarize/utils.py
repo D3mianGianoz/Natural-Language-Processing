@@ -1,13 +1,16 @@
-def read_from_file(path):
+def read_from_file(path, mood='titles'):
     """It parse the given document give input
      Params:
         path: input document path
+        mood: if 'titles' it uses titles to create contexts; if 'frequencies' it uses frequencies of words in the text
      Returns:
-         a list of all document's paragraph and a list of all titles
+         a list of all document's paragraph and a list of all titles/bows
      """
 
-    titles = []
+    selected = []
     paragraphs = []
+    
+    
     with open(path, "r", encoding="utf8") as f:
         file = f.read()
         text = file.split("\n")
@@ -17,10 +20,23 @@ def read_from_file(path):
                 if len(word_of_paragraph) > 13:
                     paragraphs.append(paragraph)
                 else:
-                    titles.append(paragraph)
+                    selected.append(paragraph)
         # Removes the link to the source of the article, placed on the top
-        titles.pop(0)
-    return paragraphs, titles
+        if mood == 'titles':
+            selected.pop(0)
+        elif mood == 'frequencies':
+            bag = []
+            selected = []
+            for i in paragraphs:
+                for bow in bag_of_word(i):
+                    bag.append(bow)
+            for i in bag:
+                if len(i) > 2:
+                    if bag.count(i) > 1:
+                        selected.append(i)
+            selected = list(dict.fromkeys(selected))
+        
+    return paragraphs, selected
 
 
 def parse_nasari_dictionary(path):
