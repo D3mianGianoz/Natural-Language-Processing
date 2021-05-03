@@ -55,7 +55,7 @@ def create_context(titles, nas_dict):
     return context
 
 
-def summarization(file_path, nasari_dict):
+def summarization(file_path, nasari_dict, mood = "frequencies"):
     """ Applies summarization to the given document, with the given percentage.
     Params:
         file_path: path of the input document
@@ -64,18 +64,24 @@ def summarization(file_path, nasari_dict):
     Return:
          the summarization of the given document.
     """
-
-    paragraphs, titles = read_from_file(f_path)
+    
+    if mood == 'titles':
+        paragraphs, selected = read_from_file(f_path, mood='titles')
+    elif mood == 'frequencies':
+        paragraphs, selected = read_from_file(f_path, mood='frequencies')
+        
     weighted_paragraphs = []
     print("Path:" + str(file_path))
+    par = 0
 
     # compute nasari
-    nasari_vectors = create_context(titles, nasari_dict)
+    nasari_vectors = create_context(selected, nasari_dict)
 
     # Stampa delle dimensioni del topic (numero di vettori presenti) e del
     # numero di paragrafi.
     print("Numero Topic:" + str(len(nasari_vectors)))
     print("Numero paragrafi:" + str(len(paragraphs)))
+    print("\nWeighted Paragraphs:")
 
     for paragraph in paragraphs:
         # Weighted Overlap average inside the paragraph.
@@ -85,8 +91,7 @@ def summarization(file_path, nasari_dict):
         for word in par_context:
             topic_wo = 0
             for vector in nasari_vectors:
-                # you could use demaria version alternatively
-                topic_wo = topic_wo + weighted_overlap(par_context[word], nasari_vectors[
+                topic_wo = topic_wo + weighted_overlap2(par_context[word], nasari_vectors[
                     vector])
             if topic_wo != 0:
                 topic_wo = topic_wo / len(nasari_vectors)
@@ -98,6 +103,8 @@ def summarization(file_path, nasari_dict):
         if len(par_context) > 0:
             par_wo = par_wo / len(par_context)
             weighted_paragraphs.append((paragraph, par_wo))
+            print(str(par) + ": " + str(par_wo))
+            par += 1
 
     paragraphs_to_delete = int(len(weighted_paragraphs) * compression_rate / 100)
     weighted_paragraphs_ordered = sorted(weighted_paragraphs, key=lambda tup: tup[1], reverse=True)
