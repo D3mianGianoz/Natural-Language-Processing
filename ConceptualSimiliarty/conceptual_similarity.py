@@ -15,7 +15,7 @@ def parse_word_sim_353(path):
     """
     Support function, it parse the WordSim353 CSV file. Each line is compose by
     a couple of terms and their annotation.
-    Params:
+    Args:
         path: input path of the CSV file
     Returns:
          a list, representation of the input file. Its format will be [(w1, w2, gold_annotation)]
@@ -33,7 +33,7 @@ def parse_word_sim_353(path):
 def conceptual_similarity(options):
     """Computes the conceptual similarity and writes the results in two CSV file
     in the output folder.
-    Params:
+    Args:
         options: a dictionary that contains the input and output paths.
     Format:
         { "input": "...", "output": "..." }

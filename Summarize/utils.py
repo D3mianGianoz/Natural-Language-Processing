@@ -3,7 +3,7 @@ from Radicioni.Wsd.utilities import bag_of_word
 
 def read_from_file(path, mood='titles'):
     """It parse the given document give input
-     Params:
+     Args:
         path: input document path
         mood: if 'titles' it uses titles to create contexts; if 'frequencies' it uses frequencies of words in the text
      Returns:
@@ -36,7 +36,7 @@ def read_from_file(path, mood='titles'):
                     if bag.count(word) > 1:
                         selected.append(word)
             selected = list(dict.fromkeys(selected))
-        
+
     return paragraphs, selected
 
 
@@ -66,7 +66,7 @@ def parse_nasari_dictionary(path):
 
 def compute_overlap(topic, paragraph):
     """ Support function used in Weighted Overlap's function below.
-    Params:
+    Args:
         topic: Vector representation of the topic
         paragraph: Vector representation of the paragraph
     Return:
@@ -77,7 +77,7 @@ def compute_overlap(topic, paragraph):
 
 def rank(vector, nasari_vector):
     """ Computes the rank of the given vector.
-    Params:
+    Args:
         vector: input vector
         nasari_vector: input Nasari vector
     Return:
@@ -91,7 +91,7 @@ def rank(vector, nasari_vector):
 
 def weighted_overlap(topic_nasari_vector, paragraph_nasari_vector):
     """ Implementation of the Weighted Overlap metrics (Pilehvar et al.)
-    Params:
+    Args:
         topic_nasari_vector: Nasari vector representing the topic
         paragraph_nasari_vector: Nasari vector representing the paragraph
     Return:
@@ -123,7 +123,7 @@ def weighted_overlap(topic_nasari_vector, paragraph_nasari_vector):
 
 def weighted_overlap_demaria(v1, v2):
     """Weighted Overlap between two nasari vectors v1 and v2 extracted from keys
-    Params:
+    Args:
         v1: first nasari vector extracted from a key
         v2: second nasari vector extracted from a key
     Returns:

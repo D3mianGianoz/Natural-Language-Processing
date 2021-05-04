@@ -6,10 +6,11 @@ from Radicioni.Summarize.gold import tf_idf
 from Radicioni.Summarize.utils import read_from_file, parse_nasari_dictionary, weighted_overlap
 from Radicioni.Wsd.utilities import bag_of_word
 
+
 def get_nasari_vectors(title, nasari_dict):
     """Given a sentence, it creates a bag of words of this sentence
     and return the Nasari nasari for the words in the sentence
-    Params:
+    Args:
         title:
         nasari_dict: dictionary containing the proper words
     Returns:
@@ -42,7 +43,7 @@ def get_nasari_vectors(title, nasari_dict):
 
 def create_context(titles, nas_dict):
     """Creates the context
-    Params:
+    Args:
         titles
     Returns:
         A unified dict of the context
@@ -87,8 +88,6 @@ def summarization():
                     vector])
             if topic_wo != 0:
                 topic_wo = topic_wo / len(nasari_vectors)
-
-
 
             # Sum all words WO in the paragraph's WO
             par_wo += topic_wo
@@ -145,7 +144,7 @@ if __name__ == "__main__":
         if compression_rate not in [10, 20, 30]:
             raise ValueError
 
-        mood_int = int(input("%s topic-picker technique: \n1 - titles, \n2 - frequencies\n technique: " %valid))
+        mood_int = int(input("%s topic-picker technique: \n1 - titles, \n2 - frequencies\n technique: " % valid))
         if mood_int == 1:
             mood = "titles"
         elif mood_int == 2:

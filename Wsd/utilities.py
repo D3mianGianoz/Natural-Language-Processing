@@ -7,7 +7,7 @@ def lesk(word, sentence):
     """Lesk algorithm implementation. Given a word and a sentence in which it appears,
     it returns the best sense of the word.
 
-    Params:
+    Args:
         word: word to disambiguate
         sentence: sentence to compare
     Returns:
@@ -46,7 +46,7 @@ def bag_of_word(sent):
     according to the bag of words approach, apply lemmatization, stop words
     and punctuation removal.
 
-    Params:
+    Args:
         sent: sentence
     Returns:
         bag of words
@@ -66,7 +66,7 @@ def compute_overlap(signature, context):
     """Auxiliary function for the Lesk algorithm. Computes the number of words in
     common between signature and context.
 
-    Params: 
+    Args: 
         signature: bag of words of the signature (e.g. definitions + examples)
         context: bag of words of the context (e.g. sentence)
     Returns:
@@ -81,7 +81,7 @@ def get_sense_index(word, sense):
     corresponding index of the sense in the synsets list associated with the
     word indices starts with 1.
 
-    Params: 
+    Args: 
         word: ambiguous word (with more that 1 sense)
         sense: sense of the word
     Returns:
@@ -94,7 +94,7 @@ def get_sense_index(word, sense):
 
 def pos_validity(pos, text, word):
     """Auxiliary function for the parse_xml
-    Params:
+    Args:
         pos:
         text:
         word: ambiguous word (with more that 1 sense)

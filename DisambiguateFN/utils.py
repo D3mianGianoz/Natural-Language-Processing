@@ -10,7 +10,7 @@ def read_correct_synsets(path):
     """
     Support function, it parse the txt file. Each line is compose by
     a couple of terms and their annotation.
-    Params:
+    Args:
         path: input path of the CSV file
     Returns:
          a list, representation of the input file. Its format will be [(syn)]
@@ -36,7 +36,7 @@ def find_between(s, first, last):
 
 def get_wordnet_context(word):
     """
-       Params:
+       Args:
             word: word for which we need to find meaning
        Returns:
             a dictionary of Synset associated to the given word

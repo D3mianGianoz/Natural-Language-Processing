@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 def tf_idf(my_corpus, compression_rate):
     """Given a corpus, it learns vocabulary and idf
-    Params:
+    Args:
         corpus
     Returns:
         Returns document-term matrix.

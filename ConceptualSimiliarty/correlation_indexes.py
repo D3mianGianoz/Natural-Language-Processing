@@ -1,4 +1,5 @@
 import numpy as np
+
 """
 This module contains the correlation indices implementations.
 Alternatively one could you use scypy implementation
@@ -50,5 +51,5 @@ def define_rank(vector):
     """
     x_couple = [(vector[i], i) for i in range(len(vector))]
     x_couple_sorted = sorted(x_couple, key=lambda x: x[0])
-    
+
     return [y for (x, y) in x_couple_sorted]

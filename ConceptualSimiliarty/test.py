@@ -52,5 +52,3 @@ if __name__ == "__main__":
     print(test3a)
     print(wn.wup_similarity(cat, dog))
     print("=========================================")
-
-

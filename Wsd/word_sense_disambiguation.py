@@ -18,7 +18,7 @@ def parse_xml(path):
     4) Select the words to disambiguate (select only the needed ones) with total number of senses >= 2
     5) Extract Golden annotated sense from WSN
 
-    Params:
+    Args:
         path: the path to the XML file (Brown Corpus)
     Returns:
         [(sentence, [(word, gold)])]
@@ -63,7 +63,7 @@ def word_sense_disambiguation(options):
     sentence. It also calculates the accuracy based on the senses noted in
     SemCor. Writes the output into a xml file.
 
-    Params:
+    Args:
         options: a dictionary that contains the input and output paths.
     Format:
         { "input": "...", "output": "..." }

@@ -54,7 +54,7 @@ def evaluate_performance(gold_path, out_path, none=True):
 
             if elem == 'None':
                 items_in_golden.append(elem)
-                #pass
+                # pass
             else:
                 items_in_golden.append(find_between(elem, start, end))
 
@@ -77,11 +77,14 @@ def evaluate_performance(gold_path, out_path, none=True):
 
         total_len = contatore
 
-    print("\nPrecision: {0} / {1} Synsets -> {2:.2f} % Number of None: {3}".format(test, total_len, (test / total_len) * 100, total_none))
+    print("\nPrecision: {0} / {1} Synsets -> {2:.2f} % Number of None: {3}".format(test, total_len,
+                                                                                   (test / total_len) * 100,
+                                                                                   total_none))
+
 
 def get_main_clause(frame_name):
     """Get of the main clause from the frame name ("reggente").
-    Params:
+    Args:
         frame_name: the name of the frame
     Returns:
          the main clause inside the frame name
@@ -98,8 +101,8 @@ def populate_contexts(f, mode: str):
     """It populates 2 disambiguation context (one for Framenet and one for Wordnet)
     given a frame name.
 
-    Params:
-        frame: the frame name.
+    Args:
+        f: the frame name.
         mode: a string indicating the way to create context the possibility are: "Frame name", "FEs" and "LUs".
     Returns:
          two list (context_w, context_s) representing the populated contexts.
@@ -149,8 +152,9 @@ def populate_contexts(f, mode: str):
 def bag_of_words(ctx_fn, ctx_wn):
     """ Given two disambiguation context, it returns the best sense using the
      bag of words mapping between the input arguments.
-    Params:
-        sent: sentence
+    Args:
+        ctx_wn: context wordnet
+        ctx_fn: context framenet
     Returns:
         the best sense
     """
