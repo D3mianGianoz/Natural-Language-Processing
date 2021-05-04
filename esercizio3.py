@@ -3,6 +3,19 @@ from pathlib import Path
 from tqdm import tqdm
 from Summarize.utils import read_from_file, parse_nasari_dictionary, weighted_overlap
 from Wsd.utilities import bag_of_word
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+def Tf_Idf(corpus):
+     """Given a corpus, it learns vocabulary and idf
+    Params:
+        corpus
+    Returns:
+        Returns document-term matrix.
+    """
+    tfidf_vectorizer = TfidfVectorizer(use_idf=True, analyzer='word', stop_words='english')
+    tfidf_vectorizer_vectors = tfidf_vectorizer.fit_transform(corpus)
+    print(tfidf_vectorizer.get_feature_names())
+    return tfidf_vectorizer_vectors
 
 
 def get_nasari_vectors(title, nasari_dict):
