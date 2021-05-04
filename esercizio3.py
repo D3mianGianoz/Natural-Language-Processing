@@ -1,38 +1,26 @@
 import sys
 from pathlib import Path
 from tqdm import tqdm
-from Summarize.utils import read_from_file, parse_nasari_dictionary, weighted_overlap
-from Wsd.utilities import bag_of_word
-from sklearn.feature_extraction.text import TfidfVectorizer
 
-def Tf_Idf(corpus):
-     """Given a corpus, it learns vocabulary and idf
-    Params:
-        corpus
-    Returns:
-        Returns document-term matrix.
-    """
-    tfidf_vectorizer = TfidfVectorizer(use_idf=True, analyzer='word', stop_words='english')
-    tfidf_vectorizer_vectors = tfidf_vectorizer.fit_transform(corpus)
-    print(tfidf_vectorizer.get_feature_names())
-    return tfidf_vectorizer_vectors
-
+from Radicioni.Summarize.gold import tf_idf
+from Radicioni.Summarize.utils import read_from_file, parse_nasari_dictionary, weighted_overlap
+from Radicioni.Wsd.utilities import bag_of_word
 
 def get_nasari_vectors(title, nasari_dict):
     """Given a sentence, it creates a bag of words of this sentence
     and return the Nasari nasari for the words in the sentence
     Params:
         title:
-        Nasari vector+
+        nasari_dict: dictionary containing the proper words
     Returns:
-        Nasari nasari of words in title
+        list of Nasari vectors of words in title
     """
 
     # create bag of words
     bag = bag_of_word(title)
 
     nasari = {}
-    # store the best scoring ones
+    # store the best scoring
     test = {}
 
     for word in bag:
@@ -68,25 +56,14 @@ def create_context(titles, nas_dict):
     return context
 
 
-def summarization(file_path, nasari_dict, mood: str):
+def summarization():
     """ Applies summarization to the given document, with the given percentage.
-    Params:
-        file_path: path of the input document
-        nasari_dict: Nasari dictionary
-        percentage: reduction percentage
+    Args:
     Return:
          the summarization of the given document.
     """
-    
-    if mood == 'titles':
-        paragraphs, selected = read_from_file(f_path, mood='titles')
-    elif mood == 'frequencies':
-        paragraphs, selected = read_from_file(f_path, mood='frequencies')
-    else:
-        raise ValueError
-        
+
     weighted_paragraphs = []
-    print("Path:" + str(file_path))
     par = 0
 
     # compute nasari
@@ -110,6 +87,8 @@ def summarization(file_path, nasari_dict, mood: str):
                     vector])
             if topic_wo != 0:
                 topic_wo = topic_wo / len(nasari_vectors)
+
+
 
             # Sum all words WO in the paragraph's WO
             par_wo += topic_wo
@@ -138,6 +117,18 @@ def summarization(file_path, nasari_dict, mood: str):
     return summary_list, selected_paragraphs_list
 
 
+def handle_reader_and_gold(file_path, mood):
+    print("Path:" + str(file_path))
+    if mood == 'titles':
+        parag, select = read_from_file(f_path, mood='titles')
+    elif mood == 'frequencies':
+        parag, select = read_from_file(f_path, mood='frequencies')
+    else:
+        raise ValueError
+
+    return parag, select, tf_idf(parag, compression_rate)
+
+
 if __name__ == "__main__":
     nasari_path = Path('.') / 'datasets' / 'NASARI_vectors' / 'dd-small-nasari-15.txt'
     path_output = Path('.') / 'output' / 'task3'
@@ -153,7 +144,7 @@ if __name__ == "__main__":
         compression_rate = int(input((valid + " compression rate(%): 10, 20, 30\n Rate: ")))
         if compression_rate not in [10, 20, 30]:
             raise ValueError
-        # TODO input of mood
+
         mood_int = int(input("%s topic-picker technique: \n1 - titles, \n2 - frequencies\n technique: " %valid))
         if mood_int == 1:
             mood = "titles"
@@ -180,8 +171,15 @@ if __name__ == "__main__":
     for f_path in file_paths:
         name_file = 'summary_' + str(f_path.name) + ".txt"
         path_write = path_output / name_file
+
+        # read files and create gold
+        paragraphs, selected, gold = handle_reader_and_gold(f_path, mood)
+
+        # TODO handle gold
+        print(gold.shape)
+
         with open(path_write, "w") as write:
-            summary, selected_paragraphs = summarization(f_path, nasari_dict, mood)
+            summary, selected_paragraphs = summarization()
 
             print("Selected paragraphs:" + str(selected_paragraphs))
             for par in summary:

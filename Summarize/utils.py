@@ -1,4 +1,4 @@
-from Wsd.utilities import bag_of_word
+from Radicioni.Wsd.utilities import bag_of_word
 
 
 def read_from_file(path, mood='titles'):
@@ -28,14 +28,13 @@ def read_from_file(path, mood='titles'):
             selected.pop(0)
         elif mood == 'frequencies':
             bag = []
-            selected = []
-            for i in paragraphs:
-                for bow in bag_of_word(i):
+            for word in paragraphs:
+                for bow in bag_of_word(word):
                     bag.append(bow)
-            for i in bag:
-                if len(i) > 2:
-                    if bag.count(i) > 1:
-                        selected.append(i)
+            for word in bag:
+                if len(word) > 2:
+                    if bag.count(word) > 1:
+                        selected.append(word)
             selected = list(dict.fromkeys(selected))
         
     return paragraphs, selected
@@ -147,4 +146,3 @@ def weighted_overlap_demaria(v1, v2):
                 denominator += 1 / (2 * dim_overlap)
                 wo = numerator / denominator
     return wo
-
