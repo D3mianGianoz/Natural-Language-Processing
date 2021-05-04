@@ -1,3 +1,6 @@
+from Wsd.utilities import bag_of_word
+
+
 def read_from_file(path, mood='titles'):
     """It parse the given document give input
      Params:
@@ -9,8 +12,7 @@ def read_from_file(path, mood='titles'):
 
     selected = []
     paragraphs = []
-    
-    
+
     with open(path, "r", encoding="utf8") as f:
         file = f.read()
         text = file.split("\n")

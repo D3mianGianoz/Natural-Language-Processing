@@ -55,7 +55,7 @@ def create_context(titles, nas_dict):
     return context
 
 
-def summarization(file_path, nasari_dict, mood = "frequencies"):
+def summarization(file_path, nasari_dict, mood: str):
     """ Applies summarization to the given document, with the given percentage.
     Params:
         file_path: path of the input document
@@ -69,6 +69,8 @@ def summarization(file_path, nasari_dict, mood = "frequencies"):
         paragraphs, selected = read_from_file(f_path, mood='titles')
     elif mood == 'frequencies':
         paragraphs, selected = read_from_file(f_path, mood='frequencies')
+    else:
+        raise ValueError
         
     weighted_paragraphs = []
     print("Path:" + str(file_path))
@@ -91,7 +93,7 @@ def summarization(file_path, nasari_dict, mood = "frequencies"):
         for word in par_context:
             topic_wo = 0
             for vector in nasari_vectors:
-                topic_wo = topic_wo + weighted_overlap2(par_context[word], nasari_vectors[
+                topic_wo = topic_wo + weighted_overlap(par_context[word], nasari_vectors[
                     vector])
             if topic_wo != 0:
                 topic_wo = topic_wo / len(nasari_vectors)
@@ -134,8 +136,17 @@ if __name__ == "__main__":
                   path / 'Trump-wall.txt']
 
     try:
-        compression_rate = int(input("Please choose and type valid compression rate(%): 10, 20, 30\nRate: "))
+        valid = "Please choose and type a valid"
+        compression_rate = int(input((valid + " compression rate(%): 10, 20, 30\n Rate: ")))
         if compression_rate not in [10, 20, 30]:
+            raise ValueError
+        # TODO input of mood
+        mood_int = int(input("%s topic-picker technique: \n1 - titles, \n2 - frequencies\n technique: " %valid))
+        if mood_int == 1:
+            mood = "titles"
+        elif mood_int == 2:
+            mood = "frequencies"
+        else:
             raise ValueError
 
     # If something else that is not a valid input
@@ -144,8 +155,9 @@ if __name__ == "__main__":
         # The cycle will go on until validation
         print("Error! This is not a valid number, using default value")
         compression_rate: int = 10
+        mood = "titles"
 
-    print("Summarization.\nReduction percentage: {}".format(compression_rate))
+    print("Summarization.\nReduction percentage: {} | topic-picker technique: {}".format(compression_rate, mood))
 
     nasari_dict = parse_nasari_dictionary(nasari_path)
     # showing progress bar
@@ -156,9 +168,9 @@ if __name__ == "__main__":
         name_file = 'summary_' + str(f_path.name) + ".txt"
         path_write = path_output / name_file
         with open(path_write, "w") as write:
-            summary, selected_paragraphs = summarization(f_path, nasari_dict)
-            print("Generazione Topic tramite:Titolo")
-            print("Paragrafi selezionati:" + str(selected_paragraphs))
+            summary, selected_paragraphs = summarization(f_path, nasari_dict, mood)
+
+            print("Selected paragraphs:" + str(selected_paragraphs))
             for par in summary:
                 # print(par + "\n")
                 write.write(par + "\n\n")
