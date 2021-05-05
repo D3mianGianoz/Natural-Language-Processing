@@ -17,3 +17,23 @@ def tf_idf(my_corpus, compression_rate):
     n_selected_values: float = (100 - compression_rate) / 100 * dataframe.shape[0]
 
     return dataframe.head(int(n_selected_values))
+
+def Tf_Idf_sum(corpus):
+    """Given a corpus, it learns vocabulary and idf
+    Args:
+        corpus
+    Returns:
+        Returns the sum of tf-idf for each paragraph.
+    """
+    tfIdfVectorizer=TfidfVectorizer(use_idf=True)
+    tfIdf = tfIdfVectorizer.fit_transform(corpus)
+    
+    i=0
+    somme = []
+    while i < len(corpus):
+        df = pd.DataFrame(tfIdf[i].T.todense(), 
+        index=tfIdfVectorizer.get_feature_names(), columns=["TF-IDF"])
+        somme.append(sum(df.iloc[:,0]))
+        i += 1
+    
+    return somme
