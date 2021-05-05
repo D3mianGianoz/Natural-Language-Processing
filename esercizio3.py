@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 from tqdm import tqdm
 
-from Radicioni.Summarize.gold import tf_idf
+from Radicioni.Summarize.gold import tf_idf_sum, similarity
 from Radicioni.Summarize.utils import read_from_file, parse_nasari_dictionary, weighted_overlap
 from Radicioni.Wsd.utilities import bag_of_word
 
@@ -96,7 +96,7 @@ def summarization():
         if len(par_context) > 0:
             par_wo = par_wo / len(par_context)
             weighted_paragraphs.append((paragraph, par_wo))
-            print(str(par) + ": " + str(par_wo))
+            # print(str(par) + ": " + str(par_wo))
             par += 1
 
     paragraphs_to_delete = int(len(weighted_paragraphs) * compression_rate / 100)
@@ -125,7 +125,7 @@ def handle_reader_and_gold(file_path, mood):
     else:
         raise ValueError
 
-    return parag, select, tf_idf(parag, compression_rate)
+    return parag, select, tf_idf_sum(parag, compression_rate)
 
 
 if __name__ == "__main__":
@@ -174,13 +174,14 @@ if __name__ == "__main__":
         # read files and create gold
         paragraphs, selected, gold = handle_reader_and_gold(f_path, mood)
 
-        # TODO handle gold
-        print(gold.shape)
-
         with open(path_write, "w") as write:
             summary, selected_paragraphs = summarization()
-
             print("Selected paragraphs:" + str(selected_paragraphs))
+            print("Gold paragraphs:" + str(gold))
+
+            accuracy = similarity(selected_paragraphs, gold)
+
+            # write to file
             for par in summary:
                 # print(par + "\n")
                 write.write(par + "\n\n")
