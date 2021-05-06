@@ -1,8 +1,8 @@
 import time as t
 
-from ConceptualSimiliarty.MetricsSimilarity import SimilarityMetrics
-from ConceptualSimiliarty.WordNetAPIClient import WordNetAPIClient
-from ConceptualSimiliarty.correlation_indexes import pearson_index, spearman_index
+from Radicioni.ConceptualSimiliarty.MetricsSimilarity import SimilarityMetrics
+from Radicioni.ConceptualSimiliarty.WordNetAPIClient import WordNetAPIClient
+from Radicioni.ConceptualSimiliarty.correlation_indexes import pearson_index, spearman_index
 
 """
 Compute Concept Similarity.
