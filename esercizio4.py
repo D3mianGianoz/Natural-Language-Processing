@@ -23,7 +23,7 @@ def parse_nasari_dictionary(path):
             for key in splits[:1]:
                 new_key = key.split("n__")
 
-            nasari_dict[new_key[0]] = vector_nasari
+            nasari_dict[splits[0]] = vector_nasari
 
     return nasari_dict
 
