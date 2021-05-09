@@ -1,5 +1,5 @@
 Task 1: Semantic Similarity
 Correlation between different group members annotation: a.k.a. inter-rate agreement
-	Inter-rate agreement - Pearson: (0.8235892328166075, 2.0804988554648845e-13), Spearman: SpearmanrResult(correlation=0.8025358423326988, pvalue=2.414604998911971e-12)
+	Inter-rate agreement - Pearson: (0.8235892328166075, 2.0804988554648845e-13), SpearmanrResult(correlation=0.8025358423326988, pvalue=2.414604998911971e-12)
 Correlation between different our average value and gold value, computed with nasari vectors
-	Evaluation - Person: (0.578818425000743, 1.6354576518131577e-05), Spearman: SpearmanrResult(correlation=0.5538022500829395, pvalue=4.441577618220217e-05)
+	Evaluation - Person: (0.578818425000743, 1.6354576518131577e-05), SpearmanrResult(correlation=0.5538022500829395, pvalue=4.441577618220217e-05)

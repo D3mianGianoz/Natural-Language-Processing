@@ -7,49 +7,54 @@ import scipy.stats
 from sklearn.metrics import cohen_kappa_score
 from sklearn.metrics.pairwise import cosine_similarity
 
-from Radicioni.Annotation.utils import get_nasari_vectors, parse_nasari_dictionary
+from Radicioni.Annotation.utils import get_nasari_vectors, parse_nasari_dictionary, babel_key
 
 
 def media(n1, n2):
     return (n1 + n2) / 2
 
 
-def max_cos_sim(w1, w2):
-    """Given 2 words in imput it calculates the maximum of the cosin similarity
+def max_cos_sim_couple(babel_word1, babel_word2, dict_n):
+    """Given 2 words in input it calculates the maximum of the cosin similarity
     between the two terms
-    Params:
-        word 1
-        word 2
+    Args:
+        babel_word1: first word
+        babel_word2: the second word
+        dict_n: NASARI dictionary
     Returns:
-        max of the cosine similarity
+        1st: max of the cosine similarity
+        2nd: the couple of senses (their BabelID) that maximise the score
     """
-    i = 0
-    j = 0
     maximum = 0
-    vec1 = get_nasari_vectors(SemEval_path, str(w1), dict_na)
-    vec2 = get_nasari_vectors(SemEval_path, str(w2), dict_na)
-    for v1 in vec1:
-        x = v1
-        i += 1
-        for v2 in vec2:
-            y = v2
-            val = cosine_similarity([x], [y])
-            j += 1
+    senses = (None, None)
+    # retrive nasari vector and list of bbl
+    vec1, bbl_ids1 = get_nasari_vectors(sense2syns, str(babel_word1), dict_n)
+    vec2, bbl_ids2 = get_nasari_vectors(sense2syns, str(babel_word2), dict_n)
+
+    for bid1, v1 in zip(bbl_ids1, vec1):
+        for bid2, v2 in zip(bbl_ids2, vec2):
+
+            # Computing and storing the cosine similarity.
+            val = cosine_similarity([v1], [v2])
+
             if val > maximum:
                 maximum = val
-    return 4 * maximum
+                senses = (bid1, bid2)
+    return 4 * maximum, senses
 
 
-def compute_gold():
+def compute_gold_and_s1_s2():
     # Calcolo i punteggi di similarità di tutte le coppie di parole (se possibile)
     gold = []
+    best_synset = []
     for (i, j) in zip(df_media['parola1'], df_media['parola2']):
-        elem = max_cos_sim(str(i), str(j))
-        if elem == 0:
+        max_score, (s1, s2) = max_cos_sim_couple(str(i), str(j), dict_nasari)
+        if max_score == 0:
             gold.append('na')
         else:
-            gold.append(elem[0][0])
-    return gold
+            gold.append(max_score[0][0])
+            best_synset.append((s1, s2))
+    return gold, best_synset
 
 
 if __name__ == '__main__':
@@ -58,6 +63,8 @@ if __name__ == '__main__':
     nasari_path = base_path / 'NASARI_vectors' / 'mini_NASARI.tsv'
     SemEval_path = base_path / 'SemEval17_IT_senses2synsets.txt'
     output_path = Path('.') / 'output'
+
+    babel_API_key = "036afd10-7afe-4064-8fe1-1b27515fb8f4"
 
     # Task 1: Semantic Similarity
     #
@@ -90,11 +97,14 @@ if __name__ == '__main__':
     inter_rate_pearson = scipy.stats.pearsonr(demaria_score, gianotti_score)
     inter_rate_spearman = scipy.stats.spearmanr(demaria_score, gianotti_score)
 
-    # Recupero i vettori di nasari
-    dict_na = parse_nasari_dictionary(nasari_path)
+    # Read and store ONCE the SemEval..txt
+    sense2syns = babel_key(SemEval_path)
 
-    # 3. Computing the cosine similarity between the hand-annotated scores and
-    df_media['gold'] = compute_gold()
+    # Recupero i vettori di nasari e babel word mapping (for future use)
+    dict_nasari, babel_word_nasari = parse_nasari_dictionary(nasari_path)
+
+    # 3. Computing the cosine similarity between the hand-annotated scores and the best synset (for later use)
+    df_media['gold'], best_syn = compute_gold_and_s1_s2()
 
     # estraggo le coppie per valutazione, escludendo i valori non trovati (na)
     our_value = np.empty(0)
@@ -110,6 +120,7 @@ if __name__ == '__main__':
     spearman = scipy.stats.spearmanr(our_value, gold_value)
 
     from contextlib import redirect_stdout
+
     with open(output_path / 'task4.1_output.txt', 'w') as f:
         with redirect_stdout(f):
             print('Task 1: Semantic Similarity')
@@ -133,5 +144,18 @@ if __name__ == '__main__':
     # 2. Computing the inter-rate agreement. This express if the two score are consistent
     k = cohen_kappa_score(demaria_score, gianotti_score)
 
+    # Retrive annotation from file
+    df_sense = pd.read_csv(annotation_path / 'input_sense_bblID.csv')
 
+    # TODO remove this testing limitation
+    df_sense = df_sense.head(12)
+
+    # re-using the result from compute_gold_and_s1_s2() function for retrieving the best couple
+    for (s1, s2) in best_syn:
+        # if both Babel Synset exists and are not None
+        if s1 is not None and s2 is not None:
+            print("{}\t{}\t".format(s1, s2))
+
+    for bblID1, bblID2 in zip(df_sense['babelID1'], df_sense['babelID1']):
+        pass
 
