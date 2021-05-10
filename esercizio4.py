@@ -173,8 +173,19 @@ if __name__ == '__main__':
     # 1. Already done in the Task 1.1
 
     # 2. Computing the inter-rate agreement. This express if the two score are consistent
-    k = cohen_kappa_score(demaria_score, gianotti_score)
-    print('\tInter-rate agreement - Cohen Kappa: {0}'.format(k))
+    demaria_ann = []
+    gianotti_ann = []
+
+    df_bab_demaria = pd.read_csv('Demaria_sense_bblID.csv')
+    df_bab_gianotti = pd.read_csv('Gianotti_sense_bblID.csv')
+    
+    for (n_dem1, n_dem2) in zip(df_bab_demaria['babelID1'], df_bab_demaria['babelID2']):
+        demaria_ann = np.append(demaria_ann, [n_dem1,n_dem2])
+    for (n_gia1, n_gia2) in zip(df_bab_gianotti['babelID1'], df_bab_gianotti['babelID2']):
+        gianotti_ann = np.append(gianotti_ann, [n_gia1,n_gia2])
+
+    k = cohen_kappa_score(demaria_ann, gianotti_ann)
+    print('\tInter-rate agreement - Cohen Kappa: {0}'.format(k)) 
 
     # Retrive annotation from file
     df_sense = pd.read_csv(annotation_path / 'input_sense_bblID.csv')
