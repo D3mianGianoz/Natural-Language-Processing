@@ -161,6 +161,8 @@ if __name__ == '__main__':
             print("Correlation between different our average value and gold value, computed with nasari vectors")
             print('\tEvaluation - Person: {0}, {1}'.format(pearson, spearman))
 
+    print('Task completed: -> see output file')
+
     # Task 2: Sense Identification
     #
     # 1. annotate by hand the couple of words in the format specified
@@ -176,8 +178,8 @@ if __name__ == '__main__':
     demaria_ann = []
     gianotti_ann = []
 
-    df_bab_demaria = pd.read_csv('Demaria_sense_bblID.csv')
-    df_bab_gianotti = pd.read_csv('Gianotti_sense_bblID.csv')
+    df_bab_demaria = pd.read_csv(annotation_path / 'Demaria_sense_bblID.csv')
+    df_bab_gianotti = pd.read_csv(annotation_path / 'Gianotti_sense_bblID.csv')
     
     for (n_dem1, n_dem2) in zip(df_bab_demaria['babelID1'], df_bab_demaria['babelID2']):
         demaria_ann = np.append(demaria_ann, [n_dem1,n_dem2])
@@ -189,9 +191,6 @@ if __name__ == '__main__':
 
     # Retrive annotation from file
     df_sense = pd.read_csv(annotation_path / 'input_sense_bblID.csv')
-
-    # TODO remove this testing limitation
-    df_sense = df_sense.head(25)
 
     with open(output_path / 'task4.2_results.tsv', "w", encoding="utf-8") as out:
         # used for print progress bar
