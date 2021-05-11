@@ -206,8 +206,8 @@ if __name__ == "__main__":
     surnames = ['Demaria', 'gianotti']
     fn_modes = ["Frame name", "FEs", "LUs"]
 
+    print("Task 2: FrameNet Disambiguation")
     print("Assigning Synsets...")
-
     for surname in surnames:
         path = output_path / f'task2_results_{surname}.csv'
         with open(path, "w", encoding="utf-8") as out:
@@ -236,5 +236,7 @@ if __name__ == "__main__":
                     sense_name = bag_of_words(ctx_fn=i, ctx_wn=j)
                     out.write("{0}, {1},Wordnet Synset,{2}\n".format(fn_modes[2][:-1], i, sense_name))
 
+        print(f'\nCreated output file: {surname_path}')
+        print("\nEvaluating model performance")
         evaluate_performance(gold_path=surname_path, out_path=path)
         evaluate_performance(gold_path=surname_path, out_path=path, none=False)
