@@ -2,6 +2,14 @@
 
 This is a Python repository for dealing with some of the most common task of Natural Language Processing
 
+## Radicioni
+
+Currently, in beta-test we have the following:
+- Exercise 1
+- Exercise 2
+- Exercise 3
+- Exercise 4
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
