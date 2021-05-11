@@ -8,6 +8,76 @@ from datetime import datetime
 # We download a pre-computed space
 import gensim.downloader as gensim_api
 
+from nltk.corpus import wordnet as wn
+import nltk
+from nltk.corpus import stopwords
+from nltk.corpus import wordnet as wn
+
+def bag_of_word(sent):
+    """Auxiliary function for the Lesk algorithm. Transforms the given sentence
+    according to the bag of words approach, apply lemmatization, stop words
+    and punctuation removal.
+    Params:
+        sent: sentence
+    Returns:
+        bag of words
+    """
+
+    stop_words = set(stopwords.words('english'))
+    punctuation = {',', ';', '(', ')', '{', '}', ':', '?', '!'}
+    # Returns the input word unchanged if it cannot be found in WordNet.
+    wnl = nltk.WordNetLemmatizer()
+    # Return a tokenized copy of text, using NLTK’s recommended word tokenizer (Treebank + PunkSentence)
+    tokens = nltk.word_tokenize(sent)
+    tokens = list(filter(lambda x: x not in stop_words and x not in punctuation, tokens))
+    return set(wnl.lemmatize(t) for t in tokens)
+
+def max_freq(word):
+    
+    synsets = wn.synsets(word)
+
+    sense2freq = ""
+    freq_max = 0
+
+    for s in synsets:
+    
+        freq = 0
+    
+        for lemma in s.lemmas():
+            freq+=lemma.count()
+            if freq > freq_max:
+                freq_max = freq
+                sense2freq = s
+
+    return sense2freq
+
+
+def lesk(word, sentence):
+    
+    #inizializzazione
+    max_overlap = 0; 
+    #best_sense = wn.synsets(word)[0] 
+    best_sense = max_freq(word)
+    #context = sentence.split()
+    
+    #If I choose the bag of words approach
+    context = bag_of_word(sentence)
+    signature = []
+    
+    for ss in wn.synsets(word):
+        
+        signature += ss.definition().split()
+        signature += ss.lemma_names()     
+
+        overlap = set(signature).intersection(context)
+        signature.clear()
+
+        if len(overlap) > max_overlap:
+            best_sense = ss
+            max_overlap = len(overlap)
+            
+    return best_sense
+
 
 def clean_up(sentence, word_of_interest, space):
     stopwords = nltk.corpus.stopwords.words("english")
@@ -128,3 +198,22 @@ if __name__ == '__main__':
     plt.savefig(path / f'{now}.png')
     plt.show()
     print(f"\n{title}'s plot saved in output folder.")
+    
+    #Cluster Interpretation (attempt)
+    from collections import Counter
+    import numpy as np
+    
+    sentences = []
+    synsets = []
+    for index, sent in enumerate(sentences_with_vectors):
+            if label_list[index] == 2:
+                sentences.append(" ".join(sent))
+            
+    for i in sentences:
+        synsets.append(lesk(word_of_interest,i))
+    
+    D = Counter(synsets)
+    print(D)
+    pd.DataFrame(D, index=['quantity']).plot(kind='bar')
+
+
