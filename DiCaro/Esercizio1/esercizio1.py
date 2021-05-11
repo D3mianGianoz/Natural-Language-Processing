@@ -211,7 +211,7 @@ def plot_panda_frame(title, my_percentage):
         my_percentage: matrix containing the proper percentage
     """
     print_val = [[my_percentage["generic_abstract"], my_percentage["generic_concrete"]],
-              [my_percentage["specific_abstract"], my_percentage["specific_concrete"]]]
+                 [my_percentage["specific_abstract"], my_percentage["specific_concrete"]]]
     df1 = pd.DataFrame(print_val, columns=["Abstract", "Concrete"],
                        index=["Generic", "Specific"])
     df1.plot.bar()

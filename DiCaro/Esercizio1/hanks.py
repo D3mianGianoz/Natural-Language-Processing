@@ -7,6 +7,8 @@ from nltk.corpus import wordnet
 #  3. Effettuare parsing e disambiguazione
 #  4. Usare i super sensi di WordNet sugli argomenti (subj e obj nel caso di 2
 #     argomenti) del verbo scelto
+#  - Individuare i path dei supersensi di (w) e poi cerco i supersensi:
+#  - Sensato ma ricorda che stai andando alle radici dei supersensi di wordnet
 #  5. Aggregare i risultati, calcolare le frequenze, stampare i
 #     cluster semantici ottenuti
 

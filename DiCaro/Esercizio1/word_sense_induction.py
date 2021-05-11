@@ -4,70 +4,41 @@ import string
 import nltk
 from pathlib import Path
 from datetime import datetime
+from nltk.corpus import wordnet as wn
+from Radicioni.Wsd.utilities import bag_of_word
+import pandas as pd
 
 # We download a pre-computed space
 import gensim.downloader as gensim_api
 
-from nltk.corpus import wordnet as wn
-import nltk
-from nltk.corpus import stopwords
-from nltk.corpus import wordnet as wn
-
-def bag_of_word(sent):
-    """Auxiliary function for the Lesk algorithm. Transforms the given sentence
-    according to the bag of words approach, apply lemmatization, stop words
-    and punctuation removal.
-    Params:
-        sent: sentence
-    Returns:
-        bag of words
-    """
-
-    stop_words = set(stopwords.words('english'))
-    punctuation = {',', ';', '(', ')', '{', '}', ':', '?', '!'}
-    # Returns the input word unchanged if it cannot be found in WordNet.
-    wnl = nltk.WordNetLemmatizer()
-    # Return a tokenized copy of text, using NLTK’s recommended word tokenizer (Treebank + PunkSentence)
-    tokens = nltk.word_tokenize(sent)
-    tokens = list(filter(lambda x: x not in stop_words and x not in punctuation, tokens))
-    return set(wnl.lemmatize(t) for t in tokens)
 
 def max_freq(word):
-    
     synsets = wn.synsets(word)
-
     sense2freq = ""
     freq_max = 0
 
     for s in synsets:
-    
         freq = 0
-    
         for lemma in s.lemmas():
-            freq+=lemma.count()
+            freq += lemma.count()
             if freq > freq_max:
                 freq_max = freq
                 sense2freq = s
-
     return sense2freq
 
 
 def lesk(word, sentence):
-    
-    #inizializzazione
-    max_overlap = 0; 
-    #best_sense = wn.synsets(word)[0] 
+    # inizializzazione
+    max_overlap = 0;
     best_sense = max_freq(word)
-    #context = sentence.split()
-    
-    #If I choose the bag of words approach
+
+    # If I choose the bag of words approach
     context = bag_of_word(sentence)
     signature = []
-    
+
     for ss in wn.synsets(word):
-        
         signature += ss.definition().split()
-        signature += ss.lemma_names()     
+        signature += ss.lemma_names()
 
         overlap = set(signature).intersection(context)
         signature.clear()
@@ -75,7 +46,7 @@ def lesk(word, sentence):
         if len(overlap) > max_overlap:
             best_sense = ss
             max_overlap = len(overlap)
-            
+
     return best_sense
 
 
@@ -83,17 +54,18 @@ def clean_up(sentence, word_of_interest, space):
     stopwords = nltk.corpus.stopwords.words("english")
     sent_cleaned = []
     for w in sentence:
-        if w.lower() == word_of_interest:
+        w = w.lower()
+        if w == word_of_interest:
             # don't keep the target word
             pass
-        elif w.lower() in stopwords or w.strip(string.punctuation) == "":
+        elif w in stopwords or w.strip(string.punctuation) == "":
             # drop this
             pass
         elif w not in fd or fd[w] <= 20:
             # drop this
             pass
-        else:
-            sent_cleaned.append(w.lower())
+        elif w in space:
+            sent_cleaned.append(w)
     return sent_cleaned
 
 
@@ -123,7 +95,7 @@ if __name__ == '__main__':
 
     # 1 part
     # test our methodology
-    word_of_interest = "special"
+    word_of_interest = "bar"
     sentences_of_interest = [s for s in nltk.corpus.brown.sents() if word_of_interest in s]
     sent0 = sentences_of_interest[0]
 
@@ -156,11 +128,11 @@ if __name__ == '__main__':
 
     # 3 part
     # We have to decide how many clusters to make.
-    # Let's try 4.
+    # Let's try 3.
 
     from sklearn.cluster import KMeans
 
-    nclusters = 4
+    nclusters = 5
     kmeans_obj = KMeans(n_clusters=nclusters)
     kmeans_obj.fit(contextvectors)
     label_list = kmeans_obj.labels_
@@ -176,7 +148,7 @@ if __name__ == '__main__':
                 if label_list[index] == clusternumber:
                     sent_print = " ".join(sent)
                     print(sent_print)
-                    f.write(sent_print+"\n")
+                    f.write(sent_print + "\n")
 
     # Plot the cluster
     import matplotlib.pyplot as plt
@@ -195,25 +167,26 @@ if __name__ == '__main__':
     plt.ylabel("Num of cluster")
     # saving plot in output folder
     now = datetime.now().strftime(f"{title} - %d.%m.%Y-%H:%M:%S")  # dd/mm/YY-H:M:S
-    plt.savefig(path / f'{now}.png')
+    plt.savefig(path / f'{now}-context_plot.png')
     plt.show()
     print(f"\n{title}'s plot saved in output folder.")
-    
-    #Cluster Interpretation (attempt)
+
+    # Cluster Interpretation (attempt)
     from collections import Counter
     import numpy as np
-    
+
     sentences = []
     synsets = []
     for index, sent in enumerate(sentences_with_vectors):
-            if label_list[index] == 2:
-                sentences.append(" ".join(sent))
-            
+        if label_list[index] == 2:
+            sentences.append(" ".join(sent))
     for i in sentences:
-        synsets.append(lesk(word_of_interest,i))
-    
+        synsets.append(lesk(word_of_interest, i))
+
     D = Counter(synsets)
     print(D)
-    pd.DataFrame(D, index=['quantity']).plot(kind='bar')
-
-
+    plot = pd.DataFrame(D, index=['quantity']).plot(kind='bar')
+    plt.title("Word of interest is " + title)
+    now = datetime.now().strftime(f"{title} - %d.%m.%Y-%H:%M:%S")  # dd/mm/YY-H:M:S
+    plt.savefig(path / f'{now}-bar_plot.png')
+    plt.show()
