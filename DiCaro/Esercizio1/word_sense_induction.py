@@ -22,10 +22,8 @@ def clean_up(sentence, word_of_interest, space):
         elif w not in fd or fd[w] <= 20:
             # drop this
             pass
-        elif w in space:
-            sent_cleaned.append(w.lower())
         else:
-            pass
+            sent_cleaned.append(w.lower())
     return sent_cleaned
 
 
