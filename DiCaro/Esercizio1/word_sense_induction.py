@@ -1,4 +1,4 @@
-# Word sense induction Task 1.3
+# Word sense induction TLN_dicaro_1.3
 # Warning: this method does not work particularly well as is, there are better implementation
 import string
 import nltk
@@ -14,7 +14,7 @@ import gensim.downloader as gensim_api
 
 def max_freq(word):
     synsets = wn.synsets(word)
-    sense2freq = ""
+    sense2freq = None
     freq_max = 0
 
     for s in synsets:

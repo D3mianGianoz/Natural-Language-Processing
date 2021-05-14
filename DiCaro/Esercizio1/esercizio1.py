@@ -1,4 +1,37 @@
-## Laboratorio
+## TLN_dicaro_1.1 & TLN_dicaro_1.2
+
+"""
+CONSEGNA:
+* Date delle definizioni per quattro concetti (due concreti e due astratti),
+calcolare la similarità fra di esse.
+
+* Aggregare anche le definizioni secondo le dimensioni di concretezza e
+specificità e ri-calcolare i punteggi.
+
+* Effettuare del pre-processing se necessario prima del calcolo.
+Analizzare i risultati.
+
+SVOLGIMENTO:
+* I termini sono:
+                Generico    Specifico
+            ==========================
+Concreto    |   Paper     Sharpener
+Astratto    |   Courage   Apprehension
+
+* Si è scelto di filtrare le stopwords come fase di pre-processing, per
+concentrarsi sui termini salienti.
+
+* Si nota come, nel caso di termini concreti, la similarità sia
+significativamente più elevata di quanto non acccada per i termini astratti.
+Questo è probabilmente dovuto alla possibilità di utilizzare degli attributi
+visivi per descrivere il termine.
+
+* Nel caso dei termini astratti, invece, la mancanza di questi attributi
+concreti porta a definizioni meno simili fra di loro.
+
+* Abbiamo provato, oltre la baseline, due diverse misure di similarità
+
+"""
 
 # handling files
 import csv

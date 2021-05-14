@@ -1,5 +1,4 @@
 # TLN_dicaro_1.4
-
 from pathlib import Path
 import nltk
 import re
@@ -7,18 +6,41 @@ import pandas as pd
 from nltk.corpus import wordnet
 import matplotlib.pyplot as plt
 from collections import Counter
+'''
+CONSEGNA:
+* Implementare un sistema basato sulla teoria di Hanks per la costruzione del
+significato.
 
-#  Lab (su teoria di P. Hanks)
-#  1. Scegliere un verbo transitivo (almeno 2 argomenti)
-#  2. Recuperare da un corpus n (> 1000) istanze in cui esso viene usato
-#  3. Effettuare parsing e disambiguazione
-#  4. Usare i super sensi di WordNet sugli argomenti (subj e obj nel caso di 2
-#     argomenti) del verbo scelto
-#  - Individuare i path dei supersensi di (w) e poi cerco i supersensi:
-#  - Sensato ma ricorda che stai andando alle radici dei supersensi di wordnet
-#  5. Aggregare i risultati, calcolare le frequenze, stampare i
-#     cluster semantici ottenuti
+* Scelto un verbo transitivo (quindi valenza >= 2), recuperare da un corpus
+delle istanze in cui viene usato.
 
+* Effettuare il parsing di queste frasi per identificare i supersensi di
+WordNet associati agli argomenti del verbo (subject e object).
+
+* Calcolare le frequenze di questi supersensi per i due ruoli e stampare le
+possibili combinazioni.
+
+SVOLGIMENTO:
+* Si è scelto il verbo 'break', in particolare il presente terza persona singolare.
+
+* Il corpus utilizzato è Wikipedia, da cui sono state estratte 3000 frasi, usando sketch engine
+
+* Per il parsing a dipendenze si è usata la libreria spaCy.
+
+* Sono state scartate quelle frasi in cui il verbo non presenta entrambi i ruoli
+richiesti.
+
+* I termini che svolgono i ruoli vengono lemmatizzati e si va poi a calcolare
+il loro synset migliore tramite WSD (algoritmo di Lesk). Nel caso il soggetto
+sia 'he', è necessario forzare il suo synset a 'person.n.01' per evitare che
+venga erroneamente riconosciuto come 'elio'.
+
+* Con questi synset si individua il relativo supersenso, andando a calcolare
+poi frequenze e combinazioni possibili.
+
+* Si verifica anche cosa accade raggruppando le combinazioni con ordine inverso,
+poiché probabilmente rappresentanti un uso attivo e passivo del verbo.
+'''
 from DiCaro.Esercizio1.word_sense_induction import lesk
 
 
@@ -42,20 +64,10 @@ def skip_synset_search(pos_tag):
     if pos_tag == "PRP" or pos_tag == 'NNP':
         return True, wordnet.synset('person.n.01')
     # Which / That
-    elif pos_tag == "WDT" or pos_tag == "IN":
-        return True, wordnet.synset('artifact.n.01')
+    # elif pos_tag == "WDT" or pos_tag == "IN":
+    #     return True, wordnet.synset('artifact.n.01')
     else:
         return False, None
-
-
-def count_hyper(synset_list):
-    from collections import Counter
-    test: list = []
-    for (index, syns) in synset_list:
-        for hypo in syns.hypernyms():
-            test.append(hypo)
-    print(test)
-    return Counter(test)
 
 
 def iequal(a, b):
@@ -82,9 +94,13 @@ def plot_hanks(data, max_v, title):
     :param title: name of the plot to show
     :return: ax to plot from
     """
-    # Plot of results
     plot_df = pd.DataFrame(data, index=['quantity'])
-    ax = plot_df.plot(kind='barh', title=title)
+    print(plot_df.head(5))
+
+    # Sort the value
+    plot_df = plot_df.sort_values(by=['quantity'], axis=1, ascending=False)
+
+    ax = plot_df.plot(kind='barh', title=title, width=8)
     colors, labels = ax.get_legend_handles_labels()
 
     # envelop in counter
@@ -166,17 +182,11 @@ if __name__ == '__main__':
             # Se il verbo reggente è il verbo di nostro interesse
             if token.head.text in verb_of_interest:
                 # oggetto
-                if token.dep == 416 or token.dep_ == "iobj":
+                if token.dep == 416:
                     obj = (token.text, token.tag_)
-                    # obj_list.append([i, (token.text, token.tag_), sentence.text.split(verb_of_interest[0])[1]])
                 # soggetto
-                elif token.dep == 429 or token.dep_ == "csubj":
-                    if token.tag_ == 'PRP' or token.tag_ == 'NNP':
-                        subj = (token.text, token.tag_)
-                        # Non presenti su wordnet
-                        # subJ_list.append([i, (token.text, token.tag_)])
-                    # else:
-                    # subJ_list.append([i, (token.text, token.tag_), sentence.text.split(verb_of_interest[0])[0]])
+                elif token.dep == 429:
+                    subj = (token.text, token.tag_)
         if obj and subj:
             fillers.append((subj, obj, sentence.text))
 
@@ -223,7 +233,6 @@ if __name__ == '__main__':
 
     nltk_lesk_ = '[4.2] - "NLTK Lesk"'
     fancy_pint(nltk_lesk_, nltk_lesk_semantic_types)
-
 
     # Plot
     ax1 = plot_hanks(our_lesk_semantic_types, 10, f"Hanks cluster with {our_lesk_} for {verb_of_interest[0]}")
