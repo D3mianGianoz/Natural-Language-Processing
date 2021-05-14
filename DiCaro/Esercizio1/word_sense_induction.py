@@ -29,7 +29,7 @@ def max_freq(word):
 
 def lesk(word, sentence):
     # inizializzazione
-    max_overlap = 0;
+    max_overlap = 0
     best_sense = max_freq(word)
 
     # If I choose the bag of words approach

@@ -1,6 +1,5 @@
 ## Laboratorio
 
-# A lot of imports
 # handling files
 import csv
 from pathlib import Path
