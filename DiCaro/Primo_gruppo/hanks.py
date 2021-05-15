@@ -1,12 +1,5 @@
 # TLN_dicaro_1.4
-from pathlib import Path
-import nltk
-import re
-import pandas as pd
-from nltk.corpus import wordnet
-import matplotlib.pyplot as plt
-from collections import Counter
-'''
+"""
 CONSEGNA:
 * Implementare un sistema basato sulla teoria di Hanks per la costruzione del
 significato.
@@ -40,8 +33,15 @@ poi frequenze e combinazioni possibili.
 
 * Si verifica anche cosa accade raggruppando le combinazioni con ordine inverso,
 poiché probabilmente rappresentanti un uso attivo e passivo del verbo.
-'''
-from DiCaro.Primo_gruppo.word_sense_induction import lesk
+"""
+from pathlib import Path
+import nltk
+import re
+import pandas as pd
+from nltk.corpus import wordnet
+import matplotlib.pyplot as plt
+from collections import Counter
+from DiCaro.Primo_gruppo.utils import lesk
 
 
 def get_wordnet_pos(tag):
@@ -54,15 +54,20 @@ def get_wordnet_pos(tag):
     return tag_dict.get(tag, wordnet.NOUN)
 
 
-def skip_synset_search(pos_tag):
+def skip_synset_search(pos_tag, t_text):
     """
     Helper function for forcing certainty synset to some
     :param pos_tag:
     :return: boolean value, Synset (or None)
     """
-    # pronouns and proper nouns
-    if pos_tag == "PRP" or pos_tag == 'NNP':
-        return True, wordnet.synset('person.n.01')
+    # pronouns
+    if pos_tag == "PRP":
+        if t_text.lower() in ["he", "she", "they"]:
+            return True, wordnet.synset('person.n.01')
+        elif t_text.lower() == "it":
+            return True, wordnet.synset('artifact.n.01')
+        else:
+            return False, None
     # Which / That
     # elif pos_tag == "WDT" or pos_tag == "IN":
     #     return True, wordnet.synset('artifact.n.01')
@@ -88,19 +93,18 @@ def iequal(a, b):
 
 def plot_hanks(data, max_v, title):
     """
-    Create a Data Frame only for plotting
+    Plot a horizontal bar graph using pd and matplotlib
+
     :param data: dictionary to bar plot
     :param max_v: maximum value of labels
     :param title: name of the plot to show
-    :return: ax to plot from
     """
     plot_df = pd.DataFrame(data, index=['quantity'])
-    print(plot_df.head(5))
 
     # Sort the value
     plot_df = plot_df.sort_values(by=['quantity'], axis=1, ascending=False)
 
-    ax = plot_df.plot(kind='barh', title=title, width=8)
+    ax = plot_df.plot(kind='barh', title=f"Hanks cluster with: {title}", width=8)
     colors, labels = ax.get_legend_handles_labels()
 
     # envelop in counter
@@ -112,7 +116,9 @@ def plot_hanks(data, max_v, title):
     colors, labels = zip(*[(color, label) for (color, label) in zipped if iequal(best_legend, label)])
 
     ax.legend(colors, labels, loc='best')
-    return ax
+    plt.savefig('output/hanks/{}.png'.format(title))
+    plt.show()
+    print(f"\n{title}'s plot saved in output folder.")
 
 
 def update_occurrences(ss1, ss2, dictionary):
@@ -183,7 +189,9 @@ if __name__ == '__main__':
             if token.head.text in verb_of_interest:
                 # oggetto
                 if token.dep == 416:
-                    obj = (token.text, token.tag_)
+                    # discarding proper nouns
+                    if not token.tag_ == 'NNP':
+                        obj = (token.text, token.tag_)
                 # soggetto
                 elif token.dep == 429:
                     subj = (token.text, token.tag_)
@@ -204,8 +212,8 @@ if __name__ == '__main__':
         obj_tag = f[1][1]
 
         # Filtering pronouns
-        skip_subj, skipped_s1 = skip_synset_search(pos_tag=subj_tag)
-        skip_obj, skipped_s2 = skip_synset_search(pos_tag=obj_tag)
+        skip_subj, skipped_s1 = skip_synset_search(pos_tag=subj_tag, t_text=subj_simple)
+        skip_obj, skipped_s2 = skip_synset_search(pos_tag=obj_tag, t_text=obj_simple)
 
         # Vado a chiamare lesk sulla coppia della parte prima della mia frase e complemento oggetto dopo il verbo?
         if not skip_subj:
@@ -235,10 +243,10 @@ if __name__ == '__main__':
     fancy_pint(nltk_lesk_, nltk_lesk_semantic_types)
 
     # Plot
-    ax1 = plot_hanks(our_lesk_semantic_types, 10, f"Hanks cluster with {our_lesk_} for {verb_of_interest[0]}")
-    plt.show()
-    ax2 = plot_hanks(nltk_lesk_semantic_types, 10, f"Hanks cluster with {nltk_lesk_} for {verb_of_interest[0]}")
-    plt.show()
+    plot_hanks(our_lesk_semantic_types, 10, f"{our_lesk_} for {verb_of_interest[0]}")
+
+    plot_hanks(nltk_lesk_semantic_types, 10, f"{nltk_lesk_} for {verb_of_interest[0]}")
+
 
     # Alternative parsing
     # from nltk.parse.corenlp import CoreNLPServer, CoreNLPParser, CoreNLPDependencyParser

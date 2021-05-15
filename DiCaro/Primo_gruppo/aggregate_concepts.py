@@ -253,7 +253,7 @@ def plot_panda_frame(title, my_percentage):
     plt.ylabel("Similarity (higher is better)")
     # saving plot in output folder
     now = datetime.now().strftime(f"{title} - %d.%m.%Y-%H:%M:%S")  # dd/mm/YY-H:M:S
-    plt.savefig('output/{}.png'.format(now))
+    plt.savefig('output/aggregate/{}.png'.format(now))
     plt.show()
     print(f"\n{title}'s plot saved in output folder.")
 
