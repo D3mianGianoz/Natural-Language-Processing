@@ -29,7 +29,7 @@ visivi per descrivere il termine.
 * Nel caso dei termini astratti, invece, la mancanza di questi attributi
 concreti porta a definizioni meno simili fra di loro.
 
-* Abbiamo provato, oltre la baseline, due diverse misure di similarità
+* Abbiamo provato, oltre la baseline, due diverse misure di similarità: Cosine sim and Pos
 
 """
 
@@ -103,7 +103,7 @@ def preprocess(definition, mode):
     # Removing stopwords
     definition = definition.lower()
     stop_words = set(stopwords.words('english'))
-    punctuation = {',', ';', '(', ')', '{', '}', ':', '?', '!', '.'}
+    punctuation = {',', ';', '(', ')', '{', '}', ':', '?', '!', '.', '\'', '\"', '``', "''"}
     wnl = nltk.WordNetLemmatizer()
     tokens = nltk.word_tokenize(definition)
     tokens = list(

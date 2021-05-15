@@ -41,7 +41,7 @@ poi frequenze e combinazioni possibili.
 * Si verifica anche cosa accade raggruppando le combinazioni con ordine inverso,
 poiché probabilmente rappresentanti un uso attivo e passivo del verbo.
 '''
-from DiCaro.Esercizio1.word_sense_induction import lesk
+from DiCaro.Primo_gruppo.word_sense_induction import lesk
 
 
 def get_wordnet_pos(tag):

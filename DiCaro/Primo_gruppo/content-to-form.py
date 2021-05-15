@@ -6,7 +6,7 @@
 #  Suggerimento: usate il principio del “genus” per indirizzare la ricerca
 from pathlib import Path
 
-from DiCaro.Esercizio1.esercizio1 import load_data
+from DiCaro.Primo_gruppo.aggregate_concepts import load_data
 
 if __name__ == '__main__':
 
