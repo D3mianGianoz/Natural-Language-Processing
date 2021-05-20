@@ -14,7 +14,7 @@ WordNet associati agli argomenti del verbo (subject e object).
 possibili combinazioni.
 
 SVOLGIMENTO:
-* Si è scelto il verbo 'break', in particolare il presente terza persona singolare.
+* Si è scelto il verbo 'to break', in particolare il presente terza persona singolare.
 
 * Il corpus utilizzato è Wikipedia, da cui sono state estratte 3000 frasi, usando sketch engine
 
@@ -104,7 +104,10 @@ def plot_hanks(data, max_v, title):
     # Sort the value
     plot_df = plot_df.sort_values(by=['quantity'], axis=1, ascending=False)
 
-    ax = plot_df.plot(kind='barh', title=f"Hanks cluster with: {title}", width=8)
+    # Take top max_v * 2
+    top_max = plot_df.iloc[:, :max_v * 2]
+
+    ax = top_max.plot(kind='barh', title=f"Hanks cluster with: {title}", width=8)
     colors, labels = ax.get_legend_handles_labels()
 
     # envelop in counter
@@ -164,7 +167,7 @@ if __name__ == '__main__':
 
     print('[1] - Extracting sentences...')
     sentences = brown_says["Sentence"]
-    head_test = sentences.head(1001)
+    head_test = sentences.head(1000)
     head_test = head_test.apply(lambda x: x.strip("<s> \'\' \" </"), lambda x: re.sub('</"', "", x))
 
     import spacy

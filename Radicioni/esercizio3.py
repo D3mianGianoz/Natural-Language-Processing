@@ -3,7 +3,7 @@ from pathlib import Path
 from tqdm import tqdm
 
 from Radicioni.Summarize.gold import tf_idf_sum, similarity
-from Radicioni.Summarize.utils import read_from_file, parse_nasari_dictionary, weighted_overlap
+from Radicioni.Summarize.utils import weighted_overlap, read_from_file, parse_nasari_dictionary
 from Radicioni.Wsd.utilities import bag_of_word
 
 
@@ -91,7 +91,7 @@ def summarization():
 
             # Sum all words WO in the paragraph's WO
             par_wo += topic_wo
-            # print(f'score {topic_wo} e paragrafo {par_wo}')
+            print(f'score {topic_wo} e paragrafo {par_wo}')
 
         if len(par_context) > 0:
             par_wo = par_wo / len(par_context)
