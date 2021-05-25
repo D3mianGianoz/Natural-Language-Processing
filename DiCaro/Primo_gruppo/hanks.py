@@ -119,7 +119,8 @@ def plot_hanks(data, max_v, title):
     colors, labels = zip(*[(color, label) for (color, label) in zipped if iequal(best_legend, label)])
 
     ax.legend(colors, labels, loc='best')
-    plt.savefig('output/hanks/{}.png'.format(title))
+    title_f = title.strip().replace(" ", "_").replace('\"', "")
+    plt.savefig('output/hanks/{}.png'.format(title_f))
     plt.show()
     print(f"\n{title}'s plot saved in output folder.")
 
@@ -142,7 +143,7 @@ def update_occurrences(ss1, ss2, dictionary):
             dictionary[t] = 1
 
 
-def fancy_pint(title, dictionary):
+def fancy_print(title, dictionary):
     """
     Helper function for evaluating performance
     :param title: string regarding the strategy
@@ -239,11 +240,11 @@ if __name__ == '__main__':
         # Library
         update_occurrences(s3, s4, nltk_lesk_semantic_types)
 
-    our_lesk_ = '[4.1] - "Our Lesk"'
-    fancy_pint(our_lesk_, our_lesk_semantic_types)
+    our_lesk_ = '"Our Lesk"'
+    fancy_print('[4.1]' + our_lesk_, our_lesk_semantic_types)
 
-    nltk_lesk_ = '[4.2] - "NLTK Lesk"'
-    fancy_pint(nltk_lesk_, nltk_lesk_semantic_types)
+    nltk_lesk_ = '"NLTK Lesk"'
+    fancy_print('[4.2]' + nltk_lesk_, nltk_lesk_semantic_types)
 
     # Plot
     plot_hanks(our_lesk_semantic_types, 10, f"{our_lesk_} for {verb_of_interest[0]}")

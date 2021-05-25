@@ -5,7 +5,7 @@ CONSEGNA:
 * Ispirandosi al text-tiling, implementare un algoritmo di segmentazione del
 testo.
 
-* Sfruttare informazioni come le frequenze e le co-occorrenze e eventuale
+* Sfruttare informazioni come le frequenze e le co-occorrenze ee eventuale
 pre-processing del testo.
 
 SVOLGIMENTO:
@@ -26,10 +26,10 @@ ogni parola (previo filtering e lemmatizzazione).
 valore scende al di sotto della loro media di una certa percentuale: in questi
 punti viene inserito un punto di cambio di discorso.
 
-* L'operazione viene ripetuta per un certo numero di iterazioni, usando come
+* L'operazione viene ripetuta per un certo numero d' iterazioni, usando come
 confronto la media di quel preciso segmento invece che la media complessiva.
 
-* Come confronto si usa implementazione di nltk disponibile a
+* Come confronto ulteriore si usa implementazione di nltk del TextTiling disponibile qui
  https://www.nltk.org/_modules/nltk/tokenize/texttiling.html
 
 """
@@ -163,7 +163,7 @@ def plot_text_tiling(result1, title):
     plt.plot(range(len(d)), d, label="Depth scores")
     plt.stem(range(len(b)), b)
     plt.legend()
-    plt.savefig('output/{}.png'.format(title))
+    plt.savefig('output/{}.png'.format(title.replace(" ", "_")))
     plt.show()
     print(f"\n{title}'s plot saved in output folder.")
 
