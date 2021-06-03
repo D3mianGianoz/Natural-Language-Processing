@@ -1,4 +1,6 @@
-## TLN_dicaro_2.1
+# Relazione del secondo gruppo di esercizi
+
+### TLN_dicaro_2.1
 
 _CONSEGNA_:
 
@@ -56,7 +58,7 @@ Come confronto ulteriore si usa implementazione di nltk del TextTiling disponibi
 - I due grafici non sono del tutto sovrapponibili per via di come gestiscono il file ingresso (in questo caso in maniera *raw*)
 
 
-## TLN_dicaro_2.1
+### TLN_dicaro_2.2
 
 _CONSEGNA_:
 
