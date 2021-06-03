@@ -12,7 +12,7 @@ Currently, in beta-test we have the following:
 
 ## DiCaro
 
-Currently, in beta-test we have the following:
+Currently, we have the following topics:
 - Exercise 1.1 Aggregate Concepts
 - Exercise 1.2 Results of aggregation
 - Exercise 1.3 Word sense induction
@@ -20,6 +20,7 @@ Currently, in beta-test we have the following:
 - Exercise 1.5 Content to form
 - Exercise 2.1 Text Segmentation
 - Exercise 2.2 Topic Modeling
+- Exercise 3.2 RNN for Sentiment Analysis & Character Generation
 
 ## Contributing
 
