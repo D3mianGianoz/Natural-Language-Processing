@@ -33,13 +33,15 @@ confronto la media di quel preciso segmento invece che la media complessiva.
  https://www.nltk.org/_modules/nltk/tokenize/texttiling.html
 
 """
-
+import re
 from pathlib import Path
 import matplotlib.pyplot as plt
 import nltk
 from scipy import spatial
 
 from DiCaro.Primo_gruppo.aggregate_concepts import preprocess
+# Better handling of this particular txt
+from Radicioni.Summarize.utils import read_from_file
 
 
 # I only look for jumps -negative- greater than one, and a half times the average
@@ -52,14 +54,19 @@ def read_text(path):
     :param path: absolute Path of the file
     :return: list of sentences of the textual file
     """
-    with open(path, "r", encoding="utf8") as f:
-        content = f.read()
-        lines = content.split(". ")
-        returned_list = []
+    content, _ = read_from_file(path)
+    returned_list = []
+
+    for par in content:
+        another_regex = re.compile(r'\.\s*')
+
+        # context dependant
+        par = par.replace("U.S.", "U_S_").replace("F.", "F_")
+
+        lines = par.split(". ")
         for line in lines:
-            line = line.strip("\n")
             returned_list.append(line)
-        return returned_list
+    return returned_list
 
 
 def calculate_frequencies(sentences):
@@ -173,6 +180,10 @@ if __name__ == '__main__':
     title_file = str(file_path.stem)
 
     ss = read_text(file_path)
+
+    # In case we wanted to process only paragraphs
+    # ss = read_from_file(file_path)
+
     ss_length = len(ss)
 
     frequency_dict = calculate_frequencies(sentences=ss)

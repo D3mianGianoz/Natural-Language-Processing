@@ -14,8 +14,10 @@ specificità e ri-calcolare i punteggi.
   
 * Effettuare del pre-processing se necessario prima del calcolo.
 
-  
-_SVOLGIMENTO_:
+## Premessa importante
+
+In questa prima fase abbiamo lavorato individualmente ottenendo due soluzioni coerenti ma diverse.
+Abbiamo, dunque, deciso di proporle entrambe perché ci sono sembrate egualmente interessanti.
 
 **I termini sono**:
 
@@ -25,6 +27,34 @@ _SVOLGIMENTO_:
     Concreto    |   Paper     Sharpener
     Astratto    |   Courage   Apprehension
 ```
+
+
+### Versione di Roberto Demaria
+
+_SVOLGIMENTO_:
+
+- Ho importato il file excel sotto forma di data frame per poterne estrarre le informazioni più agevolmente. 
+
+- Qui sotto si può vedere la testa del frame dati creato grazie alla libreria pandas:
+
+![1.1 - pandas](output/report/pandas.png)
+
+- Ho scelto di utilizzare due approcci al calcolo della similarità: uno basato su una funzione di libreria (SequenceMatcher) e uno costruendo io stesso una funzione per il calcolo della similarità.
+- In questo secondo caso ho scelto un approccio bag of words e di filtrare le stopwords come fase di pre-processing, per concentrarsi sui termini più salienti.
+- Ho costruito delle matrici di similarità fra le definizioni di ogni concetto.
+- A partire da tali matrici ho calcolato la similarità generale per i due approcci facendo una media delle similarità escludendo la diagonale.
+
+_RISULTATI_:
+
+- Si è notato come, nel caso di termini concreti, la similarità sia più elevata di quanto non accada per i termini astratti. Questo è probabilmente dovuto alla possibilità di utilizzare degli attributi visivi per descrivere il termine.
+- Nel caso dei termini astratti, invece, la mancanza di questi attributi concreti porta a definizioni meno simili fra di loro.
+- I valori di similarità ottenuti con i due approcci sono quantitativamente diversi ma in entrambi i casi si può evincere questa tendenza:
+
+![1.1 - matrix](output/report/matrix_result.png)
+
+### Versione di Damiano Gianotti
+
+_SVOLGIMENTO_:
 
 * Si è scelto di filtrare le stopwords come fase di pre-processing, per
 concentrarsi sui termini salienti.
@@ -52,6 +82,42 @@ _CONSEGNA_:
 
 * Dare una spiegazione dei risultati ottenuti nell’esercizio precedente
 
+### Versione di Roberto Demaria
+
+_SVOLGIMENTO_:
+
+- Ho scelto di utilizzare due approcci: il primo approccio usando TF-IDF per vedere se vi fosse un nesso con la rilevanza statistica delle parole 
+  mentre il secondo approccio basato semplicemente sulla frequenza delle parole utilizzate nelle definizioni.
+  
+_RISULTATI_:
+
+- Nel primo caso ho calcolato TF-IDF delle parole e li ho sommati per ogni definizione ottenendo una lista di 28 elementi
+  (pari al numero di definizioni date). Dopodiché ho nuovamente sommato questi elementi ottenendo il seguente risultato:
+  
+![1.2 - tf-idf](output/report/tf-idf.png)
+
+- Quello che si può evincere sembra essere una maggiore rilevanza statistica delle parole per i termini generici rispetto 
+  a quelli specifici e di quelli astratti rispetto a quelli concreti. Questo ci dice che i termini generici tendono
+  ad essere meno omogenei nelle definizioni mentre i termini specifici utilizzano più spesso le stesse parole:
+  in particolare sharpener che ha la maggiore similarità coincide anche con il minor valore di tf\_idf 
+  rivelando che le definizioni sono molto simili avendo gli stessi termini più o meno distribuiti in tutte le definizioni.
+  
+- Nel secondo approccio ho fatto alcune analisi sulle frequenze delle parole andando a contare la frequenza totale 
+  di ogni parola e poi discriminando quelle con frequenza maggiore di 1 ottenendo diverse misure quantitative da confrontare con la similarità.
+  
+![1.2 - frequenza](output/report/frequence.png)
+- Legenda:
+  + S —> somma delle frequenze maggiori di 1
+  + N —> numero di parole con frequenza maggiore di 1
+  + R —> rapporto S/N
+  
+
+- I termini concreti presentano un valore di R significativamente superiore
+  rispetto a quelli astratti. I valori di R rispecchiano inoltre l’andamento della
+  similarità.
+  
+### Versione di Damiano Gianotti
+
 _SVOLGIMENTO_:
 
 * Ho scelto di utilizzare approccio basato sul pos tagging delle parole
@@ -60,7 +126,7 @@ _SVOLGIMENTO_:
 
 _RISULTATI_:
 
-![1.1 - plot_3](output/aggregate/POS_Experiment.png "POS_Experiment")
+![1.2 - plot_pos](output/aggregate/POS_Experiment.png "POS_Experiment")
 
 * Quello che si può evincere sembra essere una maggiore rilevanza statistica delle parole per i termini generici rispetto a quelli specifici e di quelli astratti rispetto a quelli concreti.
 
@@ -163,16 +229,31 @@ _SVOLGIMENTO_:
 * Con questi synset si individua il relativo supersenso `lexname`, andando a calcolare
   poi frequenze e combinazioni possibili.
 
-
-* Si creano poi due grafici con le migliori `k` coppie soggetto-oggetto, usando due versioni 
-  differenti dell' algoritmo Lesk
   
 _RISULTATI_:
 
+* Andiamo a creare due grafici con le migliori `k` coppie soggetto-oggetto, usando due versioni 
+  differenti dell' algoritmo Lesk
+
 ![plot_1.4.1](output/hanks/Our_Lesk_for_breaks.png "Our Lesk" )
 
+* Questo istogramma a barre rappresenta la quantità delle 10 coppie più frequenti, usando una nostra versione dell' algoritmo di lesk (approccio a bag-of-words)
 
 ![plot_1.4.2](output/hanks/NLTK_Lesk_for_breaks.png "NLTK Lesk" )
+
+* Analogamente a quanto detto sopra con la differenza che qui viene utilizzato l' implementazione di Lesk di libreria (nltk)  
+
+
+* Facendo riferimento alla [documentazione](https://wordnet.princeton.edu/documentation/lexnames5wn) ufficiale di wordnet e a entrambi i plot possiamo intuire le seguenti cose:
+    + la maggior parte delle coppie sono del tipo (nome, nome), eccezion fatta per (noun.person, verb.creation);
+    + l' elemento con maggiore frequenza è noun.Tops ovvero "beginner" unico per i nomi
+    + come categorie semantiche abbiamo uno sbilanciamento verso person, artifact anche incentivato dalla nostra forzatura
+  
+
+* A fine dell' esperimento, analizzandolo con occhio critico, ci chiediamo se effettivamente i `lexname` di wordnet rappresentino una categoria semantica sensata 
+  e se ha una granularità/generalizzazione adeguata
+* Dal nostro punto di vista, questo laboratorio è un sofisticato tentativo di rappresentare la valenza del verbo nella sua forma presente (forse la più semplice da trattare) 
+  e potrebbe aiutare a classificare o clusterizzare verbi simili. Le cose si complicano se vi vuole espandere il discorso ad altre forme verbali e/o verbi irregolari.
 
 ## TLN_dicaro_1.5
 
