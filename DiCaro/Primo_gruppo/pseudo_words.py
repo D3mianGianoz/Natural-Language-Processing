@@ -79,7 +79,7 @@ if __name__ == '__main__':
                 elif sent in w2_list:
                     c_special += 1
 
-        print(f"Cluster {clusternumber} have {c_bar} matching in bar and {c_special} matching in special")
+        print(f"Cluster {clusternumber} have {c_bar} matching in {w1} and {c_special} matching in {w2}")
 
         precision = round(c_special / (c_bar + c_special), 2)
         print("Precision: " + str(precision))

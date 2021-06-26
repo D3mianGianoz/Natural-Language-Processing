@@ -17,8 +17,6 @@ def words_extraction(sent):
     bag = []
     stop_words = set(stopwords.words('english'))
     punctuation = {',', ';', '(', ')', '{', '}', ':', '?', '!'}
-    # Returns the input word unchanged if it cannot be found in WordNet.
-    wnl = nltk.WordNetLemmatizer()
     # Return a tokenized copy of text, using NLTK’s recommended word tokenizer (Treebank + PunkSentence)
     tokens = nltk.word_tokenize(sent)
     for tok in tokens:
@@ -43,7 +41,7 @@ def compute_genus(concept, num=4):
     return genus
 
 
-def get_synset_hyper(genus):
+def get_synset_hyponyms(genus):
     hypon_l = []
     for gen in genus:
         for ss in wn.synsets(str(gen)):
@@ -62,17 +60,7 @@ def infer_similiarity(def1, def2, n=4):
 
 
 def evaluate_performance(bow1, bow2):
-    lunghezza = len(bow1) + len(bow2)
-    uguali = 0
-
-    for i in bow1:
-        for j in bow2:
-            if i == j:
-                uguali += 1
-                # print(f'uguali:{uguali}')
-
-    result = 2 * uguali / lunghezza
-    return result
+    return len(set(bow1) & set(bow2)) * 2 / (len(bow1) + len(bow2))
 
 
 def content_to_form_result(hypon_list, concept, title, num=4):
@@ -81,7 +69,7 @@ def content_to_form_result(hypon_list, concept, title, num=4):
     max_list = []
 
     for hyp in hypon_list:
-        # Here I extract fenition
+        # Here I extract the definition
         lex = []
         definition = hyp.definition()
         lex.append(definition)
@@ -92,8 +80,6 @@ def content_to_form_result(hypon_list, concept, title, num=4):
 
         for my_def in concept:
             for wn_def in lex:
-                # my_sym = similar(my_def, wn_def)
-                # my_sym = my_similarity(my_def, wn_def)
                 my_sym = infer_similiarity(my_def, wn_def, n=num)
                 if my_sym > max_sym:
                     max_list.append([max_sym, hyp])
@@ -133,7 +119,7 @@ if __name__ == '__main__':
     print(f'testing the methodology {hello}\n')
 
     Genus_Courage = compute_genus(concept=courage, num=3)
-    hypon_courage = get_synset_hyper(genus=Genus_Courage)
+    hypon_courage = get_synset_hyponyms(genus=Genus_Courage)
 
     def1 = 'The ability to do something very hard and constancy'
     def2 = 'The capacity to do something quite hard and with constance'
@@ -151,7 +137,7 @@ if __name__ == '__main__':
     for (c, term) in zip(concept_list_no_courage, term_list):
         print(f'\n Computing concept {term}\n')
         genus = compute_genus(concept=c, num=depth)
-        hypon = get_synset_hyper(genus=genus)
+        hypon = get_synset_hyponyms(genus=genus)
         content_to_form_result(hypon_list=hypon, concept=c, title=term, num=depth)
 
     end = time.time()
