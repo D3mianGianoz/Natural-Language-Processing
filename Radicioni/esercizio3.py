@@ -91,7 +91,7 @@ def summarization():
 
             # Sum all words WO in the paragraph's WO
             par_wo += topic_wo
-            print(f'score {topic_wo} e paragrafo {par_wo}')
+            # print(f'score {topic_wo} e paragrafo {par_wo}') debug print
 
         if len(par_context) > 0:
             par_wo = par_wo / len(par_context)

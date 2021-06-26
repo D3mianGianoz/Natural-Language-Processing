@@ -1,0 +1,51 @@
+parola1	parola2	babelID1	babelID2	synset1	synset2
+recessione	PIL	bn:00066516n	bn:00037570n	recessione,depressione,depressione economica	p.i.l.,pil,prodotto interno lordo
+Cesare	Giulio Cesare	bn:00014550n	bn:00014550n	caio giulio cesare,cesare,imperatore	caio giulio cesare,cesare,imperatore
+paziente	sessione	bn:00001742n	bn:03751534n	paziente,ruolo del paziente,ruolo interessato	sessione
+comportamentismo	terapia	bn:00009659n	bn:00076843n	behaviourismo,comportamentismo,behavior based safety	terapia,cura,pratiche terapeutiche
+imperatore	costituzione	bn:00014550n	bn:02436267n	caio giulio cesare,cesare,imperatore	costituzione
+matematico	spettacolo	bn:00053834n	bn:00305552n	matematico,matematica,matematici	spettacolo
+entropia	informazione	bn:17267027n	bn:00046705n	entropia (teoria dell'informazione),entropia,entropia dell'informazione	informazione,codifica dell'informazione,informazioni
+acqua di rose	olio di rosa	bn:00068288n	bn:00007010n	acqua di rose,giulebbe	olio essenziale di rosa,essenza di rosa,olio di rosa
+agrume	pompelmo	bn:00019301n	bn:00041408n	agrume,citrus,eremocitrus	pompelmo
+Regina Vittoria	Inghilterra	bn:00065652n	bn:00030861n	vittoria del regno unito,alexandrina victoria,regina vittoria	england,inghilterra,gran bretagna
+Giochi Olimpici	spirito	bn:00058913n	bn:00044468n	giochi olimpici,olimpiade,olimpiadi	spirito,spirito-santo,spirito santo
+vescovo	musulmano	bn:03012712n	bn:00047600n	sacerdozio (mormonismo),sacerdozio,presidente di palo	islam,islamismo,maomettismo
+uomo	sospetto	bn:00053097n	bn:00075447n	uomo	indiziato,sospetto
+meteorite	Terra	bn:00054598n	bn:00029424n	meteorite,meteoroide,uranolite	globo terracqueo,globo terrestre,mondo
+simbolo	segno	bn:00075652n	bn:00075652n	segno,simbolo,simboli	segno,simbolo,simboli
+antropologia	New York	bn:02529040n	bn:02530635n	antropologia	new york
+tramonto	tavolo	bn:01888833n	bn:00075813n	crepuscolo,tramonto	tavola,tavolo,tavoli
+cittadina	città	bn:00077773n	bn:00077773n	cittadina,città,paese	cittadina,città,paese
+giacca	acqua minerale	bn:00041211n	bn:00055131n	camice,giacca,scrub	acqua minerale,minerale,acqua oligominerale
+natura	flora	bn:00081220n	bn:00012321n	natura,vita selvatica,fauna	flora,vegetazione,verde
+subroutine	compilatore	bn:00036826n	bn:00021344n	sottoprogramma,subroutine,procedimento	compilatore,compilatori,compilazione
+Hamadan	Roma	bn:03266645n	bn:00660953n	hamadan,ecbatana	roma (divinità),dea roma,roma
+ombrello	stufa	bn:00078920n	bn:00074479n	ombrello,ombrellone,paracqua	fornello,fuoco,stufa
+onore	stima	bn:00044654n	bn:00031654n	onore,onorabilità,disonore	rispetto,stima,considerazione
+insegna	dignità	bn:00002823n	bn:00025772n	emblema,insegna,personificazione	compostezza,decenza,decoro
+KFC	McDonald's	None	None	None	None
+joystick	radar	bn:00022301n	bn:00054808n	cloche,joystick,barra	radar,radiolocalizzatore,radiotelemetro
+basmati	riso jasmine	bn:00567353n	bn:02666084n	basmati,riso basmati	riso jasmine,riso al gelsomino
+medaglia	scarpe da ginnastica	bn:00054078n	bn:00068586n	medaglia,medaglista	scarpa da ginnastica,scarpa da tennis,scarpe da ginnastica
+legge	piscina	bn:00064426n	bn:02332519n	criterio,legge,norma	piscina,sacrario
+sorgente	scatola	bn:00036077n	bn:00015103n	fonte,polla,scaturigine	barattolo,bussolotto,latta
+teatro	batteria	bn:00034270n	bn:00021287n	campo,terreno,teatro bellico	brigata,compagnia,compagnia (unità militare)
+flora	web browser	bn:03260352n	bn:00013447n	flora	browser,navigatore,web browser
+camicia	cardigan	bn:00028687n	bn:00015958n	camicia da sera,camicia,abito camicia	cardigan,golf
+poema	ritmo	bn:00063193n	bn:00063201n	componimento poetico,composizione poetica,poema	ritmo,metrica,ritmica
+profeta	prete	bn:00064759n	bn:00057892n	profeta,profetessa,profeti	prete,sacerdote,non cristiano sacerdote
+Oscar	stadio	bn:00407538n	bn:00061898n	oscar	fase,punto,stadio
+backgammon	Go	bn:00007779n	bn:00040833n	sbaraglino,tric-trac,backgammon	go (gioco),go,baduk
+farfalla	rosa	bn:00012473n	bn:00062507n	farfalla,papillon,cravatta a farfalla	rosa,rosa (colore),rosa scuro
+recinto	salto	bn:00060140n	bn:00048558n	paddock,recinto	salto
+nichilismo	film	bn:00057710n	bn:00735555n	nichilismo,nihilismo,nichilismo passivo	film (film 1964),film,film (film)
+asteroide	stella	bn:00055203n	bn:00073965n	asteroide,pianetino,pianeta minore	stella,astro
+sommossa	disegno	bn:01480882n	bn:00028562n	la sommossa,sommossa,rascoala	disegno,draftsmanship
+intimo	corpo	bn:00021740n	bn:03119994n	amico,confidente,intimo	corpo (esoterismo),corpo,anatomia occulta
+Boeing	aereo	bn:01156257n	bn:00001697n	boeing,boeing commercial airplanes,boeing company	aereo,aeroplano,velivolo
+cameo	interpretazione	bn:03871797n	bn:00061560n	cameo (gruppo musicale),cameo	esibizione,interpretazione,rappresentazione
+semestre	quadrimestre	None	None	None	None
+arancia	agrume	bn:00059249n	bn:00019301n	arancia,arancio,portogallo	agrume,citrus,eremocitrus
+ghiacciaio	riscaldamento globale	bn:00040579n	bn:00040681n	ghiacciaio,ghiacciai,ghiacciaio vallivo	riscaldamento globale,riscaldamento globale dell'atmosfera,riscaldamento planetario
+galleria	percorso	bn:14530939n	bn:00061006n	canale,galleria,incavo	sentiero,via,viottolo

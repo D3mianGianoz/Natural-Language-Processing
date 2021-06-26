@@ -4,11 +4,13 @@ This is a Python repository for dealing with some of the most common task of Nat
 
 ## Radicioni
 
-Currently, in beta-test we have the following:
-- Exercise 1
-- Exercise 2
-- Exercise 3
-- Exercise 4
+Currently, we have the following:
+- Exercise 1.1 conceptual similarity
+- Exercise 1.2 word sense disambiguation
+- Exercise 2 FrameNet Disambiguation
+- Exercise 3 Shallow Summarization
+- Exercise 4.1 Semantic Similarity
+- Exercise 4.2 Sense Identification
 
 ## DiCaro
 

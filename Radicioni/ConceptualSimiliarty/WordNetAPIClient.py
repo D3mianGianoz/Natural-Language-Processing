@@ -13,6 +13,7 @@ class WordNetAPIClient:
         """
         print("[Client] - Computing WordNet graph's max depth.")
         self.depth_max = 20
+        # self.depth_max = self.__depth_max() For test purpose is disabled
         print("[Client] - WordNet graph's max depth computed.")
 
     @staticmethod
