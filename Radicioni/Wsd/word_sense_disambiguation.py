@@ -5,7 +5,7 @@ import xml.etree.ElementTree as eT
 from lxml import etree as exml
 from tqdm import tqdm
 
-from Wsd.utilities import get_sense_index, lesk, pos_validity
+from Radicioni.Wsd.utilities import lesk, get_sense_index, pos_validity, lesk_demaria
 
 
 def parse_xml(path):
@@ -84,7 +84,7 @@ def word_sense_disambiguation(options):
         sentence = list_xml[i][0]
         words = list_xml[i][1]
         for t in words:
-            sense = lesk(t[0], sentence)  # running lesk algorithm
+            sense = lesk_demaria(t[0], sentence)  # running lesk algorithm
             value = str(get_sense_index(t[0], sense))
             golden = t[1]
             count_word += 1

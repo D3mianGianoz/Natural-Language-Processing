@@ -102,3 +102,55 @@ def pos_validity(pos, text, word):
         boolean: True if the word is valid and false otherwise
     """
     return pos == 'NN' and '_' not in text and len(wn.synsets(text)) > 1 and 'wnsn' in word.attrib
+
+
+def max_freq(word):
+    """
+    Helper method for lesk_demaria
+    :param word of interest
+    :return: frequency of the word
+    """
+    synsets = wn.synsets(word)
+    sense2freq = None
+    freq_max = 0
+
+    for s in synsets:
+        freq = 0
+        for lemma in s.lemmas():
+            freq += lemma.count()
+            if freq > freq_max:
+                freq_max = freq
+                sense2freq = s
+    return sense2freq
+
+
+def lesk_demaria(word, sentence):
+    """
+    Given a word and a sentence in which it appears, it returns the best sense of the word.
+    DeMaria Implementation more precise than simpler lesk above thanks to max_freq
+    Args:
+        word: word to disambiguate
+        sentence: sentence to compare
+    Returns:
+        best sense of word
+    """
+    # inizializzazione
+    max_overlap = 0
+    best_sense = max_freq(word)
+
+    # If I choose the bag of words approach
+    context = bag_of_word(sentence)
+    signature = []
+
+    for ss in wn.synsets(word):
+        signature += ss.definition().split()
+        signature += ss.lemma_names()
+
+        overlap = set(signature).intersection(context)
+        signature.clear()
+
+        if len(overlap) > max_overlap:
+            best_sense = ss
+            max_overlap = len(overlap)
+
+    return best_sense
