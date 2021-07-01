@@ -74,7 +74,6 @@ def summarization():
     # numero di paragrafi.
     print("Numero Topic:" + str(len(nasari_vectors)))
     print("Numero paragrafi:" + str(len(paragraphs)))
-    print("\nWeighted Paragraphs:")
 
     for paragraph in paragraphs:
         # Weighted Overlap average inside the paragraph.
@@ -99,29 +98,38 @@ def summarization():
             # print(str(par) + ": " + str(par_wo))
             par += 1
 
-    paragraphs_to_delete = int(len(weighted_paragraphs) * compression_rate / 100)
-    weighted_paragraphs_ordered = sorted(weighted_paragraphs, key=lambda tup: tup[1], reverse=True)
-    weighted_paragraphs_ordered = weighted_paragraphs_ordered[:-paragraphs_to_delete]
+    n_paragraphs_to_delete = int(len(weighted_paragraphs) * compression_rate / 100)
+    weighted_paragraphs_ordered = sorted(weighted_paragraphs, key=lambda tup: tup[1], reverse=False)
+
+    # store deleted paragraphs
+    paragraphs_to_delete = weighted_paragraphs_ordered[:n_paragraphs_to_delete]
+    del weighted_paragraphs_ordered[:n_paragraphs_to_delete]
+
+    # sort them again
     weighted_paragraphs_ordered = [i[0] for i in weighted_paragraphs_ordered]
+    paragraphs_to_delete_ordered = [i[0] for i in paragraphs_to_delete]
 
     i = 0
     summary_list = []
     selected_paragraphs_list = []
+    deleted_paragraphs_list = []
     for paragraph in paragraphs:
         if paragraph in weighted_paragraphs_ordered:
             summary_list.append(paragraph)
             selected_paragraphs_list.append(i)
+        if paragraph in paragraphs_to_delete_ordered:
+            deleted_paragraphs_list.append(i)
         i += 1
 
-    return summary_list, selected_paragraphs_list
+    return summary_list, selected_paragraphs_list, deleted_paragraphs_list
 
 
-def handle_reader_and_gold(file_path, mood):
+def handle_reader_and_gold(file_path, mode):
     print("Path:" + str(file_path))
-    if mood == 'titles':
-        parag, select = read_from_file(f_path, mood='titles')
-    elif mood == 'frequencies':
-        parag, select = read_from_file(f_path, mood='frequencies')
+    if mode == 'titles':
+        parag, select = read_from_file(f_path, mode='titles')
+    elif mode == 'frequencies':
+        parag, select = read_from_file(f_path, mode='frequencies')
     else:
         raise ValueError
 
@@ -144,11 +152,11 @@ if __name__ == "__main__":
         if compression_rate not in [10, 20, 30]:
             raise ValueError
 
-        mood_int = int(input("%s topic-picker technique: \n1 - titles, \n2 - frequencies\n technique: " % valid))
-        if mood_int == 1:
-            mood = "titles"
-        elif mood_int == 2:
-            mood = "frequencies"
+        mode_int = int(input("%s topic-picker technique: \n1 - titles, \n2 - frequencies\n technique: " % valid))
+        if mode_int == 1:
+            mode = "titles"
+        elif mode_int == 2:
+            mode = "frequencies"
         else:
             raise ValueError
 
@@ -158,28 +166,31 @@ if __name__ == "__main__":
         # The cycle will go on until validation
         print("Error! This is not a valid number, using default value")
         compression_rate: int = 10
-        mood = "titles"
+        mode = "titles"
 
-    print("Summarization.\nReduction percentage: {} | topic-picker technique: {}".format(compression_rate, mood))
+    print("\nSummarization.\nReduction percentage: {} | topic-picker technique: {}".format(compression_rate, mode))
 
     nasari_dict = parse_nasari_dictionary(nasari_path)
     # showing progress bar
     progress_bar = tqdm(desc="Percentage", total=5, file=sys.stdout)
-    print("\n----------------------------")
+    print("\n------------------------------------------------------")
 
     for f_path in file_paths:
         name_file = 'summary_' + str(f_path.name) + ".txt"
         path_write = path_output / name_file
 
         # read files and create gold
-        paragraphs, selected, gold = handle_reader_and_gold(f_path, mood)
+        paragraphs, selected, (gold, del_gold) = handle_reader_and_gold(f_path, mode)
 
         with open(path_write, "w") as write:
-            summary, selected_paragraphs = summarization()
+            summary, selected_paragraphs, deleted_paragraphs = summarization()
             print("Selected paragraphs:" + str(selected_paragraphs))
             print("Gold paragraphs:" + str(gold))
-
-            accuracy = similarity(selected_paragraphs, gold)
+            accuracy_selected = similarity(selected_paragraphs, gold)
+            print("###############################################")
+            print("Deleted paragraphs:" + str(deleted_paragraphs))
+            print("Deleted Gold paragraphs:" + str(del_gold))
+            accuracy_deleted = similarity(deleted_paragraphs, del_gold)
 
             # write to file
             for par in summary:

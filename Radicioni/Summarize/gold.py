@@ -27,27 +27,27 @@ def compare_listcomp(x, y):
     return [i for i, j in zip(x, y) if i == j]
 
 
-@speed_test
+# @speed_test
 def compare_intersect(x, y):
     return frozenset(x).intersection(y)
 
 
-def similarity(selected_paragraphs, gold):
+def similarity(paragraphs, gold):
     """
     Percentage similarity of lists
     using "|" operator + compare_intersect()
     Args:
-        selected_paragraphs: selected paragraphs
+        paragraphs: selected paragraphs
         gold: gold standard choice
     Returns:
         percentage of similarity
     """
     #
-    total_length = len(set(selected_paragraphs) | set(gold))
-    res = len(compare_intersect(selected_paragraphs, gold)) / float(total_length) * 100
+    total_length = len(set(paragraphs) | set(gold))
+    res = len(compare_intersect(paragraphs, gold)) / float(total_length) * 100
 
     # printing result
-    print("Percentage similarity among lists is : " + str(res) + "\n")
+    print("Percentage similarity among the two lists is : " + str(res) + "\n")
     return res
 
 
@@ -75,13 +75,15 @@ def tf_idf_sum(corpus, rate):
     # sort it by score
     sum_tf = sorted(sum_tf.items(), key=lambda x: x[1], reverse=False)
 
-    # delete the values
+    # delete the paragraphs with worst score
     n_deleted_values: int = int(rate / 100 * len(sum_tf))
+    deleted_prg = sum_tf[:n_deleted_values]
     del sum_tf[:n_deleted_values]
 
     # sort them again
     sum_tf = sorted(sum_tf, key=lambda x: x[0], reverse=False)
     # unzip using zip and (*) operator
     res = list(zip(*sum_tf))
+    res2 = list(zip(*deleted_prg))
 
-    return res[0]
+    return res[0], sorted(res2[0])

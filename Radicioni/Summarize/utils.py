@@ -1,11 +1,11 @@
 from Radicioni.Wsd.utilities import bag_of_word
 
 
-def read_from_file(path, mood='titles'):
+def read_from_file(path, mode='titles'):
     """It parse the given document give input
      Args:
         path: input document path
-        mood: if 'titles' it uses titles to create contexts; if 'frequencies' it uses frequencies of words in the text
+        mode: if 'titles' it uses titles to create contexts; if 'frequencies' it uses frequencies of words in the text
      Returns:
          a list of all document's paragraph and a list of all titles/bows
      """
@@ -24,9 +24,9 @@ def read_from_file(path, mood='titles'):
                 else:
                     selected.append(paragraph)
         # Removes the link to the source of the article, placed on the top
-        if mood == 'titles':
+        if mode == 'titles':
             selected.pop(0)
-        elif mood == 'frequencies':
+        elif mode == 'frequencies':
             bag = []
             for word in paragraphs:
                 for bow in bag_of_word(word):
