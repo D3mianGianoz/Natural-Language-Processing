@@ -5,7 +5,7 @@ import xml.etree.ElementTree as eT
 from lxml import etree as exml
 from tqdm import tqdm
 
-from Radicioni.Wsd.utilities import lesk, get_sense_index, pos_validity, lesk_demaria
+from Radicioni.Wsd.utilities import get_sense_index, pos_validity, lesk_demaria
 
 
 def parse_xml(path):

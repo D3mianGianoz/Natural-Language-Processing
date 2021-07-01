@@ -62,9 +62,10 @@ def get_nasari_vectors(sense2s_dic, word, nasari_dict):
     Args:
         sense2s_dic: dic for the babel key
         word: what we are looking for
-        Nasari dict:
+        nasari_dict: the dict of nasari
     Returns:
         Nasari vectors in a dense form of a word
+
     """
 
     babel_codes = sense2s_dic[word]

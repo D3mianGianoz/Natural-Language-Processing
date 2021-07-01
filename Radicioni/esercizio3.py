@@ -44,9 +44,11 @@ def get_nasari_vectors(title, nasari_dict):
 def create_context(titles, nas_dict):
     """Creates the context
     Args:
-        titles
+        titles:
+        nas_dict: the dict containing nasari
     Returns:
         A unified dict of the context
+
     """
     context = {}
 
