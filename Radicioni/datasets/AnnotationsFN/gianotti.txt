@@ -27,17 +27,16 @@ Synset('employer.n.01')
 Synset('field.n.06')
 Synset('position.n.06')
 Synset('task.n.02')
-# LU
-# Nessuna
+# LU -- nessuna
 #3 Authority
 # Name
 Synset('authority.n.01')
 # FE
 Synset('agent.n.06')
-Synset('theme.n.01')
 Synset('descriptor.n.01')
 Synset('domain.n.01')
 Synset('source.n.01')
+Synset('theme.n.01')
 # LU
 Synset('authority.n.02')
 Synset('dominion.n.01')
@@ -52,6 +51,7 @@ Synset('back.a.06')
 Synset('buyer.n.01')
 Synset('explanation.n.01')
 Synset('goods.n.01')
+Synset('purpose.n.01')
 Synset('manner.n.01')
 Synset('means.n.02')
 Synset('money.n.01')

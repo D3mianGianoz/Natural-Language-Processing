@@ -70,9 +70,10 @@ def evaluate_performance(gold_path, out_path, none=True):
                 contatore += 1
                 result = items_in_results[index]
                 gold = items_in_golden[index]
-            # print(f'risultato:{result} ---- golden:{gold}')
-            if result == gold:
-                test += 1
+                # print(f'risultato:{result} ---- golden:{gold}')
+                if result == gold:
+                    test += 1
+
             index += 1
 
         total_len = contatore
@@ -222,19 +223,19 @@ if __name__ == "__main__":
                 ctx_w, ctx_s = populate_contexts(f=frame, mode=fn_modes[0])
                 sense_name = bag_of_words(ctx_fn=ctx_w, ctx_wn=ctx_s)
                 # Write it to file
-                out.write("{0}, {1},Wordnet Synset,{2}\n".format(fn_modes[0], frame.name, sense_name))
+                out.write("{0},{1},{2}\n".format(fn_modes[0], frame.name, sense_name))
 
                 # Implemented (Demaria)
                 ctx_w, ctx_s = populate_contexts(f=frame, mode=fn_modes[1])
                 for (i, j) in zip(ctx_w, ctx_s):
                     sense_name = bag_of_words(ctx_fn=i, ctx_wn=j)
-                    out.write("{0}, {1},Wordnet Synset,{2}\n".format(fn_modes[1][:-1], i[0], sense_name))
+                    out.write("{0},{1},{2}\n".format(fn_modes[1][:-1], i[0], sense_name))
 
                 # Implemented (Gianotti)
                 ctx_w_LU, ctx_s_LU = populate_contexts(f=frame, mode=fn_modes[2])
                 for (i, j) in zip(ctx_w_LU, ctx_s_LU):
                     sense_name = bag_of_words(ctx_fn=i, ctx_wn=j)
-                    out.write("{0}, {1},Wordnet Synset,{2}\n".format(fn_modes[2][:-1], i, sense_name))
+                    out.write("{0},{1},{2}\n".format(fn_modes[2][:-1], i, sense_name))
 
         print(f'\nCreated output file: {surname_path}')
         print("\nEvaluating model performance")

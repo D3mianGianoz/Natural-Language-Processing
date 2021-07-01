@@ -1,111 +1,111 @@
-Frame name, Certainty,Wordnet Synset,certainty.n.01
-FE, Cognizer,Wordnet Synset,None
-FE, Concessive,Wordnet Synset,concessive.a.01
-FE, Content,Wordnet Synset,content.v.02
-FE, Degree,Wordnet Synset,degree.n.01
-FE, Explanation,Wordnet Synset,explanation.n.01
-FE, Expressor,Wordnet Synset,None
-FE, Manner,Wordnet Synset,manner.n.01
-FE, Topic,Wordnet Synset,subject.n.01
-LU, believe,Wordnet Synset,believe.v.01
-LU, certain,Wordnet Synset,certain.s.01
-LU, certainty,Wordnet Synset,certainty.n.01
-LU, confidence,Wordnet Synset,assurance.n.01
-LU, confident,Wordnet Synset,confident.a.01
-LU, convinced,Wordnet Synset,convert.v.09
-LU, doubt,Wordnet Synset,doubt.n.01
-LU, doubt,Wordnet Synset,doubt.n.01
-LU, doubtful,Wordnet Synset,doubtful.s.01
-LU, dubious,Wordnet Synset,doubtful.s.02
-LU, know,Wordnet Synset,know.n.01
-LU, positive,Wordnet Synset,positive.a.01
-LU, skeptic,Wordnet Synset,skeptic.n.01
-LU, skeptical,Wordnet Synset,disbelieving.s.01
-LU, skepticism,Wordnet Synset,incredulity.n.01
-LU, sure,Wordnet Synset,certain.a.02
-LU, trust,Wordnet Synset,trust.n.01
-LU, uncertain,Wordnet Synset,uncertain.a.01
-LU, uncertainty,Wordnet Synset,uncertainty.n.01
-LU, unsure,Wordnet Synset,diffident.a.02
-Frame name, Firing_point,Wordnet Synset,point.n.10
-FE, Descriptor,Wordnet Synset,form.n.01
-FE, Detonator,Wordnet Synset,detonator.n.01
-FE, point,Wordnet Synset,point.v.10
-FE, Name,Wordnet Synset,name.n.01
-FE, location,Wordnet Synset,location.n.01
-LU, firing point,Wordnet Synset,None
-Frame name, Breathing,Wordnet Synset,breathe.v.01
-FE, Agent,Wordnet Synset,agent.n.01
-FE, Air,Wordnet Synset,air.n.02
-FE, Circumstances,Wordnet Synset,circumstance.n.01
-FE, Degree,Wordnet Synset,degree.n.01
-FE, Depictive,Wordnet Synset,delineative.s.01
-FE, Distance,Wordnet Synset,distance.n.01
-FE, Duration,Wordnet Synset,duration.n.01
-FE, cause,Wordnet Synset,cause.n.01
-FE, Goal,Wordnet Synset,goal.n.01
-FE, Instrument,Wordnet Synset,instrument.n.01
-FE, cause,Wordnet Synset,cause.n.01
-FE, Manner,Wordnet Synset,manner.n.01
-FE, Means,Wordnet Synset,means.n.01
-FE, Path,Wordnet Synset,way.n.05
-FE, Place,Wordnet Synset,topographic_point.n.01
-FE, Purpose,Wordnet Synset,purpose.n.01
-FE, Source,Wordnet Synset,beginning.n.04
-FE, Time,Wordnet Synset,clock_time.n.01
-LU, blow,Wordnet Synset,blow.n.01
-LU, breath,Wordnet Synset,breath.n.01
-LU, breathe,Wordnet Synset,breathe.v.01
-LU, exhalation [act],Wordnet Synset,None
-LU, exhalation,Wordnet Synset,halitus.n.01
-LU, exhale,Wordnet Synset,exhale.v.01
-LU, expire,Wordnet Synset,die.v.01
-LU, gasp,Wordnet Synset,gasp.n.01
-LU, huff,Wordnet Synset,huff.n.01
-LU, inhalation [breath],Wordnet Synset,None
-LU, inhalation,Wordnet Synset,inhalation.n.01
-LU, inhale,Wordnet Synset,inhale.v.01
-LU, inspire,Wordnet Synset,inspire.v.01
-LU, insufflate,Wordnet Synset,insufflate.v.01
-LU, pant,Wordnet Synset,pant.n.01
-LU, puff,Wordnet Synset,puff.n.01
-LU, respire,Wordnet Synset,respire.v.01
-LU, sigh,Wordnet Synset,sigh.n.02
-LU, sigh,Wordnet Synset,sigh.n.02
-LU, suspire,Wordnet Synset,breathe.v.01
-Frame name, Delivery,Wordnet Synset,delivery.n.01
-FE, Beneficiary,Wordnet Synset,beneficiary.a.01
-FE, Circumstances,Wordnet Synset,circumstance.n.01
-FE, Container,Wordnet Synset,container.n.01
-FE, Cotheme,Wordnet Synset,None
-FE, Deliverer,Wordnet Synset,deliverer.n.04
-FE, Depictive,Wordnet Synset,delineative.s.01
-FE, description,Wordnet Synset,description.n.01
-FE, Explanation,Wordnet Synset,explanation.n.01
-FE, Goal,Wordnet Synset,goal.n.01
-FE, Manner,Wordnet Synset,manner.n.01
-FE, Means,Wordnet Synset,entail.v.01
-FE, Path,Wordnet Synset,path.n.03
-FE, iterations,Wordnet Synset,iteration.n.01
-FE, Place,Wordnet Synset,topographic_point.n.01
-FE, Purpose,Wordnet Synset,purpose.n.01
-FE, Recipient,Wordnet Synset,recipient.n.01
-FE, Source,Wordnet Synset,source.v.02
-FE, Speed,Wordnet Synset,travel_rapidly.v.01
-FE, Theme,Wordnet Synset,subject.n.01
-FE, Time,Wordnet Synset,time.n.02
-FE, Vehicle,Wordnet Synset,vehicle.n.02
-LU, deliver,Wordnet Synset,deliver.v.01
-LU, delivery,Wordnet Synset,delivery.n.01
-Frame name, Motion_scenario,Wordnet Synset,movement.n.03
-FE, Area,Wordnet Synset,area.n.05
-FE, Cotheme,Wordnet Synset,None
-FE, Distance,Wordnet Synset,distance.n.01
-FE, Duration,Wordnet Synset,duration.n.01
-FE, Goal,Wordnet Synset,goal.n.01
-FE, transportation,Wordnet Synset,transportation.n.05
-FE, Path,Wordnet Synset,way.n.05
-FE, Source,Wordnet Synset,source.v.02
-FE, Speed,Wordnet Synset,speed.n.01
-FE, Theme,Wordnet Synset,subject.n.01
-FE, Time,Wordnet Synset,time.v.02
+Frame name,Certainty,certainty.n.01
+FE,Cognizer,None
+FE,Concessive,concessive.a.01
+FE,Content,content.v.02
+FE,Degree,degree.n.01
+FE,Explanation,explanation.n.01
+FE,Expressor,None
+FE,Manner,manner.n.01
+FE,Topic,subject.n.01
+LU,believe,believe.v.01
+LU,certain,certain.s.01
+LU,certainty,certainty.n.01
+LU,confidence,assurance.n.01
+LU,confident,confident.a.01
+LU,convinced,convert.v.09
+LU,doubt,doubt.n.01
+LU,doubt,doubt.n.01
+LU,doubtful,doubtful.s.01
+LU,dubious,doubtful.s.02
+LU,know,know.n.01
+LU,positive,positive.a.01
+LU,skeptic,skeptic.n.01
+LU,skeptical,disbelieving.s.01
+LU,skepticism,incredulity.n.01
+LU,sure,certain.a.02
+LU,trust,trust.n.01
+LU,uncertain,uncertain.a.01
+LU,uncertainty,uncertainty.n.01
+LU,unsure,diffident.a.02
+Frame name,Firing_point,point.n.10
+FE,Descriptor,form.n.01
+FE,Detonator,detonator.n.01
+FE,point,point.v.10
+FE,Name,name.n.01
+FE,location,location.n.01
+LU,firing point,None
+Frame name,Breathing,breathe.v.01
+FE,Agent,agent.n.01
+FE,Air,air.n.02
+FE,Circumstances,circumstance.n.01
+FE,Degree,degree.n.01
+FE,Depictive,delineative.s.01
+FE,Distance,distance.n.01
+FE,Duration,duration.n.01
+FE,cause,cause.n.01
+FE,Goal,goal.n.01
+FE,Instrument,instrument.n.01
+FE,cause,cause.n.01
+FE,Manner,manner.n.01
+FE,Means,means.n.01
+FE,Path,way.n.05
+FE,Place,topographic_point.n.01
+FE,Purpose,purpose.n.01
+FE,Source,beginning.n.04
+FE,Time,clock_time.n.01
+LU,blow,blow.n.01
+LU,breath,breath.n.01
+LU,breathe,breathe.v.01
+LU,exhalation [act],None
+LU,exhalation,halitus.n.01
+LU,exhale,exhale.v.01
+LU,expire,die.v.01
+LU,gasp,gasp.n.01
+LU,huff,huff.n.01
+LU,inhalation [breath],None
+LU,inhalation,inhalation.n.01
+LU,inhale,inhale.v.01
+LU,inspire,inspire.v.01
+LU,insufflate,insufflate.v.01
+LU,pant,pant.n.01
+LU,puff,puff.n.01
+LU,respire,respire.v.01
+LU,sigh,sigh.n.02
+LU,sigh,sigh.n.02
+LU,suspire,breathe.v.01
+Frame name,Delivery,delivery.n.01
+FE,Beneficiary,beneficiary.a.01
+FE,Circumstances,circumstance.n.01
+FE,Container,container.n.01
+FE,Cotheme,None
+FE,Deliverer,deliverer.n.04
+FE,Depictive,delineative.s.01
+FE,description,description.n.01
+FE,Explanation,explanation.n.01
+FE,Goal,goal.n.01
+FE,Manner,manner.n.01
+FE,Means,entail.v.01
+FE,Path,path.n.03
+FE,iterations,iteration.n.01
+FE,Place,topographic_point.n.01
+FE,Purpose,purpose.n.01
+FE,Recipient,recipient.n.01
+FE,Source,source.v.02
+FE,Speed,travel_rapidly.v.01
+FE,Theme,subject.n.01
+FE,Time,time.n.02
+FE,Vehicle,vehicle.n.02
+LU,deliver,deliver.v.01
+LU,delivery,delivery.n.01
+Frame name,Motion_scenario,movement.n.03
+FE,Area,area.n.05
+FE,Cotheme,None
+FE,Distance,distance.n.01
+FE,Duration,duration.n.01
+FE,Goal,goal.n.01
+FE,transportation,transportation.n.05
+FE,Path,way.n.05
+FE,Source,source.v.02
+FE,Speed,speed.n.01
+FE,Theme,subject.n.01
+FE,Time,time.v.02

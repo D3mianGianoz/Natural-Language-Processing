@@ -1,83 +1,83 @@
-Frame name, Biological_classification,Wordnet Synset,classification.n.02
-FE, Member,Wordnet Synset,member.n.01
-FE, Property,Wordnet Synset,property.n.01
-FE, Rank,Wordnet Synset,rank.n.01
-FE, Subtype,Wordnet Synset,None
-LU, class,Wordnet Synset,class.n.01
-LU, domain,Wordnet Synset,sphere.n.01
-LU, family,Wordnet Synset,family.n.01
-LU, genus,Wordnet Synset,genus.n.01
-LU, kingdom,Wordnet Synset,kingdom.n.01
-LU, order,Wordnet Synset,order.n.01
-LU, phylum,Wordnet Synset,phylum.n.01
-LU, species,Wordnet Synset,species.n.02
-LU, variety,Wordnet Synset,assortment.n.01
-Frame name, Employment_scenario,Wordnet Synset,scenario.n.03
-FE, Compensation,Wordnet Synset,compensation.n.01
-FE, Duration,Wordnet Synset,duration.n.01
-FE, Employee,Wordnet Synset,employee.n.01
-FE, Employer,Wordnet Synset,employer.n.01
-FE, Field,Wordnet Synset,field.n.03
-FE, Position,Wordnet Synset,position.n.16
-FE, Task,Wordnet Synset,task.v.01
-Frame name, Authority,Wordnet Synset,authority.n.03
-FE, Agent,Wordnet Synset,agent.n.01
-FE, Descriptor,Wordnet Synset,form.n.01
-FE, Domain,Wordnet Synset,sphere.n.01
-FE, Source,Wordnet Synset,beginning.n.04
-FE, Theme,Wordnet Synset,subject.n.01
-LU, authority,Wordnet Synset,authority.n.01
-LU, dominion,Wordnet Synset,dominion.n.01
-LU, jurisdiction,Wordnet Synset,legal_power.n.01
-LU, power,Wordnet Synset,power.n.01
-LU, sway,Wordnet Synset,sway.n.01
-Frame name, Commerce_sell,Wordnet Synset,sell.v.06
-FE, Back,Wordnet Synset,back.n.01
-FE, Buyer,Wordnet Synset,buyer.n.01
-FE, Explanation,Wordnet Synset,explanation.n.01
-FE, Goods,Wordnet Synset,good.n.01
-FE, purpose,Wordnet Synset,purpose.n.01
-FE, Manner,Wordnet Synset,manner.n.01
-FE, Means,Wordnet Synset,entail.v.01
-FE, Money,Wordnet Synset,money.n.01
-FE, iterations,Wordnet Synset,iteration.n.01
-FE, Place,Wordnet Synset,topographic_point.n.01
-FE, Purpose,Wordnet Synset,purpose.n.01
-FE, Rate,Wordnet Synset,rate.n.01
-FE, Relay,Wordnet Synset,relay.n.01
-FE, Result,Wordnet Synset,leave.v.07
-FE, Seller,Wordnet Synset,seller.n.01
-FE, Time,Wordnet Synset,time.n.01
-FE, Unit,Wordnet Synset,unit.n.03
-LU, auction,Wordnet Synset,auction.n.02
-LU, auction,Wordnet Synset,auction.n.02
-LU, retail,Wordnet Synset,retail.v.01
-LU, retailer,Wordnet Synset,retailer.n.01
-LU, sale,Wordnet Synset,sale.n.01
-LU, sell,Wordnet Synset,sell.n.01
-LU, seller,Wordnet Synset,seller.n.01
-LU, vend,Wordnet Synset,peddle.v.01
-LU, vendor,Wordnet Synset,seller.n.01
-Frame name, Locale,Wordnet Synset,venue.n.01
-FE, parts,Wordnet Synset,parts.n.01
-FE, possessor,Wordnet Synset,owner.n.02
-FE, Descriptor,Wordnet Synset,form.n.01
-FE, cause,Wordnet Synset,cause.n.01
-FE, purpose,Wordnet Synset,purpose.n.01
-FE, Locale,Wordnet Synset,venue.n.01
-FE, Name,Wordnet Synset,name.n.06
-FE, event,Wordnet Synset,event.n.02
-FE, location,Wordnet Synset,location.n.01
-LU, area,Wordnet Synset,area.n.01
-LU, earth,Wordnet Synset,earth.n.01
-LU, grounds,Wordnet Synset,evidence.n.01
-LU, locale,Wordnet Synset,venue.n.01
-LU, location,Wordnet Synset,location.n.01
-LU, place,Wordnet Synset,topographic_point.n.01
-LU, pocket,Wordnet Synset,pouch.n.02
-LU, point,Wordnet Synset,point.n.01
-LU, region,Wordnet Synset,region.n.01
-LU, regional,Wordnet Synset,regional.s.02
-LU, site,Wordnet Synset,site.n.01
-LU, spot,Wordnet Synset,topographic_point.n.01
-LU, zone,Wordnet Synset,zone.n.01
+Frame name,Biological_classification,classification.n.02
+FE,Member,member.n.01
+FE,Property,property.n.01
+FE,Rank,rank.n.01
+FE,Subtype,None
+LU,class,class.n.01
+LU,domain,sphere.n.01
+LU,family,family.n.01
+LU,genus,genus.n.01
+LU,kingdom,kingdom.n.01
+LU,order,order.n.01
+LU,phylum,phylum.n.01
+LU,species,species.n.02
+LU,variety,assortment.n.01
+Frame name,Employment_scenario,scenario.n.03
+FE,Compensation,compensation.n.01
+FE,Duration,duration.n.01
+FE,Employee,employee.n.01
+FE,Employer,employer.n.01
+FE,Field,field.n.03
+FE,Position,position.n.16
+FE,Task,task.v.01
+Frame name,Authority,authority.n.03
+FE,Agent,agent.n.01
+FE,Descriptor,form.n.01
+FE,Domain,sphere.n.01
+FE,Source,beginning.n.04
+FE,Theme,subject.n.01
+LU,authority,authority.n.01
+LU,dominion,dominion.n.01
+LU,jurisdiction,legal_power.n.01
+LU,power,power.n.01
+LU,sway,sway.n.01
+Frame name,Commerce_sell,sell.v.06
+FE,Back,back.n.01
+FE,Buyer,buyer.n.01
+FE,Explanation,explanation.n.01
+FE,Goods,good.n.01
+FE,purpose,purpose.n.01
+FE,Manner,manner.n.01
+FE,Means,entail.v.01
+FE,Money,money.n.01
+FE,iterations,iteration.n.01
+FE,Place,topographic_point.n.01
+FE,Purpose,purpose.n.01
+FE,Rate,rate.n.01
+FE,Relay,relay.n.01
+FE,Result,leave.v.07
+FE,Seller,seller.n.01
+FE,Time,time.n.01
+FE,Unit,unit.n.03
+LU,auction,auction.n.02
+LU,auction,auction.n.02
+LU,retail,retail.v.01
+LU,retailer,retailer.n.01
+LU,sale,sale.n.01
+LU,sell,sell.n.01
+LU,seller,seller.n.01
+LU,vend,peddle.v.01
+LU,vendor,seller.n.01
+Frame name,Locale,venue.n.01
+FE,parts,parts.n.01
+FE,possessor,owner.n.02
+FE,Descriptor,form.n.01
+FE,cause,cause.n.01
+FE,purpose,purpose.n.01
+FE,Locale,venue.n.01
+FE,Name,name.n.06
+FE,event,event.n.02
+FE,location,location.n.01
+LU,area,area.n.01
+LU,earth,earth.n.01
+LU,grounds,evidence.n.01
+LU,locale,venue.n.01
+LU,location,location.n.01
+LU,place,topographic_point.n.01
+LU,pocket,pouch.n.02
+LU,point,point.n.01
+LU,region,region.n.01
+LU,regional,regional.s.02
+LU,site,site.n.01
+LU,spot,topographic_point.n.01
+LU,zone,zone.n.01
