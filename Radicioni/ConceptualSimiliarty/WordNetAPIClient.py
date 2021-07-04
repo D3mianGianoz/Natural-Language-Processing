@@ -21,7 +21,7 @@ class WordNetAPIClient:
         """It measures the distance (depth) between the given Synset and the WordNet's root.
         Args:
             synset: synset to reach from the root
-            lcs:Lowest Common Subsumer - the first common sense or most specific ancestor node
+            lcs: Lowest Common Subsumer - the first common sense or most specific ancestor node
         Returns:
             the minimum path which contains LCS
         """
