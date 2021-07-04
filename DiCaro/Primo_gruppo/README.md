@@ -133,7 +133,7 @@ _RISULTATI_:
 * Questo sembra confermare che i termini generici tendono ad essere meno omogenei nelle definizioni 
 mentre i termini specifici utilizzano più spesso le stesse parole:
 
-* In particolare l'oggetto concreto e specifico (sharpener) che ha la maggiore similarità ha un valore di POS nella media, rivelando che le definizioni sono molto simili dal punto di vista del Part to Speach, avendo gli stessi termini più o meno distribuiti in tutte le definizioni.
+* In particolare l'oggetto concreto e specifico (sharpener) che ha la maggiore similarità ha un valore di POS nella media, rivelando che le definizioni sono molto simili dal punto di vista del Part to Speech, avendo gli stessi termini più o meno distribuiti in tutte le definizioni.
 
 ### TLN_dicaro_1.3
 
