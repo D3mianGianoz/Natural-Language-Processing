@@ -1,8 +1,9 @@
 import math
 import pyconll
+import pandas as pd
 from collections import Counter
 
-from Mazzei.Smoothing import basic_smooth
+from Mazzei.Smoothing import basic_smooth, baseline
 
 ALMOST_ZERO_P = -99999
 LATIN = 42
@@ -57,8 +58,15 @@ class PosTagger:
         # 2. Computing probabilities
         self.prob_word_given_tag, self.prob_tag_given_pred_tag = self.calculate_prob()
         # 3. Smoothing/testing
-        self.basic_s = basic_smooth(path=self.lang["test"],
-                                    emission=self.prob_word_given_tag, tags=self.prob_tag_given_pred_tag)
+        smoothing_tuple = basic_smooth(path=self.lang["test"],
+                                       emission=self.prob_word_given_tag, tags=self.prob_tag_given_pred_tag)
+
+        self.rating_metrics = {
+            "max_noun smoothing": smoothing_tuple[0],
+            "NN_and_VB smoothing": smoothing_tuple[1],
+            "uniform smoothing": smoothing_tuple[2]
+        }
+
         # 4. Decoding and rating performance
         self.rate(path_to_test=self.lang["test"])
 
@@ -111,7 +119,7 @@ class PosTagger:
 
     def calculate_prob(self):
         """
-        # Creating the statistical model and calculate P(ti | ti-1) and P(wi | ti)
+        Creating the statistical model and calculate P(ti | ti-1) and P(wi | ti)
         P(ti | ti-1): probabilità che compaia un tag t dato un tag precedente ti
         P(wi | ti): probabilità che un tag t sia attribuito ad una parola w
         :return:
@@ -145,25 +153,10 @@ class PosTagger:
                 result[element][n_tag] = p
         return result
 
-    def rate(self, path_to_test: str):
-        phrases, correct_tags = self.get_test_values(path_to_test)
-        total_n_words = 0
-
-        for phrase in phrases[:3]:
-            total_n_words += len(phrase)
-            for smooth in self.basic_s:
-                # TODO statistical smoothing
-                pos_backpointer, viterbi = self.viterbi_algo(phrase, smooth)
-                print(pos_backpointer)
-                pretty_print(viterbi, 2)
-                # pretty_print(pos_backpointer, 2)
-
-            # decoding = self.viterbi(phrase, self.prob_tag_given_pred_tag, self.prob_word_given_tag, dict())
-
     @staticmethod
     def get_test_values(path_to_test):
         """
-        Retrive from .pyconll files the test set
+        Retrive from .pyconll files the test set and parse it in appropriate data structure
         :param path_to_test: position on the disk
         :return: test_set: list of phrase, test_pos: list of pos tagging (gold)
         """
@@ -181,13 +174,59 @@ class PosTagger:
 
         return test_set, test_pos
 
+    def rate(self, path_to_test: str) -> None:
+        """
+        Method to evaluate the performance of our system, final step in the initialization of our class
+        :param path_to_test: path of the test set used for evaluation
+        """
+        phrases, correct_tags = self.get_test_values(path_to_test)
+
+        self.rating_metrics["baseline"] = dict()
+
+        for key, metric in self.rating_metrics.items():
+            # Reset for every metrics
+            n_correct_pos = 0
+            total_n_words = 0
+
+            for j, phrase in enumerate(phrases):
+                # TODO statistical smoothing
+                total_n_words += len(phrase)
+                if key != "baseline":
+                    pos_backpointer, viterbi = self.viterbi_algo(phrase, metric)
+                    # pretty_v = pd.DataFrame(viterbi)
+                    # print(pretty_v.head())
+                    # pretty_print(viterbi, 2)
+                else:
+                    pos_backpointer = baseline(phrase, self.n_tags_given_word)
+
+                # print(pos_backpointer)
+                # pretty_print(pos_backpointer, 2)
+
+                for k, token in enumerate(phrase):
+                    if pos_backpointer[token] == correct_tags[j][k]:
+                        n_correct_pos += 1
+
+            print(f"Accuracy of technique {key} is: {round((n_correct_pos * 100) / total_n_words, 3)} %")
+
     def viterbi_algo(self, phrase: list, smoothed_p: dict):
         """
         In una fase preliminare viene inizializzata la prima colonna, per ogni tag, con la somma dei logaritmi
         della probabilità che quel tag sia preceduto dal tag START (probabilità di transizione) e della probabilità
         che alla prima parola della frase sia associato un tale tag (probabilità di emissione). Nel caso non
         esistesse una entry nella probabilità di transizione (default e smoothing) per un tag la cella nella matrice
-        corrispondente, allora viene messa a probabilità nulla.
+        corrispondente, allora viene messa a probabilità nulla (ALMOST_ZERO_P).
+
+        Segue poi una fase ricorsiva dove per ogni parola, per ogni possibile tag, vengono calcolate tutte le
+        somme in logaritmo delle probabilità riferite alla colonna precedente più la somma di quelle riferite alla
+        parola attuale; nella colonna attuale viene salvato solo il valore massimo tra tutte quelle appena calcolate.
+        In parallelo viene salvato anche il tag con la probabilità più alta di essere riferito alla parola precedente.
+        In questo modo viene tenuta traccia del miglior tag da attribuire ad ogni parola.
+
+        L’ultimo passaggio è analogo al primo, ma fa riferimento al tag LAST andando a completare l’ultima
+        colonna della matrice. A causa dell' utilizzo dei log una probabilità nulla non sarà espressa con 0 ma con un
+        numero molto piccolo, un questo caso si è scelto ALMOST_ZERO_P, usandolo nella matrice risultante
+        Alla fine dell’algoritmo si ottiene, grazie alla matrice di Viterbi, la più probabile taggatura (POS tagging)
+        per la frase in input.
 
         :param phrase: frase da analizzare
         :param smoothed_p: dizionario extra per migliorare le performance
@@ -204,6 +243,8 @@ class PosTagger:
         maximum_tag: str = '_'  # init as empty space
 
         # 1. Initialization step
+        hmm_state: str
+
         for hmm_state in trans_prob.keys():
             if hmm_state != 'START':
                 # create the rows of the matrix
@@ -216,14 +257,13 @@ class PosTagger:
                 if hmm_state in trans_prob['START']:
                     first_word = phrase[0]
                     if first_word in smoothed_p:
-
                         if hmm_state in smoothed_p[first_word]:
                             probability = trans_prob['START'][hmm_state] + smoothed_p[first_word][hmm_state]
                     else:
                         if hmm_state in emission_prob[first_word]:
                             probability = trans_prob['START'][hmm_state] + emission_prob[first_word][hmm_state]
 
-                # Update the dictionaries
+                # Update the dictionaries key = pos:probability
                 viterbi[hmm_state].append(probability)
                 back_pointer[hmm_state].append(maximum_tag)
 
@@ -233,8 +273,9 @@ class PosTagger:
             if t != 0:
                 for state in trans_prob.keys():
                     if state != 'START':
-                        maximum_tag, bpointer, m_vit = self.maximum(
-                            viterbi, phrase[t], t - 1, maximum_tag, state, smoothed_p)
+                        maximum_tag, bpointer, m_vit = self.maximum(vit=viterbi, word=phrase[t],
+                                                                    index=t - 1, m_tag=maximum_tag,
+                                                                    current_state=state, smoothed=smoothed_p)
 
                         #  nella colonna attuale viene salvato solo il valore massimo tra tutte quelle appena calcolate.
                         viterbi[state].append(round(m_vit, 3))
@@ -242,18 +283,19 @@ class PosTagger:
 
                     # il tag con la probabilità più alta di essere riferito alla parola precedente
                     pos_back_pointer[phrase[t - 1]] = maximum_tag
-            last_t = t
+            # salvo l' indice finale
+            if t == len(phrase) - 1:
+                last_t = t
 
         # 3. Termination step
-        m_path = ALMOST_ZERO_P
-        last_tag = ''
+        m_path: float = ALMOST_ZERO_P
+        last_tag: str = '_'
         for s in trans_prob.keys():
-            if s != 'START':
-                if 'END' in trans_prob[s]:
-                    temp = viterbi[s][last_t] + trans_prob[s]['END']
-                    if temp > m_path:
-                        m_path = temp
-                        last_tag = s
+            if s != 'START' and 'END' in trans_prob[s]:
+                temp = viterbi[s][last_t] + trans_prob[s]['END']
+                if temp > m_path:
+                    m_path = temp
+                    last_tag = s
 
         # Update dictionary
         viterbi['END'] = m_path
@@ -262,17 +304,19 @@ class PosTagger:
         return pos_back_pointer, viterbi
 
     # Maximum function for viterbi  algorithm
-    def maximum(self, vit, word, index, m_tag, current_state, smoothed):
+    def maximum(self, vit: dict, word: str, index: int, m_tag: str, current_state: str, smoothed: dict):
         """
         Helper function of the viterbi algorithm, it handle the task of
         computing max and argmax for the recursion step
+
         :param vit: viterbi matrix
         :param word: token that we are currently analizing
         :param index: index of the previous word/column (t-1) important for retrieving probabilities
         :param m_tag: maximum tag founded till now
         :param current_state: HMM state that we are analyzing
         :param smoothed: auxiliary dict for word not present in the training set
-        :return: m_tag, bpointer, m_vit
+        :return: m_tag: max tag founded for probability,
+                bpointer: back pointer for reconstructing the path, m_vit: updated viterbi matrix
         """
 
         m_vit, bpointer = ALMOST_ZERO_P, ALMOST_ZERO_P
@@ -284,7 +328,7 @@ class PosTagger:
             if state != 'START':
 
                 if word in smoothed:
-                    # We are gonna use the smoothed probabilities
+                    # We are gonna use the smoothed probabilities in case of proper nouns
                     temp_dict = smoothed
                 else:
                     temp_dict = emission_prob
@@ -303,4 +347,7 @@ class PosTagger:
 
 
 if __name__ == '__main__':
-    pos = PosTagger(LATIN)
+    print("\nPOS tagging Latin LLCT\n")
+    pos_latin = PosTagger(LATIN)
+    print("\nPOS tagging Ancient Greek Perseus \n")
+    pos_greek = PosTagger(GREEK)
