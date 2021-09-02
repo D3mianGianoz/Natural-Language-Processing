@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>DiCaro.Primo_gruppo.aggregate_concepts API documentation</title>
+<meta name="description" content="CONSEGNA:
+* Date delle definizioni per quattro concetti (due concreti e due astratti),
+calcolare la similarità fra di esse …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>DiCaro.Primo_gruppo.aggregate_concepts</code></h1>
+</header>
+<section id="section-intro">
+<p>CONSEGNA:
+* Date delle definizioni per quattro concetti (due concreti e due astratti),
+calcolare la similarità fra di esse.</p>
+<ul>
+<li>
+<p>Aggregare anche le definizioni secondo le dimensioni di concretezza e
+specificità e ri-calcolare i punteggi.</p>
+</li>
+<li>
+<p>Effettuare del pre-processing se necessario prima del calcolo.
+Analizzare i risultati.</p>
+</li>
+</ul>
+<p>SVOLGIMENTO:
+* I termini sono:
+Generico
+Specifico
+==========================
+Concreto
+|
+Paper
+Sharpener
+Astratto
+|
+Courage
+Apprehension</p>
+<ul>
+<li>
+<p>Si è scelto di filtrare le stopwords come fase di pre-processing, per
+concentrarsi sui termini salienti.</p>
+</li>
+<li>
+<p>Si nota come, nel caso di termini concreti, la similarità sia
+significativamente più elevata di quanto non accada per i termini astratti.
+Questo è probabilmente dovuto alla possibilità di utilizzare degli attributi
+visivi per descrivere il termine.</p>
+</li>
+<li>
+<p>Nel caso dei termini astratti, invece, la mancanza di questi attributi
+concreti porta a definizioni meno simili fra di loro.</p>
+</li>
+<li>
+<p>Abbiamo provato, oltre la baseline, due diverse misure di similarità: Cosine sim and Pos</p>
+</li>
+</ul>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">## TLN_dicaro_1.1 &amp; TLN_dicaro_1.2
+
+&#34;&#34;&#34;
+CONSEGNA:
+* Date delle definizioni per quattro concetti (due concreti e due astratti),
+calcolare la similarità fra di esse.
+
+* Aggregare anche le definizioni secondo le dimensioni di concretezza e
+specificità e ri-calcolare i punteggi.
+
+* Effettuare del pre-processing se necessario prima del calcolo.
+Analizzare i risultati.
+
+SVOLGIMENTO:
+* I termini sono:
+                Generico    Specifico
+            ==========================
+Concreto    |   Paper     Sharpener
+Astratto    |   Courage   Apprehension
+
+* Si è scelto di filtrare le stopwords come fase di pre-processing, per
+concentrarsi sui termini salienti.
+
+* Si nota come, nel caso di termini concreti, la similarità sia
+significativamente più elevata di quanto non accada per i termini astratti.
+Questo è probabilmente dovuto alla possibilità di utilizzare degli attributi
+visivi per descrivere il termine.
+
+* Nel caso dei termini astratti, invece, la mancanza di questi attributi
+concreti porta a definizioni meno simili fra di loro.
+
+* Abbiamo provato, oltre la baseline, due diverse misure di similarità: Cosine sim and Pos
+
+&#34;&#34;&#34;
+
+# handling files
+import csv
+from pathlib import Path
+
+# numeric staples
+import numpy as np
+import pandas as pd
+
+# graph for the result
+import matplotlib.pyplot as plt
+from datetime import datetime
+
+# for preprocessing
+import nltk
+from nltk import word_tokenize
+from nltk.corpus import stopwords
+
+# Scikit learn stuff
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+SET = 0
+LIST = 1
+
+
+def load_data(path):
+    &#34;&#34;&#34; It reads che definition&#39;s CSV
+    Args:
+        path: csv path
+    Returns:
+         four list containing the read definitions.
+    &#34;&#34;&#34;
+    with open(path, &#34;r&#34;, encoding=&#34;utf-8&#34;) as definitions:
+        reader = csv.reader(definitions, delimiter=&#39;,&#39;)
+
+        def_abstract_generic = []
+        def_concrete_generic = []
+        def_abstract_specific = []
+        def_concrete_specific = []
+
+        first = True
+        for line in reader:
+            if not first:
+                def_abstract_generic.append(line[0])
+                def_concrete_generic.append(line[1])
+                def_abstract_specific.append(line[2])
+                def_concrete_specific.append(line[3])
+            else:
+                first = False
+
+        # Courage,Paper,Apprehension,Sharpener
+        return def_abstract_generic, def_concrete_generic, def_abstract_specific, def_concrete_specific
+
+
+def preprocess(definition, mode):
+    &#34;&#34;&#34; It does some preprocess: removes the stopwords, punctuation and does the
+    lemmatization of the tokens inside the sentence.
+    Args:
+        mode: enum for defining the kind of return data structure
+        definition: a string representing a definition
+    Returns:
+        - a set of string which contains the preprocessed string tokens.
+        OR
+        - original array preprocessed without eliminating duplicates
+    &#34;&#34;&#34;
+
+    lemmatized_tokens = None
+    # Removing stopwords
+    definition = definition.lower()
+    stop_words = set(stopwords.words(&#39;english&#39;))
+    punctuation = {&#39;,&#39;, &#39;;&#39;, &#39;(&#39;, &#39;)&#39;, &#39;{&#39;, &#39;}&#39;, &#39;:&#39;, &#39;?&#39;, &#39;!&#39;, &#39;.&#39;, &#39;\&#39;&#39;, &#39;\&#34;&#39;, &#39;``&#39;, &#34;&#39;&#39;&#34;}
+    wnl = nltk.WordNetLemmatizer()
+    tokens = nltk.word_tokenize(definition)
+    tokens = list(
+        filter(lambda x: x not in stop_words and x not in punctuation, tokens))
+
+    # Lemmatization
+    if mode == SET:
+        lemmatized_tokens = set(wnl.lemmatize(t) for t in tokens)
+    elif mode == LIST:
+        lemmatized_tokens = &#39; &#39;.join(list(wnl.lemmatize(t) for t in tokens))
+
+    return lemmatized_tokens
+
+
+def compute_overlap_terms(definitions):
+    &#34;&#34;&#34; It computes the overlap between the two set of the preprocessed terms
+    Args:
+        definitions: a list of definitions (strings)
+    Returns:
+        a list of length pow(len(definition)) containing the similarity
+    score of each definition.
+    &#34;&#34;&#34;
+
+    # list of similarity score for each type of definition (length: pow(len(definition)))
+    results = []
+
+    i = 0
+    while i &lt; len(definitions):
+        a = preprocess(definitions[i], SET)  # set of terms of the first definition
+        j = i + 1
+        while j &lt; len(definitions) - 1:
+            # print(i,j)  # DEBUG
+            b = preprocess(definitions[j], SET)  # set of terms of the second definition
+            # Computing similarity between definitions
+            t = len(a &amp; b) / min(len(a), len(b))
+            results.append(t)
+            j = j + 1
+
+        i = i + 1
+
+    return results
+
+
+def compute_overlap_pos(definitions):
+    &#34;&#34;&#34; It computes the overlap between the two set of the preprocessed definitions 
+    converted in POS tagging.
+    Args:
+        definitions: a list of definitions (strings)
+    Returns:
+        a list of length |definitions| containing the maximum similarity
+    score of each definition.
+    &#34;&#34;&#34;
+
+    results = []
+
+    i = 0
+    while i &lt; len(definitions):
+        text1 = word_tokenize(definitions[i])
+        temp_a = nltk.pos_tag(text1)
+        a = set(x[1] for x in temp_a)
+
+        j = i + 1
+
+        # Performed (n(n+1))/2 times
+        while j &lt; len(definitions) - 1:
+            # print(i,j)  # DEBUG
+            text2 = word_tokenize(definitions[j])
+            temp_b = nltk.pos_tag(text2)
+            b = set(y[1] for y in temp_b)
+
+            # Computing similarity between definitions
+            # intersec = [z for z in a if z in b]
+            t = len(a &amp; b) / min(len(a), len(b))  # normalization step
+            results.append(t)
+            j = j + 1
+
+        i = i + 1
+
+    return results
+
+
+def compute_overlap_cosine(definitions):
+    &#34;&#34;&#34; It computes the overlap between the two set of the preprocessed definitions 
+    using cosine similarity.
+    Args:
+        definitions: a list of definitions (strings)
+    Returns:
+        a list of length |definitions| containing the maximum similarity
+    score of each definition.
+    &#34;&#34;&#34;
+
+    # Preprocess step.
+    clean_defs = []
+    for de in definitions:
+        clean_defs.append(preprocess(de, LIST))
+
+    &#39;&#39;&#39;
+    CountVectorizer will create k vectors in n-dimensional space, where:
+    - k is the number of sentences,
+    - n is the number of unique words in all sentences combined.
+    If a sentence contains a certain word, the value will be 1 and 0 otherwise
+    &#39;&#39;&#39;
+    vectorizer = CountVectorizer().fit_transform(clean_defs)
+    vectors = vectorizer.toarray()
+
+    results = []
+    i = 0
+
+    # Performed (n(n+1))/2 times
+    while i &lt; len(vectors):
+        a = vectors[i]
+        j = i + 1
+        while j &lt; len(definitions) - 1:
+            # print(i,j)  # DEBUG
+            b = vectors[j]
+
+            # Computing cosine similarity between definitions.
+            # cosine_similarity() expect 2D arrays, and the input vectors are
+            # 1D arrays, so we need reshaping.
+            a = a.reshape(1, -1)
+            b = b.reshape(1, -1)
+            res = cosine_similarity(a, b)[0][0]
+
+            results.append(res)
+            j = j + 1
+
+        i = i + 1
+
+    return results
+
+
+def plot_panda_frame(title, my_percentage):
+    &#34;&#34;&#34;
+    Plot the matrix using mathplotlib and saves it in the output folder
+    Args:
+        title: name of the plot
+        my_percentage: matrix containing the proper percentage
+    &#34;&#34;&#34;
+    print_val = [[my_percentage[&#34;generic_abstract&#34;], my_percentage[&#34;generic_concrete&#34;]],
+                 [my_percentage[&#34;specific_abstract&#34;], my_percentage[&#34;specific_concrete&#34;]]]
+    df1 = pd.DataFrame(print_val, columns=[&#34;Abstract&#34;, &#34;Concrete&#34;],
+                       index=[&#34;Generic&#34;, &#34;Specific&#34;])
+    df1.plot.bar()
+    plt.xticks(rotation=30, horizontalalignment=&#34;center&#34;)
+    plt.title(title)
+    plt.xlabel(&#34;Concepts&#34;)
+    plt.ylabel(&#34;Similarity (higher is better)&#34;)
+    # saving plot in output folder
+    now = datetime.now().strftime(f&#34;{title} - %d.%m.%Y-%H:%M:%S&#34;)  # dd/mm/YY-H:M:S
+    plt.savefig(&#39;output/aggregate/{}.png&#39;.format(now))
+    plt.show()
+    print(f&#34;\n{title}&#39;s plot saved in output folder.&#34;)
+
+
+if __name__ == &#39;__main__&#39;:
+    path = Path(&#39;.&#39;) / &#39;input&#39; / &#39;1-1_defs.csv&#39;
+    defs = load_data(path)  # Loading the definition file
+
+    count = 0
+    first_row = []  # generic abstract, concrete
+    second_row = []  # specific abstract, concrete
+    third_row = []  # generic 2 abstract, concrete
+    fourth_row = []  # specific 2 abstract, concrete
+    fifth_row = []  # generic 3 abstract, concrete
+    sixth_row = []  # specific 3 abstract, concrete
+
+    percentage1 = {
+        &#34;generic_abstract&#34;: 0,
+        &#34;generic_concrete&#34;: 0,
+        &#34;specific_abstract&#34;: 0,
+        &#34;specific_concrete&#34;: 0
+    }
+
+    percentage2 = {
+        &#34;generic_abstract&#34;: 0,
+        &#34;generic_concrete&#34;: 0,
+        &#34;specific_abstract&#34;: 0,
+        &#34;specific_concrete&#34;: 0
+    }
+
+    percentage3 = {
+        &#34;generic_abstract&#34;: 0,
+        &#34;generic_concrete&#34;: 0,
+        &#34;specific_abstract&#34;: 0,
+        &#34;specific_concrete&#34;: 0
+    }
+
+    for d in defs:
+        # computing the mean of the overlap of the definitions
+        overlap_terms = compute_overlap_terms(d)
+        mean_terms = np.mean(overlap_terms)
+
+        overlap_pos = compute_overlap_pos(d)
+        mean_pos = np.mean(overlap_pos)
+
+        overlap_cosine = compute_overlap_cosine(d)
+        mean_cosine = np.mean(overlap_cosine)
+
+        # filling the rows
+        if count == 0:
+            first_row.append(&#39;{:.0%}&#39;.format(mean_terms))
+            percentage1[&#34;generic_abstract&#34;] = mean_terms
+            third_row.append(&#39;{:.0%}&#39;.format(mean_pos))
+            percentage2[&#34;generic_abstract&#34;] = mean_pos
+            fifth_row.append(&#39;{:.0%}&#39;.format(mean_cosine))
+            percentage3[&#34;generic_abstract&#34;] = mean_cosine
+        elif count == 1:
+            first_row.append(&#39;{:.0%}&#39;.format(mean_terms))
+            percentage1[&#34;generic_concrete&#34;] = mean_terms
+            third_row.append(&#39;{:.0%}&#39;.format(mean_pos))
+            percentage2[&#34;generic_concrete&#34;] = mean_pos
+            fifth_row.append(&#39;{:.0%}&#39;.format(mean_cosine))
+            percentage3[&#34;generic_concrete&#34;] = mean_cosine
+        elif count == 2:
+            second_row.append(&#39;{:.0%}&#39;.format(mean_terms))
+            percentage1[&#34;specific_abstract&#34;] = mean_terms
+            fourth_row.append(&#39;{:.0%}&#39;.format(mean_pos))
+            percentage2[&#34;specific_abstract&#34;] = mean_pos
+            sixth_row.append(&#39;{:.0%}&#39;.format(mean_cosine))
+            percentage3[&#34;specific_abstract&#34;] = mean_cosine
+        else:
+            second_row.append(&#39;{:.0%}&#39;.format(mean_terms))
+            percentage1[&#34;specific_concrete&#34;] = mean_terms
+            fourth_row.append(&#39;{:.0%}&#39;.format(mean_pos))
+            percentage2[&#34;specific_concrete&#34;] = mean_pos
+            sixth_row.append(&#39;{:.0%}&#39;.format(mean_cosine))
+            percentage3[&#34;specific_concrete&#34;] = mean_cosine
+
+        count += 1
+
+    # build and print dataframe
+    df_baseline = pd.DataFrame([first_row, second_row], columns=[&#34;Abstract&#34;, &#34;Concrete&#34;],
+                               index=[&#34;Generic&#34;, &#34;Specific&#34;])
+    df_pos = pd.DataFrame([third_row, fourth_row], columns=[&#34;Abstract&#34;, &#34;Concrete&#34;],
+                          index=[&#34;Generic&#34;, &#34;Specific&#34;])
+    df_cosine = pd.DataFrame([fifth_row, sixth_row], columns=[&#34;Abstract&#34;, &#34;Concrete&#34;],
+                             index=[&#34;Generic&#34;, &#34;Specific&#34;])
+
+    # Pandas Print -------------------------------------------------------------
+
+    print(&#34;\n\nBaseline:\n&#34;)
+    print(df_baseline)
+    print(&#34;\nPOS Experiment:\n&#34;)
+    print(df_pos)
+    print(&#34;\nCosine Similarity Experiment:\n&#34;)
+    print(df_cosine)
+
+    # Pandas Plot -------------------------------------------------------------
+
+    # Baseline
+    plot_panda_frame(title=&#34;Baseline&#34;, my_percentage=percentage1)
+
+    # POS Experiment
+    plot_panda_frame(title=&#34;POS Experiment&#34;, my_percentage=percentage2)
+
+    # Cosine Similarity Experiment
+    plot_panda_frame(title=&#34;Cosine Similarity Experiment&#34;, my_percentage=percentage3)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="DiCaro.Primo_gruppo.aggregate_concepts.compute_overlap_cosine"><code class="name flex">
+<span>def <span class="ident">compute_overlap_cosine</span></span>(<span>definitions)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>It computes the overlap between the two set of the preprocessed definitions
+using cosine similarity.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>definitions</code></strong></dt>
+<dd>a list of definitions (strings)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>a list of length |definitions| containing the maximum similarity
+score of each definition.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_overlap_cosine(definitions):
+    &#34;&#34;&#34; It computes the overlap between the two set of the preprocessed definitions 
+    using cosine similarity.
+    Args:
+        definitions: a list of definitions (strings)
+    Returns:
+        a list of length |definitions| containing the maximum similarity
+    score of each definition.
+    &#34;&#34;&#34;
+
+    # Preprocess step.
+    clean_defs = []
+    for de in definitions:
+        clean_defs.append(preprocess(de, LIST))
+
+    &#39;&#39;&#39;
+    CountVectorizer will create k vectors in n-dimensional space, where:
+    - k is the number of sentences,
+    - n is the number of unique words in all sentences combined.
+    If a sentence contains a certain word, the value will be 1 and 0 otherwise
+    &#39;&#39;&#39;
+    vectorizer = CountVectorizer().fit_transform(clean_defs)
+    vectors = vectorizer.toarray()
+
+    results = []
+    i = 0
+
+    # Performed (n(n+1))/2 times
+    while i &lt; len(vectors):
+        a = vectors[i]
+        j = i + 1
+        while j &lt; len(definitions) - 1:
+            # print(i,j)  # DEBUG
+            b = vectors[j]
+
+            # Computing cosine similarity between definitions.
+            # cosine_similarity() expect 2D arrays, and the input vectors are
+            # 1D arrays, so we need reshaping.
+            a = a.reshape(1, -1)
+            b = b.reshape(1, -1)
+            res = cosine_similarity(a, b)[0][0]
+
+            results.append(res)
+            j = j + 1
+
+        i = i + 1
+
+    return results</code></pre>
+</details>
+</dd>
+<dt id="DiCaro.Primo_gruppo.aggregate_concepts.compute_overlap_pos"><code class="name flex">
+<span>def <span class="ident">compute_overlap_pos</span></span>(<span>definitions)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>It computes the overlap between the two set of the preprocessed definitions
+converted in POS tagging.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>definitions</code></strong></dt>
+<dd>a list of definitions (strings)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>a list of length |definitions| containing the maximum similarity
+score of each definition.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_overlap_pos(definitions):
+    &#34;&#34;&#34; It computes the overlap between the two set of the preprocessed definitions 
+    converted in POS tagging.
+    Args:
+        definitions: a list of definitions (strings)
+    Returns:
+        a list of length |definitions| containing the maximum similarity
+    score of each definition.
+    &#34;&#34;&#34;
+
+    results = []
+
+    i = 0
+    while i &lt; len(definitions):
+        text1 = word_tokenize(definitions[i])
+        temp_a = nltk.pos_tag(text1)
+        a = set(x[1] for x in temp_a)
+
+        j = i + 1
+
+        # Performed (n(n+1))/2 times
+        while j &lt; len(definitions) - 1:
+            # print(i,j)  # DEBUG
+            text2 = word_tokenize(definitions[j])
+            temp_b = nltk.pos_tag(text2)
+            b = set(y[1] for y in temp_b)
+
+            # Computing similarity between definitions
+            # intersec = [z for z in a if z in b]
+            t = len(a &amp; b) / min(len(a), len(b))  # normalization step
+            results.append(t)
+            j = j + 1
+
+        i = i + 1
+
+    return results</code></pre>
+</details>
+</dd>
+<dt id="DiCaro.Primo_gruppo.aggregate_concepts.compute_overlap_terms"><code class="name flex">
+<span>def <span class="ident">compute_overlap_terms</span></span>(<span>definitions)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>It computes the overlap between the two set of the preprocessed terms</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>definitions</code></strong></dt>
+<dd>a list of definitions (strings)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>a list of length pow(len(definition)) containing the similarity
+score of each definition.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_overlap_terms(definitions):
+    &#34;&#34;&#34; It computes the overlap between the two set of the preprocessed terms
+    Args:
+        definitions: a list of definitions (strings)
+    Returns:
+        a list of length pow(len(definition)) containing the similarity
+    score of each definition.
+    &#34;&#34;&#34;
+
+    # list of similarity score for each type of definition (length: pow(len(definition)))
+    results = []
+
+    i = 0
+    while i &lt; len(definitions):
+        a = preprocess(definitions[i], SET)  # set of terms of the first definition
+        j = i + 1
+        while j &lt; len(definitions) - 1:
+            # print(i,j)  # DEBUG
+            b = preprocess(definitions[j], SET)  # set of terms of the second definition
+            # Computing similarity between definitions
+            t = len(a &amp; b) / min(len(a), len(b))
+            results.append(t)
+            j = j + 1
+
+        i = i + 1
+
+    return results</code></pre>
+</details>
+</dd>
+<dt id="DiCaro.Primo_gruppo.aggregate_concepts.load_data"><code class="name flex">
+<span>def <span class="ident">load_data</span></span>(<span>path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>It reads che definition's CSV</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path</code></strong></dt>
+<dd>csv path</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>four list containing the read definitions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_data(path):
+    &#34;&#34;&#34; It reads che definition&#39;s CSV
+    Args:
+        path: csv path
+    Returns:
+         four list containing the read definitions.
+    &#34;&#34;&#34;
+    with open(path, &#34;r&#34;, encoding=&#34;utf-8&#34;) as definitions:
+        reader = csv.reader(definitions, delimiter=&#39;,&#39;)
+
+        def_abstract_generic = []
+        def_concrete_generic = []
+        def_abstract_specific = []
+        def_concrete_specific = []
+
+        first = True
+        for line in reader:
+            if not first:
+                def_abstract_generic.append(line[0])
+                def_concrete_generic.append(line[1])
+                def_abstract_specific.append(line[2])
+                def_concrete_specific.append(line[3])
+            else:
+                first = False
+
+        # Courage,Paper,Apprehension,Sharpener
+        return def_abstract_generic, def_concrete_generic, def_abstract_specific, def_concrete_specific</code></pre>
+</details>
+</dd>
+<dt id="DiCaro.Primo_gruppo.aggregate_concepts.plot_panda_frame"><code class="name flex">
+<span>def <span class="ident">plot_panda_frame</span></span>(<span>title, my_percentage)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot the matrix using mathplotlib and saves it in the output folder</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>title</code></strong></dt>
+<dd>name of the plot</dd>
+<dt><strong><code>my_percentage</code></strong></dt>
+<dd>matrix containing the proper percentage</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_panda_frame(title, my_percentage):
+    &#34;&#34;&#34;
+    Plot the matrix using mathplotlib and saves it in the output folder
+    Args:
+        title: name of the plot
+        my_percentage: matrix containing the proper percentage
+    &#34;&#34;&#34;
+    print_val = [[my_percentage[&#34;generic_abstract&#34;], my_percentage[&#34;generic_concrete&#34;]],
+                 [my_percentage[&#34;specific_abstract&#34;], my_percentage[&#34;specific_concrete&#34;]]]
+    df1 = pd.DataFrame(print_val, columns=[&#34;Abstract&#34;, &#34;Concrete&#34;],
+                       index=[&#34;Generic&#34;, &#34;Specific&#34;])
+    df1.plot.bar()
+    plt.xticks(rotation=30, horizontalalignment=&#34;center&#34;)
+    plt.title(title)
+    plt.xlabel(&#34;Concepts&#34;)
+    plt.ylabel(&#34;Similarity (higher is better)&#34;)
+    # saving plot in output folder
+    now = datetime.now().strftime(f&#34;{title} - %d.%m.%Y-%H:%M:%S&#34;)  # dd/mm/YY-H:M:S
+    plt.savefig(&#39;output/aggregate/{}.png&#39;.format(now))
+    plt.show()
+    print(f&#34;\n{title}&#39;s plot saved in output folder.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="DiCaro.Primo_gruppo.aggregate_concepts.preprocess"><code class="name flex">
+<span>def <span class="ident">preprocess</span></span>(<span>definition, mode)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>It does some preprocess: removes the stopwords, punctuation and does the
+lemmatization of the tokens inside the sentence.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>mode</code></strong></dt>
+<dd>enum for defining the kind of return data structure</dd>
+<dt><strong><code>definition</code></strong></dt>
+<dd>a string representing a definition</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<ul>
+<li>a set of string which contains the preprocessed string tokens.
+OR</li>
+<li>original array preprocessed without eliminating duplicates</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def preprocess(definition, mode):
+    &#34;&#34;&#34; It does some preprocess: removes the stopwords, punctuation and does the
+    lemmatization of the tokens inside the sentence.
+    Args:
+        mode: enum for defining the kind of return data structure
+        definition: a string representing a definition
+    Returns:
+        - a set of string which contains the preprocessed string tokens.
+        OR
+        - original array preprocessed without eliminating duplicates
+    &#34;&#34;&#34;
+
+    lemmatized_tokens = None
+    # Removing stopwords
+    definition = definition.lower()
+    stop_words = set(stopwords.words(&#39;english&#39;))
+    punctuation = {&#39;,&#39;, &#39;;&#39;, &#39;(&#39;, &#39;)&#39;, &#39;{&#39;, &#39;}&#39;, &#39;:&#39;, &#39;?&#39;, &#39;!&#39;, &#39;.&#39;, &#39;\&#39;&#39;, &#39;\&#34;&#39;, &#39;``&#39;, &#34;&#39;&#39;&#34;}
+    wnl = nltk.WordNetLemmatizer()
+    tokens = nltk.word_tokenize(definition)
+    tokens = list(
+        filter(lambda x: x not in stop_words and x not in punctuation, tokens))
+
+    # Lemmatization
+    if mode == SET:
+        lemmatized_tokens = set(wnl.lemmatize(t) for t in tokens)
+    elif mode == LIST:
+        lemmatized_tokens = &#39; &#39;.join(list(wnl.lemmatize(t) for t in tokens))
+
+    return lemmatized_tokens</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="DiCaro.Primo_gruppo" href="index.html">DiCaro.Primo_gruppo</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="DiCaro.Primo_gruppo.aggregate_concepts.compute_overlap_cosine" href="#DiCaro.Primo_gruppo.aggregate_concepts.compute_overlap_cosine">compute_overlap_cosine</a></code></li>
+<li><code><a title="DiCaro.Primo_gruppo.aggregate_concepts.compute_overlap_pos" href="#DiCaro.Primo_gruppo.aggregate_concepts.compute_overlap_pos">compute_overlap_pos</a></code></li>
+<li><code><a title="DiCaro.Primo_gruppo.aggregate_concepts.compute_overlap_terms" href="#DiCaro.Primo_gruppo.aggregate_concepts.compute_overlap_terms">compute_overlap_terms</a></code></li>
+<li><code><a title="DiCaro.Primo_gruppo.aggregate_concepts.load_data" href="#DiCaro.Primo_gruppo.aggregate_concepts.load_data">load_data</a></code></li>
+<li><code><a title="DiCaro.Primo_gruppo.aggregate_concepts.plot_panda_frame" href="#DiCaro.Primo_gruppo.aggregate_concepts.plot_panda_frame">plot_panda_frame</a></code></li>
+<li><code><a title="DiCaro.Primo_gruppo.aggregate_concepts.preprocess" href="#DiCaro.Primo_gruppo.aggregate_concepts.preprocess">preprocess</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>DiCaro.Secondo_gruppo.text_segmentation API documentation</title>
+<meta name="description" content="CONSEGNA:
+* Ispirandosi al text-tiling, implementare un algoritmo di segmentazione del
+testo …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>DiCaro.Secondo_gruppo.text_segmentation</code></h1>
+</header>
+<section id="section-intro">
+<p>CONSEGNA:
+* Ispirandosi al text-tiling, implementare un algoritmo di segmentazione del
+testo.</p>
+<ul>
+<li>Sfruttare informazioni come le frequenze e le co-occorrenze ee eventuale
+pre-processing del testo.</li>
+</ul>
+<p>SVOLGIMENTO:
+* Breve lettura iniziale di
+<a href="https://www.sciencedirect.com/science/article/pii/S0031320316303399#bib12">https://www.sciencedirect.com/science/article/pii/S0031320316303399#bib12</a></p>
+<ul>
+<li>
+<p>Si è scelto di utilizzare un testo su Trump-wall già usato nella seconda
+parte del corso.</p>
+</li>
+<li>
+<p>Si crea per prima cosa il dizionario del testo, annotando le frequenze di
+ogni parola (previo filtering e lemmatizzazione).</p>
+</li>
+<li>
+<p>Si creano poi i vettori che contengono i termini presenti in ogni frase.</p>
+</li>
+<li>
+<p>Si calcola la cosine similarity fra tutti questi vettori colonna.</p>
+</li>
+<li>
+<p>Si itera su queste cosine similarities per identificare i punti in cui il
+valore scende al di sotto della loro media di una certa percentuale: in questi
+punti viene inserito un punto di cambio di discorso.</p>
+</li>
+<li>
+<p>L'operazione viene ripetuta per un certo numero d' iterazioni, usando come
+confronto la media di quel preciso segmento invece che la media complessiva.</p>
+</li>
+<li>
+<p>Come confronto ulteriore si usa implementazione di nltk del TextTiling disponibile qui
+<a href="https://www.nltk.org/_modules/nltk/tokenize/texttiling.html">https://www.nltk.org/_modules/nltk/tokenize/texttiling.html</a></p>
+</li>
+</ul>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># TLN_dicaro_2.1
+
+&#34;&#34;&#34;
+CONSEGNA:
+* Ispirandosi al text-tiling, implementare un algoritmo di segmentazione del
+testo.
+
+* Sfruttare informazioni come le frequenze e le co-occorrenze ee eventuale
+pre-processing del testo.
+
+SVOLGIMENTO:
+* Breve lettura iniziale di
+https://www.sciencedirect.com/science/article/pii/S0031320316303399#bib12
+
+* Si è scelto di utilizzare un testo su Trump-wall già usato nella seconda
+parte del corso.
+
+* Si crea per prima cosa il dizionario del testo, annotando le frequenze di
+ogni parola (previo filtering e lemmatizzazione).
+
+* Si creano poi i vettori che contengono i termini presenti in ogni frase.
+
+* Si calcola la cosine similarity fra tutti questi vettori colonna.
+
+* Si itera su queste cosine similarities per identificare i punti in cui il
+valore scende al di sotto della loro media di una certa percentuale: in questi
+punti viene inserito un punto di cambio di discorso.
+
+* L&#39;operazione viene ripetuta per un certo numero d&#39; iterazioni, usando come
+confronto la media di quel preciso segmento invece che la media complessiva.
+
+* Come confronto ulteriore si usa implementazione di nltk del TextTiling disponibile qui
+ https://www.nltk.org/_modules/nltk/tokenize/texttiling.html
+
+&#34;&#34;&#34;
+import re
+from pathlib import Path
+import matplotlib.pyplot as plt
+import nltk
+from scipy import spatial
+
+from DiCaro.Primo_gruppo.aggregate_concepts import preprocess
+# Better handling of this particular txt
+from Radicioni.Summarize.utils import read_from_file
+
+
+# I only look for jumps -negative- greater than one, and a half times the average
+SCALE_FACTOR = 1.5
+
+
+def read_text(path):
+    &#34;&#34;&#34;
+    Read the given .txt file
+    :param path: absolute Path of the file
+    :return: list of sentences of the textual file
+    &#34;&#34;&#34;
+    content, _ = read_from_file(path)
+    returned_list = []
+
+    for par in content:
+        # context dependant
+        par = par.replace(&#34;U.S.&#34;, &#34;U_S_&#34;).replace(&#34;F.&#34;, &#34;F_&#34;)
+
+        lines = par.split(&#34;. &#34;)
+        for line in lines:
+            returned_list.append(line)
+    return returned_list
+
+
+def calculate_frequencies(sentences):
+    &#34;&#34;&#34;
+     Calculate the frequency of a word (non-stop-words) in a sentence, for all sentences
+    :param sentences: lines of text to be processed
+    :return: dictionary containing the frequencies
+    &#34;&#34;&#34;
+    terms = {}
+    pos = 0
+    for sentence in sentences:
+        words = preprocess(sentence, 0)
+        for word in words:
+            if word in terms:
+                (terms[word])[pos] += 1
+            else:
+                terms[word] = [0] * len(sentences)
+                (terms[word])[pos] = 1
+        pos += 1
+    return terms
+
+
+def generate_columns(length_sentences, terms):
+    &#34;&#34;&#34;
+    Generate a vector containing the frequencies of each word, for each sentence
+    :param length_sentences: n° of sentences
+    :param terms: dict of the frequency
+    :return: list with frequencies of each word, for each sentence
+    &#34;&#34;&#34;
+
+    columns = [[] for _ in range(length_sentences)]
+
+    for key in terms.keys():
+        for i in range(length_sentences):
+            freqs = terms[key]
+            column = columns[i]
+            column.append(freqs[i])
+    return columns
+
+
+def compute_cosine(columns):
+    &#34;&#34;&#34;
+    Calculates the cosine similarity between all sentences, based on word frequencies
+    using scipy library, spatial module
+    :param columns: list of list
+    :return: list of measurement, one for each column
+    &#34;&#34;&#34;
+    cosine_similarities = []
+    for i in range(1, len(columns)):
+        cosine_similarity = 1 - spatial.distance.cosine(columns[i - 1], columns[i])
+        cosine_similarities.append(cosine_similarity)
+    return cosine_similarities
+
+
+def calculate_avg_drop(block):
+    &#34;&#34;&#34;
+    It calculates the average of a descent of cosine in block
+    :param block: slice to consider
+    :return: average value if found, 0 otherwise
+    &#34;&#34;&#34;
+    sum_drops = 0
+    num_drops = 0
+    for j in range(1, len(block)):
+        if block[j - 1] - block[j] &gt; 0:
+            sum_drops += block[j - 1] - block[j]
+            num_drops += 1
+    if num_drops == 0:
+        return 0
+    else:
+        return sum_drops / num_drops
+
+
+def plot_sim(cos, b_points):
+    first = True
+    # first plot
+    plt.plot(cos, label=&#34;Cosine similarity&#34;)
+    # second plot (each point drawn individually)
+    for point in b_points:
+        if first:
+            first = False  # add label only once
+            plt.axvline(point, color=&#39;r&#39;, label=&#34;Breakpoints&#34;)
+        else:
+            plt.axvline(point, color=&#39;r&#39;)
+
+    plt.title(title_file)
+    plt.xlabel(&#34;Number of sentences&#34;)
+    plt.ylabel(&#34;Cos Score&#34;)
+    plt.legend()
+    plt.savefig(&#39;output/{}.png&#39;.format(title_file))
+    plt.show()
+    print(f&#34;\n{title_file}&#39;s plot saved in output folder.&#34;)
+
+
+def plot_text_tiling(result1, title):
+    s, sgs, d, b = result1
+    plt.title(str(file_path.stem))
+    plt.xlabel(&#34;Sentence Gap index&#34;)
+    plt.ylabel(&#34;Gap Scores&#34;)
+    plt.plot(range(len(s)), s, label=&#34;Gap Scores&#34;)
+    plt.plot(range(len(sgs)), sgs, label=&#34;Smoothed Gap scores&#34;)
+    plt.plot(range(len(d)), d, label=&#34;Depth scores&#34;)
+    plt.stem(range(len(b)), b)
+    plt.legend()
+    plt.savefig(&#39;output/{}.png&#39;.format(title.replace(&#34; &#34;, &#34;_&#34;)))
+    plt.show()
+    print(f&#34;\n{title}&#39;s plot saved in output folder.&#34;)
+
+
+if __name__ == &#39;__main__&#39;:
+    file_path: Path = Path(&#34;.&#34;) / &#34;input&#34; / &#34;Trump-wall.txt&#34;
+    title_file = str(file_path.stem)
+
+    ss = read_text(file_path)
+
+    # In case we wanted to process only paragraphs
+    # ss = read_from_file(file_path)
+
+    ss_length = len(ss)
+
+    frequency_dict = calculate_frequencies(sentences=ss)
+    position_breakpoints = [0]
+
+    col = generate_columns(ss_length, frequency_dict)
+    cos_similarities = compute_cosine(col)
+
+    iterations: int = 3
+    try:
+        valid = &#34;Please choose and type a valid&#34;
+        iterations = int(input((valid + &#34; n° of iterations or press enter for default (3)\n iterations: &#34;)))
+
+    # If something else that is not a valid input,
+    # then ValueError exception will be called.
+    except ValueError:
+        # The cycle will go on until validation
+        print(&#34;Error! This is not a valid number, using default value&#34;)
+
+    for iterations in range(iterations):
+        index = 0
+        while index &lt; len(position_breakpoints):
+            break_p_l_updated = len(position_breakpoints)
+            left_index = position_breakpoints[index]
+            if index == break_p_l_updated - 1:
+                right_index = ss_length - 1
+            else:
+                right_index = position_breakpoints[index + 1]
+
+            # Debugging
+            # print(left_index, right_index)
+
+            avg = calculate_avg_drop(cos_similarities[left_index:right_index])
+            avg = avg * SCALE_FACTOR
+
+            for b_point in range(left_index + 1, right_index):
+                &#34;&#34;&#34;
+                If the jump is greater than the average, a new Breakpoint is created
+                &#34;&#34;&#34;
+                if (cos_similarities[b_point - 1] - cos_similarities[b_point]) &gt; avg:
+                    position_breakpoints.insert(index + 1, b_point)
+                    break
+
+            # Update the index
+            index += 1
+
+    print(f&#39;Position breakpoints: {position_breakpoints}&#39;)
+    plot_sim(cos=cos_similarities, b_points=position_breakpoints)
+
+    # For comparison again nltk text tiling implementation
+    # Demo mode will also plot a nice graph
+    tt = nltk.TextTilingTokenizer(demo_mode=True)
+    # We need to process again the file and have it raw
+    path_str = str(file_path.resolve())
+    file_raw = nltk.corpus.gutenberg.raw(path_str)
+    result = tt.tokenize(file_raw)
+    plot_text_tiling(result, f&#34;TexTiling of {title_file}&#34;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="DiCaro.Secondo_gruppo.text_segmentation.calculate_avg_drop"><code class="name flex">
+<span>def <span class="ident">calculate_avg_drop</span></span>(<span>block)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>It calculates the average of a descent of cosine in block
+:param block: slice to consider
+:return: average value if found, 0 otherwise</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculate_avg_drop(block):
+    &#34;&#34;&#34;
+    It calculates the average of a descent of cosine in block
+    :param block: slice to consider
+    :return: average value if found, 0 otherwise
+    &#34;&#34;&#34;
+    sum_drops = 0
+    num_drops = 0
+    for j in range(1, len(block)):
+        if block[j - 1] - block[j] &gt; 0:
+            sum_drops += block[j - 1] - block[j]
+            num_drops += 1
+    if num_drops == 0:
+        return 0
+    else:
+        return sum_drops / num_drops</code></pre>
+</details>
+</dd>
+<dt id="DiCaro.Secondo_gruppo.text_segmentation.calculate_frequencies"><code class="name flex">
+<span>def <span class="ident">calculate_frequencies</span></span>(<span>sentences)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the frequency of a word (non-stop-words) in a sentence, for all sentences
+:param sentences: lines of text to be processed
+:return: dictionary containing the frequencies</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculate_frequencies(sentences):
+    &#34;&#34;&#34;
+     Calculate the frequency of a word (non-stop-words) in a sentence, for all sentences
+    :param sentences: lines of text to be processed
+    :return: dictionary containing the frequencies
+    &#34;&#34;&#34;
+    terms = {}
+    pos = 0
+    for sentence in sentences:
+        words = preprocess(sentence, 0)
+        for word in words:
+            if word in terms:
+                (terms[word])[pos] += 1
+            else:
+                terms[word] = [0] * len(sentences)
+                (terms[word])[pos] = 1
+        pos += 1
+    return terms</code></pre>
+</details>
+</dd>
+<dt id="DiCaro.Secondo_gruppo.text_segmentation.compute_cosine"><code class="name flex">
+<span>def <span class="ident">compute_cosine</span></span>(<span>columns)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates the cosine similarity between all sentences, based on word frequencies
+using scipy library, spatial module
+:param columns: list of list
+:return: list of measurement, one for each column</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_cosine(columns):
+    &#34;&#34;&#34;
+    Calculates the cosine similarity between all sentences, based on word frequencies
+    using scipy library, spatial module
+    :param columns: list of list
+    :return: list of measurement, one for each column
+    &#34;&#34;&#34;
+    cosine_similarities = []
+    for i in range(1, len(columns)):
+        cosine_similarity = 1 - spatial.distance.cosine(columns[i - 1], columns[i])
+        cosine_similarities.append(cosine_similarity)
+    return cosine_similarities</code></pre>
+</details>
+</dd>
+<dt id="DiCaro.Secondo_gruppo.text_segmentation.generate_columns"><code class="name flex">
+<span>def <span class="ident">generate_columns</span></span>(<span>length_sentences, terms)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate a vector containing the frequencies of each word, for each sentence
+:param length_sentences: n° of sentences
+:param terms: dict of the frequency
+:return: list with frequencies of each word, for each sentence</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_columns(length_sentences, terms):
+    &#34;&#34;&#34;
+    Generate a vector containing the frequencies of each word, for each sentence
+    :param length_sentences: n° of sentences
+    :param terms: dict of the frequency
+    :return: list with frequencies of each word, for each sentence
+    &#34;&#34;&#34;
+
+    columns = [[] for _ in range(length_sentences)]
+
+    for key in terms.keys():
+        for i in range(length_sentences):
+            freqs = terms[key]
+            column = columns[i]
+            column.append(freqs[i])
+    return columns</code></pre>
+</details>
+</dd>
+<dt id="DiCaro.Secondo_gruppo.text_segmentation.plot_sim"><code class="name flex">
+<span>def <span class="ident">plot_sim</span></span>(<span>cos, b_points)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_sim(cos, b_points):
+    first = True
+    # first plot
+    plt.plot(cos, label=&#34;Cosine similarity&#34;)
+    # second plot (each point drawn individually)
+    for point in b_points:
+        if first:
+            first = False  # add label only once
+            plt.axvline(point, color=&#39;r&#39;, label=&#34;Breakpoints&#34;)
+        else:
+            plt.axvline(point, color=&#39;r&#39;)
+
+    plt.title(title_file)
+    plt.xlabel(&#34;Number of sentences&#34;)
+    plt.ylabel(&#34;Cos Score&#34;)
+    plt.legend()
+    plt.savefig(&#39;output/{}.png&#39;.format(title_file))
+    plt.show()
+    print(f&#34;\n{title_file}&#39;s plot saved in output folder.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="DiCaro.Secondo_gruppo.text_segmentation.plot_text_tiling"><code class="name flex">
+<span>def <span class="ident">plot_text_tiling</span></span>(<span>result1, title)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_text_tiling(result1, title):
+    s, sgs, d, b = result1
+    plt.title(str(file_path.stem))
+    plt.xlabel(&#34;Sentence Gap index&#34;)
+    plt.ylabel(&#34;Gap Scores&#34;)
+    plt.plot(range(len(s)), s, label=&#34;Gap Scores&#34;)
+    plt.plot(range(len(sgs)), sgs, label=&#34;Smoothed Gap scores&#34;)
+    plt.plot(range(len(d)), d, label=&#34;Depth scores&#34;)
+    plt.stem(range(len(b)), b)
+    plt.legend()
+    plt.savefig(&#39;output/{}.png&#39;.format(title.replace(&#34; &#34;, &#34;_&#34;)))
+    plt.show()
+    print(f&#34;\n{title}&#39;s plot saved in output folder.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="DiCaro.Secondo_gruppo.text_segmentation.read_text"><code class="name flex">
+<span>def <span class="ident">read_text</span></span>(<span>path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Read the given .txt file
+:param path: absolute Path of the file
+:return: list of sentences of the textual file</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_text(path):
+    &#34;&#34;&#34;
+    Read the given .txt file
+    :param path: absolute Path of the file
+    :return: list of sentences of the textual file
+    &#34;&#34;&#34;
+    content, _ = read_from_file(path)
+    returned_list = []
+
+    for par in content:
+        # context dependant
+        par = par.replace(&#34;U.S.&#34;, &#34;U_S_&#34;).replace(&#34;F.&#34;, &#34;F_&#34;)
+
+        lines = par.split(&#34;. &#34;)
+        for line in lines:
+            returned_list.append(line)
+    return returned_list</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="DiCaro.Secondo_gruppo" href="index.html">DiCaro.Secondo_gruppo</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="DiCaro.Secondo_gruppo.text_segmentation.calculate_avg_drop" href="#DiCaro.Secondo_gruppo.text_segmentation.calculate_avg_drop">calculate_avg_drop</a></code></li>
+<li><code><a title="DiCaro.Secondo_gruppo.text_segmentation.calculate_frequencies" href="#DiCaro.Secondo_gruppo.text_segmentation.calculate_frequencies">calculate_frequencies</a></code></li>
+<li><code><a title="DiCaro.Secondo_gruppo.text_segmentation.compute_cosine" href="#DiCaro.Secondo_gruppo.text_segmentation.compute_cosine">compute_cosine</a></code></li>
+<li><code><a title="DiCaro.Secondo_gruppo.text_segmentation.generate_columns" href="#DiCaro.Secondo_gruppo.text_segmentation.generate_columns">generate_columns</a></code></li>
+<li><code><a title="DiCaro.Secondo_gruppo.text_segmentation.plot_sim" href="#DiCaro.Secondo_gruppo.text_segmentation.plot_sim">plot_sim</a></code></li>
+<li><code><a title="DiCaro.Secondo_gruppo.text_segmentation.plot_text_tiling" href="#DiCaro.Secondo_gruppo.text_segmentation.plot_text_tiling">plot_text_tiling</a></code></li>
+<li><code><a title="DiCaro.Secondo_gruppo.text_segmentation.read_text" href="#DiCaro.Secondo_gruppo.text_segmentation.read_text">read_text</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
