@@ -62,7 +62,7 @@ def skip_synset_search(pos_tag, t_text):
     """
     # pronouns
     if pos_tag == "PRP":
-        if t_text.lower() in ["he", "she", "they"]:
+        if t_text.lower() in ["he", "she"]:
             return True, wordnet.synset('person.n.01')
         elif t_text.lower() == "it":
             return True, wordnet.synset('artifact.n.01')
@@ -168,24 +168,24 @@ if __name__ == '__main__':
 
     print('[1] - Extracting sentences...')
     sentences = brown_says["Sentence"]
-    head_test = sentences.head(1000)
-    head_test = head_test.apply(lambda x: x.strip("<s> \'\' \" </"), lambda x: re.sub('</"', "", x))
+    head_corpus = sentences.head(1000)
+    head_corpus = head_corpus.apply(lambda x: x.strip("<s> \'\' \" </"), lambda x: re.sub('</"', "", x))
 
     import spacy
     nlp = spacy.load("en_core_web_sm")
     # Construction via add_pipe with default model
-    sents = nlp(u'A woman is walking through the door.')
+    # sents = nlp(u'A woman is walking through the door.')
 
-    for token in sents:
-        print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_)
+    # for token in sents:
+    #     print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_)
 
     print('\n[2] - Extracting fillers...')
     # parsing di tutte le frasi
-    head_test_v = head_test.apply(lambda x: nlp(x)).values
+    head_corpus_v = head_corpus.apply(lambda x: nlp(x)).values
 
     fillers = []  # [(subj, obj, sentence)]
-    for i in range(len(head_test_v)):
-        sentence = head_test_v[i]
+    for i in range(len(head_corpus_v)):
+        sentence = head_corpus_v[i]
         obj = None
         subj = None
         for token in sentence:
@@ -219,7 +219,7 @@ if __name__ == '__main__':
         skip_subj, skipped_s1 = skip_synset_search(pos_tag=subj_tag, t_text=subj_simple)
         skip_obj, skipped_s2 = skip_synset_search(pos_tag=obj_tag, t_text=obj_simple)
 
-        # Vado a chiamare lesk sulla coppia della parte prima della mia frase e complemento oggetto dopo il verbo?
+        # Vado a chiamare lesk sulla coppia della parte prima della mia frase e complemento oggetto dopo il verbo
         if not skip_subj:
             # Our Lesk
             s1 = lesk(subj_simple, f[2])
@@ -229,14 +229,15 @@ if __name__ == '__main__':
             s1 = s3 = skipped_s1
 
         if not skip_obj:
+            # Our Lesk
             s2 = lesk(obj_simple, f[2])
+            # Wordnet Lesk
             s4 = nltk.wsd.lesk(f[2], obj_simple)
         else:
             s2 = s4 = skipped_s1
 
         # Our
         update_occurrences(s1, s2, our_lesk_semantic_types)
-
         # Library
         update_occurrences(s3, s4, nltk_lesk_semantic_types)
 
@@ -248,7 +249,6 @@ if __name__ == '__main__':
 
     # Plot
     plot_hanks(our_lesk_semantic_types, 10, f"{our_lesk_} for {verb_of_interest[0]}")
-
     plot_hanks(nltk_lesk_semantic_types, 10, f"{nltk_lesk_} for {verb_of_interest[0]}")
 
 

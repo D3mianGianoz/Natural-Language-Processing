@@ -58,8 +58,6 @@ def read_text(path):
     returned_list = []
 
     for par in content:
-        another_regex = re.compile(r'\.\s*')
-
         # context dependant
         par = par.replace("U.S.", "U_S_").replace("F.", "F_")
 
@@ -214,7 +212,7 @@ if __name__ == '__main__':
                 right_index = position_breakpoints[index + 1]
 
             # Debugging
-            print(left_index, right_index)
+            # print(left_index, right_index)
 
             avg = calculate_avg_drop(cos_similarities[left_index:right_index])
             avg = avg * SCALE_FACTOR

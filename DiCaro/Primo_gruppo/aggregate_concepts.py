@@ -22,7 +22,7 @@ Astratto    |   Courage   Apprehension
 concentrarsi sui termini salienti.
 
 * Si nota come, nel caso di termini concreti, la similarità sia
-significativamente più elevata di quanto non acccada per i termini astratti.
+significativamente più elevata di quanto non accada per i termini astratti.
 Questo è probabilmente dovuto alla possibilità di utilizzare degli attributi
 visivi per descrivere il termine.
 

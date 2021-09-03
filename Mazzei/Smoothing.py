@@ -30,7 +30,7 @@ def basic_smooth(path, emission, tags) -> (dict, dict, dict):
         for line in file:
             if line.split('\t')[0].isdigit():
                 splitlines = line.split('\t')
-                word = splitlines[2]
+                word = splitlines[1] #word form
                 if word not in emission:
                     em_noun[word], em_nn_vb[word], em_uniform[word] = dict(), dict(), dict()
 

@@ -100,7 +100,7 @@ class PosTagger:
 
                 if line.split('\t')[0].isdigit():
                     split_line = line.split('\t')
-                    word = split_line[2]
+                    word = split_line[1] # word form
                     tag = split_line[3]
 
                     # Calculating C(ti, wi): counts of tags given specific words
@@ -174,7 +174,7 @@ class PosTagger:
             test_set.append([])
             test_pos.append([])
             for token in sentence:
-                test_set[counter].append(token.lemma)
+                test_set[counter].append(token.form)
                 test_pos[counter].append(token.upos)
 
         return test_set, test_pos
@@ -364,4 +364,4 @@ if __name__ == '__main__':
     print_message("POS tagging Latin LLCT")
     pos_latin = PosTagger(LATIN)
     print_message("POS tagging Ancient Greek Perseus")
-    # pos_greek = PosTagger(GREEK)
+    pos_greek = PosTagger(GREEK)

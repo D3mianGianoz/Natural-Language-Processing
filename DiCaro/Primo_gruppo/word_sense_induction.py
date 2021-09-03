@@ -63,6 +63,7 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     import numpy as np
 
+    # nclusters = input(f"Choose how many cluster for the {word_of_interest} ")
     nclusters = 3
     kmeans_obj = KMeans(n_clusters=nclusters)
     kmeans_obj.fit(ctx_vectors)
