@@ -2,31 +2,29 @@ import math
 import pyconll
 import pandas as pd
 from collections import Counter
-
 from Mazzei.Smoothing import basic_smooth, baseline
 
 ALMOST_ZERO_P = -99999
 LATIN = 42
 GREEK = 17
-
 LATIN_DIC = {
     "dev": "corpus/latin-dev.conllu",
     "test": "corpus/latin-test.conllu",
     "train": "corpus/latin-train.conllu"
 }
-
 GREEK_DIC = {
     "dev": "corpus/greek-dev.conllu",
     "test": "corpus/greek-test.conllu",
     "train": "corpus/greek-train.conllu"
 }
 
+verbose = True
 
-def num_occurrence(dictionary):
-    total_sum = 0
-    for elem in dictionary:
-        total_sum += dictionary[elem]
-    return total_sum
+
+def print_message(m):
+    num_stars = 10
+    if verbose:
+        print("*" * num_stars + m + "*" * num_stars)
 
 
 # Debugging printing function
@@ -39,6 +37,13 @@ def pretty_print(d, indent=0):
             pretty_print(value, indent + 2)
         else:
             print('\t' * (indent + 2) + str(value))
+
+
+def num_occurrence(dictionary):
+    total_sum = 0
+    for elem in dictionary:
+        total_sum += dictionary[elem]
+    return total_sum
 
 
 class PosTagger:
@@ -187,6 +192,7 @@ class PosTagger:
             # Reset for every metrics
             n_correct_pos = 0
             total_n_words = 0
+            wrong_pos = Counter()  # keep tracks of mistake
 
             for j, phrase in enumerate(phrases):
                 # TODO statistical smoothing
@@ -203,10 +209,18 @@ class PosTagger:
                 # pretty_print(pos_backpointer, 2)
 
                 for k, token in enumerate(phrase):
-                    if pos_backpointer[token] == correct_tags[j][k]:
-                        n_correct_pos += 1
+                    token_ = pos_backpointer[token]
+                    c_label = correct_tags[j][k]
 
-            print(f"Accuracy of technique {key} is: {round((n_correct_pos * 100) / total_n_words, 3)} %")
+                    if token_ == c_label:
+                        n_correct_pos += 1
+                    else:
+                        wrong_pos.update({f"{token_} ✗ | {c_label} ✓": 1})
+
+            print(f"Accuracy of technique {key} is: {round((n_correct_pos * 100) / total_n_words, 3)} % "
+                  f"with correct POS {n_correct_pos} out of {total_n_words}")
+            print(f"The 5 most common mislabeled POS are: {wrong_pos.most_common(5)}")
+            print("------------------------------------------------------------------")
 
     def viterbi_algo(self, phrase: list, smoothed_p: dict):
         """
@@ -347,7 +361,7 @@ class PosTagger:
 
 
 if __name__ == '__main__':
-    print("\nPOS tagging Latin LLCT\n")
+    print_message("POS tagging Latin LLCT")
     pos_latin = PosTagger(LATIN)
-    print("\nPOS tagging Ancient Greek Perseus \n")
-    pos_greek = PosTagger(GREEK)
+    print_message("POS tagging Ancient Greek Perseus")
+    # pos_greek = PosTagger(GREEK)
