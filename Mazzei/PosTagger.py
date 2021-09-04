@@ -1,8 +1,7 @@
 import math
-import pyconll
 import pandas as pd
 from collections import Counter
-from Mazzei.Smoothing import basic_smooth, baseline
+from Mazzei.Smoothing import basic_smooth, baseline, load_treebank_values, statistical_smooth
 
 ALMOST_ZERO_P = -99999
 LATIN = 42
@@ -41,10 +40,9 @@ def pretty_print(d, indent=0):
 
 def num_occurrence(dictionary):
     total_sum = 0
-    for elem in dictionary:
-        total_sum += dictionary[elem]
+    for key in dictionary:
+        total_sum += dictionary[key]
     return total_sum
-
 
 class PosTagger:
     def __init__(self, language: int):
@@ -69,7 +67,9 @@ class PosTagger:
         self.rating_metrics = {
             "max_noun smoothing": smoothing_tuple[0],
             "NN_and_VB smoothing": smoothing_tuple[1],
-            "uniform smoothing": smoothing_tuple[2]
+            "uniform smoothing": smoothing_tuple[2],
+            "statistical smoothing": statistical_smooth(
+                self.lang["dev"], self.lang["test"], self.prob_word_given_tag, self.prob_tag_given_pred_tag)
         }
 
         # 4. Decoding and rating performance
@@ -100,7 +100,7 @@ class PosTagger:
 
                 if line.split('\t')[0].isdigit():
                     split_line = line.split('\t')
-                    word = split_line[1] # word form
+                    word = split_line[1]  # word form
                     tag = split_line[3]
 
                     # Calculating C(ti, wi): counts of tags given specific words
@@ -150,41 +150,20 @@ class PosTagger:
                 if element not in result:
                     result[element] = dict()
                 if given_tag is not None:
-                    # Calculate P(wi | ti)
+                    # Calculate P(wi | ti) emissione
                     p = math.log(n_tags_giv[element][n_tag] / num_occurrence(given_tag[n_tag]))
                 else:
-                    # Calculate P(ti | ti-1)
+                    # Calculate P(ti | ti-1) transizione
                     p = math.log(n_tags_giv[element][n_tag] / num_occurrence(n_tags_giv[element]))
                 result[element][n_tag] = p
         return result
-
-    @staticmethod
-    def get_test_values(path_to_test):
-        """
-        Retrive from .pyconll files the test set and parse it in appropriate data structure
-        :param path_to_test: position on the disk
-        :return: test_set: list of phrase, test_pos: list of pos tagging (gold)
-        """
-        test = pyconll.load_from_file(path_to_test)
-        test_set = []
-        test_pos = []
-        counter = -1
-        for sentence in test:
-            counter += 1
-            test_set.append([])
-            test_pos.append([])
-            for token in sentence:
-                test_set[counter].append(token.form)
-                test_pos[counter].append(token.upos)
-
-        return test_set, test_pos
 
     def rate(self, path_to_test: str) -> None:
         """
         Method to evaluate the performance of our system, final step in the initialization of our class
         :param path_to_test: path of the test set used for evaluation
         """
-        phrases, correct_tags = self.get_test_values(path_to_test)
+        phrases, correct_tags = load_treebank_values(path_to_test)
 
         self.rating_metrics["baseline"] = dict()
 
@@ -195,7 +174,6 @@ class PosTagger:
             wrong_pos = Counter()  # keep tracks of mistake
 
             for j, phrase in enumerate(phrases):
-                # TODO statistical smoothing
                 total_n_words += len(phrase)
                 if key != "baseline":
                     pos_backpointer, viterbi = self.viterbi_algo(phrase, metric)
@@ -236,9 +214,10 @@ class PosTagger:
         In parallelo viene salvato anche il tag con la probabilità più alta di essere riferito alla parola precedente.
         In questo modo viene tenuta traccia del miglior tag da attribuire ad ogni parola.
 
-        L’ultimo passaggio è analogo al primo, ma fa riferimento al tag LAST andando a completare l’ultima
+        L’ultimo passaggio è analogo al primo, ma fa riferimento al tag END andando a completare l’ultima
         colonna della matrice. A causa dell' utilizzo dei log una probabilità nulla non sarà espressa con 0 ma con un
         numero molto piccolo, un questo caso si è scelto ALMOST_ZERO_P, usandolo nella matrice risultante
+
         Alla fine dell’algoritmo si ottiene, grazie alla matrice di Viterbi, la più probabile taggatura (POS tagging)
         per la frase in input.
 
@@ -338,23 +317,23 @@ class PosTagger:
         trans_prob: dict = self.prob_tag_given_pred_tag
         emission_prob: dict = self.prob_word_given_tag
 
+        if word in smoothed:
+            # We are gonna use the smoothed probabilities in case of proper nouns
+            emission_p = smoothed
+        else:
+            emission_p = emission_prob
+
         for state in trans_prob.keys():
             if state != 'START':
-
-                if word in smoothed:
-                    # We are gonna use the smoothed probabilities in case of proper nouns
-                    temp_dict = smoothed
-                else:
-                    temp_dict = emission_prob
-
-                if current_state in temp_dict[word] and current_state in trans_prob[state]:
-                    temp1 = vit[state][index] + trans_prob[state][current_state] + temp_dict[word][current_state]
-                    if temp1 > m_vit:
-                        m_vit = temp1
-
-                    temp2 = vit[state][index] + trans_prob[state][current_state]
-                    if temp2 > bpointer:
-                        bpointer = temp2
+                if current_state in emission_p[word] and current_state in trans_prob[state]:
+                    # Max function viterbi[s', t-1] + A_s',s + B_s(O_t)
+                    max_v = vit[state][index] + trans_prob[state][current_state] + emission_p[word][current_state]
+                    if max_v > m_vit:
+                        m_vit = max_v
+                    # Argmax function viterbi[s', t-1] + A_s',s
+                    argmax = vit[state][index] + trans_prob[state][current_state]
+                    if argmax > bpointer:
+                        bpointer = argmax
                         m_tag = state
 
         return m_tag, bpointer, m_vit
