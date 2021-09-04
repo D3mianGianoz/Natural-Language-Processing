@@ -44,6 +44,7 @@ def num_occurrence(dictionary):
         total_sum += dictionary[key]
     return total_sum
 
+
 class PosTagger:
     def __init__(self, language: int):
         self.n_tags_given_word = dict()
@@ -239,43 +240,41 @@ class PosTagger:
         hmm_state: str
 
         for hmm_state in trans_prob.keys():
-            if hmm_state != 'START':
-                # create the rows of the matrix
-                viterbi[hmm_state] = list()
-                back_pointer[hmm_state] = list()
+            # create the rows of the matrix
+            viterbi[hmm_state] = list()
+            back_pointer[hmm_state] = list()
 
-                # In case we don't find we assign 0 probability
-                probability: float = ALMOST_ZERO_P
+            # In case we don't find we assign 0 probability
+            probability: float = ALMOST_ZERO_P
 
-                if hmm_state in trans_prob['START']:
-                    first_word = phrase[0]
-                    if first_word in smoothed_p:
-                        if hmm_state in smoothed_p[first_word]:
-                            probability = trans_prob['START'][hmm_state] + smoothed_p[first_word][hmm_state]
-                    else:
-                        if hmm_state in emission_prob[first_word]:
-                            probability = trans_prob['START'][hmm_state] + emission_prob[first_word][hmm_state]
+            if hmm_state in trans_prob['START']:
+                first_word = phrase[0]
+                if first_word in smoothed_p:
+                    if hmm_state in smoothed_p[first_word]:
+                        probability = trans_prob['START'][hmm_state] + smoothed_p[first_word][hmm_state]
+                else:
+                    if hmm_state in emission_prob[first_word]:
+                        probability = trans_prob['START'][hmm_state] + emission_prob[first_word][hmm_state]
 
-                # Update the dictionaries key = pos:probability
-                viterbi[hmm_state].append(probability)
-                back_pointer[hmm_state].append(maximum_tag)
+            # Update the dictionaries key = pos:probability
+            viterbi[hmm_state].append(probability)
+            back_pointer[hmm_state].append(maximum_tag)
 
         # 2. Recursion step
         last_t = 0
         for t in range(len(phrase)):
             if t != 0:
                 for state in trans_prob.keys():
-                    if state != 'START':
-                        maximum_tag, bpointer, m_vit = self.maximum(vit=viterbi, word=phrase[t],
-                                                                    index=t - 1, m_tag=maximum_tag,
-                                                                    current_state=state, smoothed=smoothed_p)
+                    maximum_tag, bpointer, m_vit = self.maximum(vit=viterbi, word=phrase[t],
+                                                                index=t - 1, m_tag=maximum_tag,
+                                                                current_state=state, smoothed=smoothed_p)
 
-                        #  nella colonna attuale viene salvato solo il valore massimo tra tutte quelle appena calcolate.
-                        viterbi[state].append(round(m_vit, 3))
-                        back_pointer[state].append(round(bpointer, 3))
+                    #  nella colonna attuale viene salvato solo il valore massimo tra tutte quelle appena calcolate.
+                    viterbi[state].append(round(m_vit, 3))
+                    back_pointer[state].append(round(bpointer, 3))
 
-                    # il tag con la probabilità più alta di essere riferito alla parola precedente
-                    pos_back_pointer[phrase[t - 1]] = maximum_tag
+                # il tag con la probabilità più alta di essere riferito alla parola precedente
+                pos_back_pointer[phrase[t - 1]] = maximum_tag
             # salvo l' indice finale
             if t == len(phrase) - 1:
                 last_t = t
@@ -324,17 +323,16 @@ class PosTagger:
             emission_p = emission_prob
 
         for state in trans_prob.keys():
-            if state != 'START':
-                if current_state in emission_p[word] and current_state in trans_prob[state]:
-                    # Max function viterbi[s', t-1] + A_s',s + B_s(O_t)
-                    max_v = vit[state][index] + trans_prob[state][current_state] + emission_p[word][current_state]
-                    if max_v > m_vit:
-                        m_vit = max_v
-                    # Argmax function viterbi[s', t-1] + A_s',s
-                    argmax = vit[state][index] + trans_prob[state][current_state]
-                    if argmax > bpointer:
-                        bpointer = argmax
-                        m_tag = state
+            if current_state in emission_p[word] and current_state in trans_prob[state]:
+                # Max function viterbi[s', t-1] + A_s',s + B_s(O_t)
+                max_v = vit[state][index] + trans_prob[state][current_state] + emission_p[word][current_state]
+                if max_v > m_vit:
+                    m_vit = max_v
+                # Argmax function viterbi[s', t-1] + A_s',s
+                argmax = vit[state][index] + trans_prob[state][current_state]
+                if argmax > bpointer:
+                    bpointer = argmax
+                    m_tag = state
 
         return m_tag, bpointer, m_vit
 

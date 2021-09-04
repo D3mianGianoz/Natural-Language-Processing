@@ -45,8 +45,7 @@ def basic_smooth(path, emission, tags) -> (dict, dict, dict):
 
                     # P(unk|ti) = 1/#(PoS_TAGs)
                     for tag in tags:
-                        if tag != 'START':
-                            em_uniform[word][tag] = log(1 / (len(tags) - 1))
+                        em_uniform[word][tag] = log(1 / (len(tags) - 1))
 
     return em_noun, em_nn_vb, em_uniform
 
@@ -105,9 +104,8 @@ def statistical_smooth(path_dev, path_test, emission, tags):
             if word not in emission:
                 dev_smooth[word] = dict()
                 for tag in tags:
-                    if tag != 'START':
-                        if tag_count[tag] > 0:
-                            dev_smooth[word][tag] = log(tag_count[tag] / num_dev_unk_words)
+                    if tag_count[tag] > 0:
+                        dev_smooth[word][tag] = log(tag_count[tag] / num_dev_unk_words)
     return dev_smooth
 
 
