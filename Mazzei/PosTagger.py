@@ -172,7 +172,11 @@ class PosTagger:
             # Reset for every metrics
             n_correct_pos = 0
             total_n_words = 0
-            wrong_pos = Counter()  # keep tracks of mistake
+
+            # keep tracks of mistake
+            wrong_pos = Counter()
+            total_pos = Counter()
+            correct_pos = Counter()
 
             for j, phrase in enumerate(phrases):
                 total_n_words += len(phrase)
@@ -191,13 +195,20 @@ class PosTagger:
                     token_ = pos_backpointer[token]
                     c_label = correct_tags[j][k]
 
+                    total_pos.update({c_label: 1})
                     if token_ == c_label:
                         n_correct_pos += 1
+                        correct_pos.update({token_: 1})
                     else:
                         wrong_pos.update({f"{token_} ✗ | {c_label} ✓": 1})
 
+            for pos in total_pos:
+                correct_pos[pos] = round(correct_pos[pos] * 100 / total_pos[pos], 3)
+
             print(f"Accuracy of technique {key} is: {round((n_correct_pos * 100) / total_n_words, 3)} % "
                   f"with correct POS {n_correct_pos} out of {total_n_words}")
+            print(f"The single accuracy percentage are: ")
+            print(pd.DataFrame(sorted(correct_pos.items()), columns=["POS", "Accuracy (%)"]))
             print(f"The 5 most common mislabeled POS are: {wrong_pos.most_common(5)}")
             print("------------------------------------------------------------------")
 
