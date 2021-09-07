@@ -20,10 +20,13 @@ GREEK_DIC = {
 verbose = True
 
 
-def print_message(m):
+def print_message(m, stars=False):
     num_stars = 10
     if verbose:
-        print("*" * num_stars + m + "*" * num_stars)
+        if stars:
+            print("*" * num_stars + m + "*" * num_stars)
+        else:
+            print(m)
 
 
 # Debugging printing function
@@ -207,9 +210,9 @@ class PosTagger:
 
             print(f"Accuracy of technique {key} is: {round((n_correct_pos * 100) / total_n_words, 3)} % "
                   f"with correct POS {n_correct_pos} out of {total_n_words}")
-            print(f"The single accuracy percentage are: ")
-            print(pd.DataFrame(sorted(correct_pos.items()), columns=["POS", "Accuracy (%)"]))
-            print(f"The 5 most common mislabeled POS are: {wrong_pos.most_common(5)}")
+            print_message(f"The single accuracy percentage are: ")
+            print_message(pd.DataFrame(sorted(correct_pos.items()), columns=["POS", "Accuracy (%)"]))
+            print_message(f"The 5 most common mislabeled POS are: {wrong_pos.most_common(5)}")
             print("------------------------------------------------------------------")
 
     def viterbi_algo(self, phrase: list, smoothed_p: dict):
@@ -349,7 +352,7 @@ class PosTagger:
 
 
 if __name__ == '__main__':
-    print_message("POS tagging Latin LLCT")
+    print_message("POS tagging Latin LLCT", stars=True)
     pos_latin = PosTagger(LATIN)
-    print_message("POS tagging Ancient Greek Perseus")
+    print_message("POS tagging Ancient Greek Perseus", stars=True)
     pos_greek = PosTagger(GREEK)
