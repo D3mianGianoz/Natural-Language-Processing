@@ -1,7 +1,7 @@
 import math
 import pandas as pd
 from collections import Counter
-from Mazzei.Smoothing import basic_smooth, baseline, load_treebank_values, statistical_smooth
+from Smoothing import basic_smooth, baseline, load_treebank_values, statistical_smooth
 
 ALMOST_ZERO_P = -99999
 LATIN = 42
@@ -11,13 +11,15 @@ LATIN_DIC = {
     "test": "corpus/latin-test.conllu",
     "train": "corpus/latin-train.conllu"
 }
+
 GREEK_DIC = {
     "dev": "corpus/greek-dev.conllu",
     "test": "corpus/greek-test.conllu",
     "train": "corpus/greek-train.conllu"
 }
 
-verbose = True
+
+verbose = False
 
 
 def print_message(m, stars=False):
@@ -337,9 +339,9 @@ class PosTagger:
             emission_p = emission_prob
 
         for state in trans_prob.keys():
-            if current_state in emission_p[word] and current_state in trans_prob[state]:
+            if current_state in trans_prob[state] and current_state in emission_p[word]:
                 # Max function viterbi[s', t-1] + A_s',s + B_s(O_t)
-                max_v = vit[state][index] + trans_prob[state][current_state] + emission_p[word][current_state]
+                max_v = vit[state][index] + trans_prob[state][current_state]
                 if max_v > m_vit:
                     m_vit = max_v
                 # Argmax function viterbi[s', t-1] + A_s',s
@@ -347,6 +349,10 @@ class PosTagger:
                 if argmax > bpointer:
                     bpointer = argmax
                     m_tag = state
+
+        # B_s(O_t)
+        if current_state in emission_p[word]:
+            m_vit += emission_p[word][current_state]
 
         return m_tag, bpointer, m_vit
 
