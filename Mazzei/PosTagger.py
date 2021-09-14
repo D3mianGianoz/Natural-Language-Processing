@@ -19,7 +19,7 @@ GREEK_DIC = {
 }
 
 
-verbose = False
+verbose = True
 
 
 def print_message(m, stars=False):
@@ -187,14 +187,8 @@ class PosTagger:
                 total_n_words += len(phrase)
                 if key != "baseline":
                     pos_backpointer, viterbi = self.viterbi_algo(phrase, metric)
-                    # pretty_v = pd.DataFrame(viterbi)
-                    # print(pretty_v.head())
-                    # pretty_print(viterbi, 2)
                 else:
                     pos_backpointer = baseline(phrase, self.n_tags_given_word)
-
-                # print(pos_backpointer)
-                # pretty_print(pos_backpointer, 2)
 
                 for k, token in enumerate(phrase):
                     token_ = pos_backpointer[token]
@@ -340,7 +334,7 @@ class PosTagger:
 
         for state in trans_prob.keys():
             if current_state in trans_prob[state] and current_state in emission_p[word]:
-                # Max function viterbi[s', t-1] + A_s',s + B_s(O_t)
+                # Max function viterbi[s', t-1] + A_s',s
                 max_v = vit[state][index] + trans_prob[state][current_state]
                 if max_v > m_vit:
                     m_vit = max_v
@@ -350,7 +344,7 @@ class PosTagger:
                     bpointer = argmax
                     m_tag = state
 
-        # B_s(O_t)
+        # Adding B_s(O_t) that is indie from s'
         if current_state in emission_p[word]:
             m_vit += emission_p[word][current_state]
 

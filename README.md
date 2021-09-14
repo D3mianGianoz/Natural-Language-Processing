@@ -2,6 +2,10 @@
 
 This is a Python repository for dealing with some of the most common task of Natural Language Processing
 
+## Mazzei 
+
+Hidden Markov Model based PoS Tagger, using Viterbi's algorithm
+
 ## Radicioni
 
 Currently, we have the following:
@@ -14,7 +18,7 @@ Currently, we have the following:
 
 ## DiCaro
 
-Currently, we have the following topics:
+Currently, we cover the following topics:
 - Exercise 1.1 Aggregate Concepts
 - Exercise 1.2 Results of aggregation
 - Exercise 1.3 Word sense induction
