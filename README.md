@@ -2,11 +2,16 @@
 
 This is a Python repository for dealing with some of the most common task of Natural Language Processing
 
-## Mazzei 
+The repository is divided into three main sections, named by the professor's family name to reference in case of doubt:
+1. in the first part the basics of natural language processing will be given, with special focus on: morphology, syntax, formal semantics, NL generation and automatic translation;
+2. the second one is mostly focussed on Lexical Semantics; several approaches for Knowledge Representation will be introduced herein, along with the notion of semantics based on conceptual anchoring. Also a detailed survey on the existing, state-of-the-art, semantic resources will be provided.
+3. the third one is oriented to statistical approaches to NLP, starting from the concept of distributional semantics and the existing methodologies. Then it will focus on the notion of semantic similarity and the theoretical bases for the construction of meaning through syntactic-semantic compositions, with an emphasis on the automatic construction of ontologies.
+
+## 1. Mazzei 
 
 Hidden Markov Model based PoS Tagger, using Viterbi's algorithm
 
-## Radicioni
+## 2. Radicioni
 
 Currently, we have the following:
 - Exercise 1.1 conceptual similarity
@@ -16,7 +21,7 @@ Currently, we have the following:
 - Exercise 4.1 Semantic Similarity
 - Exercise 4.2 Sense Identification
 
-## DiCaro
+## 3. DiCaro
 
 Currently, we cover the following topics:
 - Exercise 1.1 Aggregate Concepts
